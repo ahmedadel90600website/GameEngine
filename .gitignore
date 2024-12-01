@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+Intermediate/
+bin/
+.vs/
 
 # Compiled Object files
 *.slo
