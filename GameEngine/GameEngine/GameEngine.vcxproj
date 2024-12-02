@@ -57,7 +57,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GameEngine_Platform_Windows;GameEngine_Build_DLL; _DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source; $(ProjectDir)GameEngine\ThirdParty\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source; $(ProjectDir)ThirdParty\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -72,7 +73,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GameEngine_Platform_Windows;GameEngine_Build_DLL; NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source; $(ProjectDir)GameEngine\ThirdParty\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source; $(ProjectDir)ThirdParty\spdlog\include\</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,11 +85,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp" />
+    <ClCompile Include="Source\Private\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Public\Core.h" />
     <ClInclude Include="Source\Public\Application.h" />
     <ClInclude Include="Source\Public\EntryPoint.h" />
+    <ClInclude Include="Source\Public\Log.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
