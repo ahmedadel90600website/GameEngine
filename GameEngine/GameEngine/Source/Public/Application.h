@@ -11,3 +11,5 @@ public:
 	virtual ~Application();
 	virtual void Run();
 };
+
+extern Application* CreateApplication();
