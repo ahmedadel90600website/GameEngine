@@ -1,14 +1,17 @@
 # Prerequisites
 *.d
-Intermediate/
-bin/
+Bins/
 .vs/
+
 
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
+*.sln
+*.tlog
+*.log
 
 # Precompiled Headers
 *.gch
