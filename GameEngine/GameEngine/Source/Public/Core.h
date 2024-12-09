@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdint>
+#include <string>
+
 #ifdef GameEngine_Platform_Windows
 	#ifdef GameEngine_Build_DLL
 		#define	GameEngine_API _declspec(dllexport)

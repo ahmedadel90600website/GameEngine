@@ -7,7 +7,7 @@
 
 Application::Application()
 {
-	GameEngine_LOG(info, "Applicaiton created")
+
 }
 
 Application::~Application()

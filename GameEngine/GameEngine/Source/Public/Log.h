@@ -1,13 +1,15 @@
 #pragma once
 
 // Engine
-#include "Core.h"
+#include "Public/Core.h"
 #include "spdlog/Logger.h"
 
 #ifdef GameEngine_Platform_Windows
 	#ifdef GameEngine_Build_DLL
+		// Warn yellow, error red, info green
 		#define	GameEngine_LOG(type, message) GameEngineLog::GetGameEngineLogger()->type(message);
 	#else
+		// Warn yellow, error red, info green
 		#define	Application_LOG(type, message) GameEngineLog::GetApplicationLogger()->type(message);
 
 	#endif

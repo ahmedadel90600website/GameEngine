@@ -16,7 +16,5 @@ int main(int argc, char* argv[])
 	app->Run();
 	delete app;
 
-	Application_LOG(warn, "Application Log")
-
 	return 0;
 }
