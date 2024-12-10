@@ -1,7 +1,7 @@
+#include "Public/PCH.h"
+
 // Engine
 #include "Public/Log.h"
-#include <iostream>
-#include <memory>
 
 // Thirdparty
 #include "spdlog/spdlog.h"

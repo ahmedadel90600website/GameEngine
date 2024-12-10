@@ -78,6 +78,9 @@
     <ClInclude Include="Source\Public\Log.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\PCH.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
@@ -117,6 +120,9 @@
       <Filter>Private\Events\WindowEvents</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Log.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\PCH.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>

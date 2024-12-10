@@ -1,3 +1,4 @@
+#include "Public/PCH.h"
 #include "Public/Events/MouseEvents/MouseScrolledEvent.h"
 
 MouseScrolledEvent::MouseScrolledEvent(const float inOffsetX, const float inOffsetY) :

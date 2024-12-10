@@ -21,6 +21,9 @@ project "GameEngine"
         "%{prj.name}/Source/Private/**.cpp"
     }
 
+    pchheader "Public/PCH.h"
+    pchsource "GameEngine/Source/Private/PCH.cpp"
+
     includedirs {
         "%{prj.name}/Source",
         "%{prj.name}/ThirdParty/spdlog/include"

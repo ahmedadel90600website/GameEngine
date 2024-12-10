@@ -1,3 +1,4 @@
+#include "Public/PCH.h"
 #include "Public/Events/WindowEvents/WindowClosedEvent.h"
 
 EEventType WindowClosedEvent::GetEventType() const

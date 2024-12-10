@@ -1,3 +1,4 @@
+#include "Public/PCH.h"
 #include "Public/Events/WindowEvents/WindowResizedEvent.h"
 
 WindowResizedEvent::WindowResizedEvent(const float inWidth, const float inHeight) :

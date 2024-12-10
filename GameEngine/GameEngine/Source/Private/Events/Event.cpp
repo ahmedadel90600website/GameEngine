@@ -1,3 +1,4 @@
+#include "Public/PCH.h"
 #include "Public/Events/Event.h"
 
 Event::Event() : bHasBeenHandled(false)

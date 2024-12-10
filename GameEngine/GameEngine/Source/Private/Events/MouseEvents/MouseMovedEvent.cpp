@@ -1,3 +1,4 @@
+#include "Public/PCH.h"
 #include "Public/Events/MouseEvents/MouseMovedEvent.h"
 
 MouseMovedEvent::MouseMovedEvent(const float inPositionX, const float inPositionY) :
