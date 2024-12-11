@@ -4,7 +4,6 @@
 
 // Engine
 #include "Public/Application.h"
-#include "Public/Log.h"
 
 // Third party
 #include "spdlog/logger.h"

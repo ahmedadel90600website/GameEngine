@@ -16,6 +16,9 @@
     <Filter Include="Private\Events\WindowEvents">
       <UniqueIdentifier>{00E05FE3-6CED-8DC9-F5D3-89B461E05980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Windows">
+      <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,12 @@
     </Filter>
     <Filter Include="Public\Events\WindowEvents">
       <UniqueIdentifier>{84EBE673-70FB-9244-D9B4-F762C5E381DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Windows">
+      <UniqueIdentifier>{BE6EB011-AA3C-A417-93D0-143E7F3D807C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Windows\Structs">
+      <UniqueIdentifier>{E543B91A-D13D-E26C-BAAA-787DA64348D9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +90,18 @@
     <ClInclude Include="Source\Public\PCH.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\Windows\Structs\WindowData.h">
+      <Filter>Public\Windows\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Windows\Structs\WindowProps.h">
+      <Filter>Public\Windows\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Windows\WindowBase.h">
+      <Filter>Public\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Windows\WindowsWindow.h">
+      <Filter>Public\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
@@ -124,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="Source\Private\PCH.cpp">
       <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Windows\WindowsWindow.cpp">
+      <Filter>Private\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

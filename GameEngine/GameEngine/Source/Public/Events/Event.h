@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Public/PCH.h"
 #include "Public/Core.h"
 
 enum class EEventType : uint8_t

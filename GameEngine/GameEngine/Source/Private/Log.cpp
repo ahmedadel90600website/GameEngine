@@ -1,8 +1,5 @@
 #include "Public/PCH.h"
 
-// Engine
-#include "Public/Log.h"
-
 // Thirdparty
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
