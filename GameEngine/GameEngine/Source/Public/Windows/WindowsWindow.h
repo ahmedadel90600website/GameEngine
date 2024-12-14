@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Public/Windows/WindowBase.h"
-#include "Public/Windows/Structs/WindowData.h"
 #include "Public/Windows/Structs/WindowProps.h"
 
 extern class GLFWwindow;
@@ -16,7 +15,7 @@ public:
 
 	float GetWidth() const;
 	float GetHeight() const;
-
+	void Test(GLFWwindow* window) {}
 	// WindowBase ///////////////////////////////////////////////////////////////////
 	void OnUpdate() override;
 	void SetEventCallback(std::function<void(Event&)> inFunction) override;
@@ -24,11 +23,12 @@ public:
 	bool GetIsVSyncEnabled() const override;
 	// WindowBase ///////////////////////////////////////////////////////////////////
 
+	static MulticastDelegate<double, double> OnMouseMoved;
+
 private:
 
 	void Initialize(const WindowProps& inProps);
 	void ShutDown();
 
 	GLFWwindow* TheGLFWWindow = nullptr;
-	WindowData TheWindowData;
 };

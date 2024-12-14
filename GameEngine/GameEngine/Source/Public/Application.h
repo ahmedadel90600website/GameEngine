@@ -12,7 +12,11 @@ public:
 	virtual ~Application();
 	virtual void Run();
 
+	void OnMouseMoved(double xPos, double yPos);
+	void OnMouseScrolled(double xPos, double yPos);
+
 private:
+
 
 	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
 	bool bIsRunning : 1;

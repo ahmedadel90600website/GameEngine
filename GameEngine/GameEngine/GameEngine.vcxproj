@@ -163,6 +163,7 @@
     <ClInclude Include="Source\Public\Events\MouseEvents\MousePressedEvent.h" />
     <ClInclude Include="Source\Public\Events\MouseEvents\MouseReleasedEvent.h" />
     <ClInclude Include="Source\Public\Events\MouseEvents\MouseScrolledEvent.h" />
+    <ClInclude Include="Source\Public\Events\MulticastDelegate.h" />
     <ClInclude Include="Source\Public\Events\WindowEvents\WindowClosedEvent.h" />
     <ClInclude Include="Source\Public\Events\WindowEvents\WindowResizedEvent.h" />
     <ClInclude Include="Source\Public\Log.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Source\Private\PCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Private\Windows\WindowBase.cpp" />
     <ClCompile Include="Source\Private\Windows\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>

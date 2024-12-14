@@ -3,6 +3,7 @@
 
 Event::Event() : bHasBeenHandled(false)
 {
+
 }
 
 bool Event::IsOfConfigyrationType(const EEventConfiguration inConfigType) const

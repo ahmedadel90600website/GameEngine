@@ -40,6 +40,7 @@ void WindowsWindow::OnUpdate()
 
 void WindowsWindow::SetEventCallback(std::function<void(Event&)> inFunction)
 {
+	TheWindowData.CallbackFunction = inFunction;
 }
 
 void WindowsWindow::SetIsVSyncEnabled(const bool enabled)
@@ -84,6 +85,18 @@ void WindowsWindow::Initialize(const WindowProps& inWindowProps)
 	glfwMakeContextCurrent(TheGLFWWindow);
 	glfwSetWindowUserPointer(TheGLFWWindow, &TheWindowData);
 	SetIsVSyncEnabled(true);
+
+	glfwSetCursorPosCallback(TheGLFWWindow, [](GLFWwindow* window, double xpos, double ypos)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnMouseMoved.Broadcast(xpos, ypos);
+		});
+
+	glfwSetScrollCallback(TheGLFWWindow, [](GLFWwindow* window, double xpos, double ypos)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnMouseScrolled.Broadcast(xpos, ypos);
+		});
 }
 
 void WindowsWindow::ShutDown()

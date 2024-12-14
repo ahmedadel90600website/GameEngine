@@ -2,6 +2,7 @@
 
 #include "Public/PCH.h"
 #include "Public/Events/Event.h"
+#include "Public/Events/MulticastDelegate.h"
 
 struct WindowData
 {
@@ -12,4 +13,7 @@ struct WindowData
 	float Width = 100.0f;
 	bool bIsVSyncEnabled : 1;
 	std::function<void(Event&)> CallbackFunction;
+
+	MulticastDelegate<double, double> OnMouseMoved;
+	MulticastDelegate<double, double> OnMouseScrolled;
 };

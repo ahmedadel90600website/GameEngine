@@ -4,5 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <functional>
+#include <vector>
+#include <map>
 
 #include "Public/Log.h"

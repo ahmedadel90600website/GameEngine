@@ -3,6 +3,8 @@
 #include "Public/PCH.h"
 #include "Public/Core.h"
 
+//DELCARE_MULTICAST_DELEGATE_OneParam(Test, int);
+
 enum class EEventType : uint8_t
 {
 	NONE,
@@ -23,6 +25,8 @@ enum class EEventConfiguration : uint8_t
 
 class GameEngine_API Event
 {
+	//Test lolz;
+
 public:
 
 	virtual EEventType GetEventType() const = 0;
