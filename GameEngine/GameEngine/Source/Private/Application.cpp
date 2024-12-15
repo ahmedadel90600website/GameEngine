@@ -13,13 +13,35 @@ Application::Application() :
 	if (ApplicationWindow != nullptr)
 	{
 		WindowBase& applicationWindowRef = *ApplicationWindow;
+		// Mouse events
 		applicationWindowRef.GetOnMouseMovedRef().ADD_OBJECT(Application, this, OnMouseMoved);
 		applicationWindowRef.GetOnMouseScrolledRef().ADD_OBJECT(Application, this, OnMouseScrolled);
+
+		// Keyboard events
+		applicationWindowRef.GetOnButtonEvent().ADD_OBJECT(Application, this, OnButtonEvent);
+
+		// Window events
+		applicationWindowRef.GetOnWindowClosed().ADD_OBJECT(Application, this, OnWindowClosed);
+		applicationWindowRef.GetOnWindowResized().ADD_OBJECT(Application, this, OnWindowResized);
 	}
 }
 
 Application::~Application()
 {
+	if (ApplicationWindow != nullptr)
+	{
+		WindowBase& applicationWindowRef = *ApplicationWindow;
+		// Mouse events
+		applicationWindowRef.GetOnMouseMovedRef().RemoveAll(this);
+		applicationWindowRef.GetOnMouseScrolledRef().RemoveAll(this);
+
+		// Keyboard events
+		applicationWindowRef.GetOnButtonEvent().RemoveAll(this);
+
+		// Window events
+		applicationWindowRef.GetOnWindowClosed().RemoveAll(this);
+		applicationWindowRef.GetOnWindowResized().RemoveAll(this);
+	}
 }
 
 void Application::Run()
@@ -40,5 +62,41 @@ void Application::OnMouseMoved(double xPos, double yPos)
 void Application::OnMouseScrolled(double xOffset, double yOffset)
 {
 	GameEngine_LOG(info, "XPos {0}, YPos {1}", xOffset, yOffset);
+}
 
+void Application::OnButtonEvent(int button, int scanCode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+	{
+		OnButtonpressed(button, scanCode, mods);
+	}
+	else if (action == GLFW_REPEAT)
+	{
+		OnButtonHeld(button, scanCode, mods);
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		OnButtonReleased(button, scanCode, mods);
+	}
+}
+
+void Application::OnButtonpressed(int button, int scanCode, int mods)
+{
+}
+
+void Application::OnButtonHeld(int button, int scanCode, int mods)
+{
+}
+
+void Application::OnButtonReleased(int button, int scanCode, int mods)
+{
+}
+
+void Application::OnWindowClosed(GLFWwindow* closedWindow)
+{
+	bIsRunning = false;
+}
+
+void Application::OnWindowResized(GLFWwindow* closedWindow, int width, int height)
+{
 }

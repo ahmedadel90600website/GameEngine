@@ -86,6 +86,7 @@ void WindowsWindow::Initialize(const WindowProps& inWindowProps)
 	glfwSetWindowUserPointer(TheGLFWWindow, &TheWindowData);
 	SetIsVSyncEnabled(true);
 
+	// Mouse actions //////////////////////////////////////////////////////////////////////////////////////
 	glfwSetCursorPosCallback(TheGLFWWindow, [](GLFWwindow* window, double xpos, double ypos)
 		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -96,6 +97,32 @@ void WindowsWindow::Initialize(const WindowProps& inWindowProps)
 		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 			windowData.OnMouseScrolled.Broadcast(xpos, ypos);
+		});
+
+	glfwSetMouseButtonCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnButtonEvent.Broadcast(button, -1, action, mods);
+		});
+	// Mouse actions //////////////////////////////////////////////////////////////////////////////////////
+
+	// Keyboard actions //////////////////////////////////////////////////////////////////////////////////////
+	glfwSetKeyCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int scanCode, int action, int mods)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnButtonEvent.Broadcast(button, scanCode, action, mods);
+		});
+
+	glfwSetWindowCloseCallback(TheGLFWWindow, [](GLFWwindow* window)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnWindowClosed.Broadcast(window);
+		});
+
+	glfwSetWindowSizeCallback(TheGLFWWindow, [](GLFWwindow* window, int width, int height)
+		{
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnWindowResized.Broadcast(window, width, height);
 		});
 }
 

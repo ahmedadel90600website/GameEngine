@@ -6,6 +6,8 @@
 #include "Public/Events/MulticastDelegate.h"
 #include "Public/Windows/Structs/WindowData.h"
 
+extern class GLFWwindow;
+
 class GameEngine_API WindowBase
 {
 public:
@@ -19,6 +21,9 @@ public:
 
 	MulticastDelegate<double, double>& GetOnMouseMovedRef();
 	MulticastDelegate<double, double>& GetOnMouseScrolledRef();
+	MulticastDelegate<int, int, int, int>& GetOnButtonEvent();
+	MulticastDelegate<GLFWwindow*>& GetOnWindowClosed();
+	MulticastDelegate<GLFWwindow*, int, int>& GetOnWindowResized();
 
 	static WindowBase* Create(const WindowProps& inProps);
 

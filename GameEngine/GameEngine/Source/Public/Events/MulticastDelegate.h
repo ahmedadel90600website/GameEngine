@@ -92,9 +92,9 @@ public:
 
 	// Call ADD_OBJECT instead of directly calling AddObject as it makes sure that name of the passed function pointer, and the function name is the same.
 	template<class UserClass>
-	void AddObject(UserClass* inObjectToRemoveFrom, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
+	void AddObject(UserClass* inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
 	{
-		AddObject_Internal<UserClass>(inObjectToRemoveFrom, inFunction, functionName);
+		AddObject_Internal<UserClass>(inObjectToAdd, inFunction, functionName);
 	}
 
 	void RemoveAll(void* inObjectToRemoveFrom)
@@ -108,11 +108,11 @@ public:
 private:
 
 	template<class UserClass>
-	void AddObject_Internal(UserClass* inObjectToRemoveFrom, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
+	void AddObject_Internal(UserClass* inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
 	{
-		if (FunctionsPerObject.count(inObjectToRemoveFrom))
+		if (FunctionsPerObject.count(inObjectToAdd))
 		{
-			const std::vector<STDFunctionWrapper>& currentFunctions = FunctionsPerObject.find(inObjectToRemoveFrom)->second;
+			const std::vector<STDFunctionWrapper>& currentFunctions = FunctionsPerObject.find(inObjectToAdd)->second;
 			for (const STDFunctionWrapper& currentFunction : currentFunctions)
 			{
 				if (currentFunction.FunctionName == functionName)
@@ -127,29 +127,29 @@ private:
 		std::function<void(Paramtypes...)> stdFunction;
 		if constexpr (numberOfArguments == 1)
 		{
-			std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1);
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1);
 		}
 		else if constexpr (numberOfArguments == 2)
 		{
-			stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1, std::placeholders::_2);
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1, std::placeholders::_2);
 		}
 		else if constexpr (numberOfArguments == 3)
 		{
-			stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		}
 		else if constexpr (numberOfArguments == 4)
 		{
-			stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1, std::placeholders::_2,
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1, std::placeholders::_2,
 				std::placeholders::_3, std::placeholders::_4);
 		}
 		else if constexpr (numberOfArguments == 5)
 		{
-			stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1, std::placeholders::_2,
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1, std::placeholders::_2,
 				std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
 		}
 		else if constexpr (numberOfArguments == 6)
 		{
-			stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1, std::placeholders::_2,
+			stdFunction = std::bind(inFunction, inObjectToAdd, std::placeholders::_1, std::placeholders::_2,
 				std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6);
 		}
 		else
@@ -161,7 +161,7 @@ private:
 		STDFunctionWrapper wrapper;
 		wrapper.TheFunction = stdFunction;
 		wrapper.FunctionName = functionName;
-		FunctionsPerObject[inObjectToRemoveFrom].push_back(wrapper);
+		FunctionsPerObject[inObjectToAdd].push_back(wrapper);
 	}
 
 	std::map<void*, std::vector<STDFunctionWrapper>> FunctionsPerObject;
