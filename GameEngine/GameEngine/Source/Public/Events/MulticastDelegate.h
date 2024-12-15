@@ -88,14 +88,7 @@ public:
 		}
 	}
 	
-#define ADD_OBJECT(ClassType, ClassInstance, FunctionName) AddObject<ClassType>(ClassInstance, &ClassType::FunctionName, #FunctionName);
-
-	// Call ADD_OBJECT instead of directly calling AddObject as it makes sure that name of the passed function pointer, and the function name is the same.
-	template<class UserClass>
-	void AddObject(UserClass* inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
-	{
-		AddObject_Internal<UserClass>(inObjectToAdd, inFunction, functionName);
-	}
+#define ADD_OBJECT(ClassType, ClassInstance, FunctionName) AddObject_Internal<ClassType>(ClassInstance, &ClassType::FunctionName, #FunctionName);
 
 	void RemoveAll(void* inObjectToRemoveFrom)
 	{
@@ -105,11 +98,28 @@ public:
 		}
 	}
 
-private:
-
+	// Call ADD_OBJECT instead of directly calling AddObject as it makes sure that name of the passed function pointer, and the function name is the same.
 	template<class UserClass>
 	void AddObject_Internal(UserClass* inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
 	{
+		if (inObjectToAdd == nullptr)
+		{
+			GameEngine_LOG(error, "MulticastDelegate::AddObject, inObjectToAdd is nullptr.");
+			return;
+		}
+
+		if (inFunction == nullptr)
+		{
+			GameEngine_LOG(error, "MulticastDelegate::AddObject, inFunction is nullptr.");
+			return;
+		}
+
+		if (functionName.length() == 0)
+		{
+			GameEngine_LOG(error, "MulticastDelegate::AddObject, functionName is empty string.");
+			return;
+		}
+
 		if (FunctionsPerObject.count(inObjectToAdd))
 		{
 			const std::vector<STDFunctionWrapper>& currentFunctions = FunctionsPerObject.find(inObjectToAdd)->second;
@@ -154,8 +164,14 @@ private:
 		}
 		else
 		{
-			GameEngine_LOG(error, "MulticastDelegate::AddObject, passing more than 6 arguments.")
-				return;
+			GameEngine_LOG(error, "MulticastDelegate::AddObject, passing more than 6 arguments.");
+			return;
+		}
+
+		if (stdFunction == nullptr)
+		{
+			GameEngine_LOG(error, "MulticastDelegate::AddObject. Failed to construct the stdFunction");
+			return;
 		}
 
 		STDFunctionWrapper wrapper;
@@ -163,6 +179,8 @@ private:
 		wrapper.FunctionName = functionName;
 		FunctionsPerObject[inObjectToAdd].push_back(wrapper);
 	}
+
+private:
 
 	std::map<void*, std::vector<STDFunctionWrapper>> FunctionsPerObject;
 };
