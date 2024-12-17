@@ -19,15 +19,11 @@ public:
 	virtual void SetIsVSyncEnabled(const bool enabled) = 0;
 	virtual bool GetIsVSyncEnabled() const = 0;
 
-	MulticastDelegate<double, double>& GetOnMouseMovedRef();
-	MulticastDelegate<double, double>& GetOnMouseScrolledRef();
-	MulticastDelegate<int, int, int, int>& GetOnButtonEvent();
-	MulticastDelegate<GLFWwindow*>& GetOnWindowClosed();
-	MulticastDelegate<GLFWwindow*, int, int>& GetOnWindowResized();
+	MulticastDelegate<FEventDataBase&>& GetOnGLFWEvent();
 
-	static WindowBase* Create(const WindowProps& inProps);
+	static WindowBase* Create(const FWindowProps& inProps);
 
 protected:
 
-	WindowData TheWindowData;
+	FWindowData TheWindowData;
 };

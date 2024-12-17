@@ -1,18 +1,23 @@
 #include "Public/PCH.h"
 
 #include "Public/Windows/WindowsWindow.h"
+#include "Public/EventData/ButtonActionEventData.h"
+#include "Public/EventData/MouseMoveEventData.h"
+#include "Public/EventData/MouseScrollEventData.h"
+#include "Public/EventData/WindowClosedEventData.h"
+#include "Public/EventData/WindowResizedEvenetData.h"
 
 // Third party
 #include "GLFW/glfw3.h"
 
 static bool IsGLFWInitialized = false;
 
-WindowBase* WindowBase::Create(const WindowProps& inProps)
+WindowBase* WindowBase::Create(const FWindowProps& inProps)
 {
 	return new WindowsWindow(inProps);
 }
 
-WindowsWindow::WindowsWindow(const WindowProps& inProps)
+WindowsWindow::WindowsWindow(const FWindowProps& inProps)
 {
 	Initialize(inProps);
 }
@@ -62,7 +67,7 @@ bool WindowsWindow::GetIsVSyncEnabled() const
 	return TheWindowData.bIsVSyncEnabled;
 }
 
-void WindowsWindow::Initialize(const WindowProps& inWindowProps)
+void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 {
 	const std::string windowTitle = inWindowProps.Title;
 	const float windowWidth = inWindowProps.Width;
@@ -87,42 +92,42 @@ void WindowsWindow::Initialize(const WindowProps& inWindowProps)
 	SetIsVSyncEnabled(true);
 
 	// Mouse actions //////////////////////////////////////////////////////////////////////////////////////
-	glfwSetCursorPosCallback(TheGLFWWindow, [](GLFWwindow* window, double xpos, double ypos)
+	glfwSetCursorPosCallback(TheGLFWWindow, [](GLFWwindow* window, double xPos, double yPos)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnMouseMoved.Broadcast(xpos, ypos);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FMouseMoveEventData(xPos, yPos));
 		});
 
-	glfwSetScrollCallback(TheGLFWWindow, [](GLFWwindow* window, double xpos, double ypos)
+	glfwSetScrollCallback(TheGLFWWindow, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnMouseScrolled.Broadcast(xpos, ypos);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FMouseScrollEventData(xOffset, yOffset));
 		});
 
 	glfwSetMouseButtonCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int action, int mods)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnButtonEvent.Broadcast(button, -1, action, mods);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FButtonActionEventData(button, -1, action, mods));
 		});
 	// Mouse actions //////////////////////////////////////////////////////////////////////////////////////
 
 	// Keyboard actions //////////////////////////////////////////////////////////////////////////////////////
 	glfwSetKeyCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int scanCode, int action, int mods)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnButtonEvent.Broadcast(button, scanCode, action, mods);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FButtonActionEventData(button, scanCode, action, mods));
 		});
 
 	glfwSetWindowCloseCallback(TheGLFWWindow, [](GLFWwindow* window)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnWindowClosed.Broadcast(window);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FWindowClosedEventData(window));
 		});
 
 	glfwSetWindowSizeCallback(TheGLFWWindow, [](GLFWwindow* window, int width, int height)
 		{
-			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnWindowResized.Broadcast(window, width, height);
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FWindowResizedEventData(window, width, height));
 		});
 }
 

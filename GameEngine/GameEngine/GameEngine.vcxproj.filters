@@ -22,6 +22,9 @@
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\EventData">
+      <UniqueIdentifier>{0FADE470-FBA5-03C3-24D8-E8471030E3CE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public\Events">
       <UniqueIdentifier>{E8EFCF4B-54B0-4B82-1DEB-94FF896A905E}</UniqueIdentifier>
     </Filter>
@@ -51,6 +54,24 @@
     <ClInclude Include="Source\Public\EntryPoint.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\EventData\ButtonActionEventData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\EventData\EventDataBase.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\EventData\MouseMoveEventData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\EventData\MouseScrollEventData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\EventData\WindowClosedEventData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\EventData\WindowResizedEvenetData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\Events\Event.h">
       <Filter>Public\Events</Filter>
     </ClInclude>
@@ -78,6 +99,9 @@
     <ClInclude Include="Source\Public\Events\MouseEvents\MouseScrolledEvent.h">
       <Filter>Public\Events\MouseEvents</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\Events\MulticastDelegate.h">
+      <Filter>Public\Events</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\Events\WindowEvents\WindowClosedEvent.h">
       <Filter>Public\Events\WindowEvents</Filter>
     </ClInclude>
@@ -102,7 +126,6 @@
     <ClInclude Include="Source\Public\Windows\WindowsWindow.h">
       <Filter>Public\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Events\MulticastDelegate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
@@ -147,9 +170,11 @@
     <ClCompile Include="Source\Private\PCH.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Private\Windows\WindowBase.cpp">
+      <Filter>Private\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Private\Windows\WindowsWindow.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\Windows\WindowBase.cpp" />
   </ItemGroup>
 </Project>

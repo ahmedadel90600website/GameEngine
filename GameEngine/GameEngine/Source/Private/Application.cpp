@@ -4,25 +4,21 @@
 #include "Public/Application.h"
 #include "Public/Windows/Structs/WindowProps.h"
 
+#include "Public/EventData/ButtonActionEventData.h"
+#include "Public/EventData/MouseMoveEventData.h"
+#include "Public/EventData/MouseScrollEventData.h"
+#include "Public/EventData/WindowClosedEventData.h"
+#include "Public/EventData/WindowResizedEvenetData.h"
+
 #include "GLFW/glfw3.h"
 
 Application::Application() :
 	bIsRunning(true)
 {
-	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(WindowProps("Test", 1000.0, 1000.0f)));
+	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000.0, 1000.0f)));
 	if (ApplicationWindow != nullptr)
 	{
-		WindowBase& applicationWindowRef = *ApplicationWindow;
-		// Mouse events
-		applicationWindowRef.GetOnMouseMovedRef().ADD_OBJECT(Application, this, OnMouseMoved);
-		applicationWindowRef.GetOnMouseScrolledRef().ADD_OBJECT(Application, this, OnMouseScrolled);
-
-		// Keyboard events
-		applicationWindowRef.GetOnButtonEvent().ADD_OBJECT(Application, this, OnButtonEvent);
-
-		// Window events
-		applicationWindowRef.GetOnWindowClosed().ADD_OBJECT(Application, this, OnWindowClosed);
-		applicationWindowRef.GetOnWindowResized().ADD_OBJECT(Application, this, OnWindowResized);
+		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(Application, this, OnGLFWEvent);
 	}
 }
 
@@ -31,20 +27,11 @@ Application::~Application()
 	if (ApplicationWindow != nullptr)
 	{
 		WindowBase& applicationWindowRef = *ApplicationWindow;
-		// Mouse events
-		applicationWindowRef.GetOnMouseMovedRef().RemoveAll(this);
-		applicationWindowRef.GetOnMouseScrolledRef().RemoveAll(this);
-
-		// Keyboard events
-		applicationWindowRef.GetOnButtonEvent().RemoveAll(this);
-
-		// Window events
-		applicationWindowRef.GetOnWindowClosed().RemoveAll(this);
-		applicationWindowRef.GetOnWindowResized().RemoveAll(this);
+		applicationWindowRef.GetOnGLFWEvent().RemoveAll(this);
 	}
 }
 
-void Application::Run()
+void Application::Tick()
 {
 	while (bIsRunning)
 	{
@@ -54,30 +41,21 @@ void Application::Run()
 	}
 }
 
+void Application::OnGLFWEvent(FEventDataBase& inEvent)
+{
+	FEventDataBase* inEventPtr = &inEvent;
+	if (FWindowClosedEventData* windowClosedEventData = dynamic_cast<FWindowClosedEventData*>(inEventPtr))
+	{
+		OnWindowClosed(windowClosedEventData->TheGLFWWindow);
+	}
+}
+
 void Application::OnMouseMoved(double xPos, double yPos)
 {
-	GameEngine_LOG(info, "XPos {0}, YPos {1}", xPos, yPos);
 }
 
-void Application::OnMouseScrolled(double xOffset, double yOffset)
+void Application::OnMouseScrolled(double xPos, double yPos)
 {
-	GameEngine_LOG(info, "XPos {0}, YPos {1}", xOffset, yOffset);
-}
-
-void Application::OnButtonEvent(int button, int scanCode, int action, int mods)
-{
-	if (action == GLFW_PRESS)
-	{
-		OnButtonpressed(button, scanCode, mods);
-	}
-	else if (action == GLFW_REPEAT)
-	{
-		OnButtonHeld(button, scanCode, mods);
-	}
-	else if (action == GLFW_RELEASE)
-	{
-		OnButtonReleased(button, scanCode, mods);
-	}
 }
 
 void Application::OnButtonpressed(int button, int scanCode, int mods)

@@ -3,74 +3,13 @@
 #include "Public/PCH.h"
 #include "Public/Core.h"
 
-/*
-* 
-#define DELCARE_MULTICAST_DELEGATE_OneParam(DelegateName, UserClass, paramType)\
-struct GameEngine_API STDFunctionWrapper\
-{ \
-std::function<void(paramType)> TheFunction; \
-std::string FunctionName = ""; \
-};\
-\
-class GameEngine_API DelegateName\
-{\
-public:\
-\
-	void Broadcast(paramType param)\
-	{\
-		for (auto currentPair : FunctionsPerObject)\
-		{\
-			const std::vector<STDFunctionWrapper>& functions = currentPair.second;\
-			for (const STDFunctionWrapper& currentFunction : functions)\
-			{\
-				currentFunction.TheFunction(param);\
-			}\
-		}\
-	}\
-	\
-	void AddObject(UserClass* inObjectToRemoveFrom, void(UserClass::* inFunction)(paramType), const std::string& functionName)\
-	{\
-		std::function<void(paramType)> stdFunction = std::bind(inFunction, inObjectToRemoveFrom, std::placeholders::_1);\
-		if (FunctionsPerObject.count(inObjectToRemoveFrom))\
-		{\
-			const std::vector<STDFunctionWrapper>& currentFunctions = FunctionsPerObject.find(inObjectToRemoveFrom)->second;\
-			for (const STDFunctionWrapper& currentFunction : currentFunctions)\
-			{\
-				if (currentFunction.FunctionName == functionName)\
-				{\
-					return;\
-				}\
-			}\
-		}\
-\
-		STDFunctionWrapper wrapper;\
-		wrapper.TheFunction = stdFunction;\
-		wrapper.FunctionName = functionName;\
-		FunctionsPerObject[inObjectToRemoveFrom].push_back(wrapper);\
-	}\
-	\
-	void RemoveAll(UserClass* inObjectToRemoveFrom)\
-	{\
-		if (FunctionsPerObject.count(inObjectToRemoveFrom))\
-		{\
-			FunctionsPerObject.erase(inObjectToRemoveFrom);\
-		}\
-	}\
-\
-\
-private:\
-\
-	std::map<UserClass*, std::vector<STDFunctionWrapper>> FunctionsPerObject;\
-};
-
-*/
-
+// TODO: Make sure you make std types not imported by making pointers to them.
 template<class... Paramtypes>
 class GameEngine_API MulticastDelegate
 {
 public:
 
-	struct GameEngine_API STDFunctionWrapper
+	struct STDFunctionWrapper
 	{
 		std::function<void(Paramtypes...)> TheFunction;
 		std::string FunctionName = "";

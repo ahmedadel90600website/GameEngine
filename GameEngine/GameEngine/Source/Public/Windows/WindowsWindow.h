@@ -9,7 +9,7 @@ class WindowsWindow : public WindowBase
 {
 public:
 
-	WindowsWindow(const WindowProps& inProps);
+	WindowsWindow(const FWindowProps& inProps);
 
 	virtual ~WindowsWindow();
 
@@ -27,7 +27,7 @@ public:
 
 private:
 
-	void Initialize(const WindowProps& inProps);
+	void Initialize(const FWindowProps& inProps);
 	void ShutDown();
 
 	GLFWwindow* TheGLFWWindow = nullptr;

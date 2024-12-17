@@ -55,19 +55,20 @@ project "GameEngine"
             "{COPY} %{cfg.buildtarget.relpath} ../Bins/bin/"..OutputDir.."/Sandbox"
         }
 
-        buildoptions "/utf-8"
-
     filter "configurations:Debug"
         defines {"GameEngine_Debug", "GameEngine_AssertsEnabled"}
         symbols "On"
+		buildoptions {"/utf-8", "/MDd"}
 
     filter "configurations:Development"
         defines "GameEngine_Development"
         symbols "On"
+		buildoptions {"/utf-8", "/MD"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
+		buildoptions {"/utf-8", "/MD"}
 
 -----------------------------------------------------------------------------------------------------
 project "Sandbox"
@@ -102,17 +103,18 @@ project "Sandbox"
             "GameEngine_Platform_Windows"
         }
 
-        buildoptions "/utf-8"
-
     filter "configurations:Debug"
         defines "GameEngine_Debug"
         symbols "On"
-
+		buildoptions {"/utf-8", "/MDd"}
+		
     filter "configurations:Development"
         defines "GameEngine_Development"
         optimize "On"
+		buildoptions {"/utf-8", "/MD"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
         symbols "off"
+		buildoptions {"/utf-8", "/MDd"}

@@ -84,7 +84,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -108,7 +108,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -135,7 +135,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -154,6 +154,12 @@
     <ClInclude Include="Source\Public\Application.h" />
     <ClInclude Include="Source\Public\Core.h" />
     <ClInclude Include="Source\Public\EntryPoint.h" />
+    <ClInclude Include="Source\Public\EventData\ButtonActionEventData.h" />
+    <ClInclude Include="Source\Public\EventData\EventDataBase.h" />
+    <ClInclude Include="Source\Public\EventData\MouseMoveEventData.h" />
+    <ClInclude Include="Source\Public\EventData\MouseScrollEventData.h" />
+    <ClInclude Include="Source\Public\EventData\WindowClosedEventData.h" />
+    <ClInclude Include="Source\Public\EventData\WindowResizedEvenetData.h" />
     <ClInclude Include="Source\Public\Events\Event.h" />
     <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonPressed.h" />
     <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonReleased.h" />

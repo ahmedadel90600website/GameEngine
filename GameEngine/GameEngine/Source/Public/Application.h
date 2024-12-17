@@ -2,8 +2,9 @@
 
 #include "Public/Core.h"
 #include "Public/Windows/WindowBase.h"
+#include "Public/EventData/EventDataBase.h"
 
-extern class GLFWwindow;
+class GLFWwindow;
 
 class GameEngine_API Application
 {
@@ -12,16 +13,17 @@ public:
 
 	Application();
 	virtual ~Application();
-	virtual void Run();
+	virtual void Tick();
 
 private:
+
+	void OnGLFWEvent(FEventDataBase& inEvent);
 
 	// Mouse events
 	void OnMouseMoved(double xPos, double yPos);
 	void OnMouseScrolled(double xPos, double yPos);
 
 	// Buttons events
-	void OnButtonEvent(int button, int scanCode, int action, int mods);
 	void OnButtonpressed(int button, int scanCode, int mods);
 	void OnButtonHeld(int button, int scanCode, int mods);
 	void OnButtonReleased(int button, int scanCode, int mods);

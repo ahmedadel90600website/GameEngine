@@ -2,13 +2,13 @@
 
 #include "Public/PCH.h"
 
-struct WindowProps
+struct FWindowProps
 {
 	std::string Title = "Window";
 	float Height = 100.0f;
 	float Width = 100.0f;
-	WindowProps() {}
-	WindowProps(const std::string& inTitle, float inHeight, float inWidth) :
+	FWindowProps() {}
+	FWindowProps(const std::string& inTitle, float inHeight, float inWidth) :
 		Title(inTitle),
 		Height(inHeight),
 		Width(inWidth)
