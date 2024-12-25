@@ -11,6 +11,7 @@
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
 
+// Third party
 #include "GLAD/glad.h"
 
 Application::Application() :
