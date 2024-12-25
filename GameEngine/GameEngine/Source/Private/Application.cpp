@@ -11,7 +11,7 @@
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
 
-#include "GLFW/glfw3.h"
+#include "GLAD/glad.h"
 
 Application::Application() :
 	bIsRunning(true)

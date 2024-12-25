@@ -12,6 +12,7 @@ OutputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -----------------------------------------------------------------------------------------------------
 -- Include the GLFW Premake file to include it as a project
 include "GameEngine/ThirdParty/GLFW"
+include "GameEngine/ThirdParty/GLAD"
 
 -----------------------------------------------------------------------------------------------------
 project "GameEngine"
@@ -24,6 +25,7 @@ project "GameEngine"
 
     links{
         "GLFW",
+		"GLAD",
         "opengl32.lib"
     }
 
@@ -38,7 +40,8 @@ project "GameEngine"
     includedirs {
         "%{prj.name}/Source",
         "%{prj.name}/ThirdParty/spdlog/include",
-        "%{prj.name}/ThirdParty/GLFW/include"
+        "%{prj.name}/ThirdParty/GLFW/include",
+        "%{prj.name}/ThirdParty/GLAD/include"
     }
 
     filter "system:windows"
@@ -109,12 +112,16 @@ project "Sandbox"
     filter "configurations:Debug"
         defines "GameEngine_Debug"
         symbols "On"
+		buildoptions {"/MDd"}
+
 		
     filter "configurations:Development"
         defines "GameEngine_Development"
         optimize "On"
+		buildoptions {"/MD"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
         symbols "off"
+		buildoptions {"/MD"}

@@ -9,6 +9,7 @@
 
 // Third party
 #include "GLFW/glfw3.h"
+#include "GLAD/glad.h"
 
 static bool IsGLFWInitialized = false;
 
@@ -83,6 +84,10 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 
 	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(TheGLFWWindow);
+
+	int gladInitialization = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	GameEngine_Assert(gladInitialization, "WindowsWindow::Initialize. Wasn't able to init GLAD");
+
 	glfwSetWindowUserPointer(TheGLFWWindow, &TheWindowData);
 	SetIsVSyncEnabled(true);
 
