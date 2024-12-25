@@ -27,12 +27,12 @@ WindowsWindow::~WindowsWindow()
 	ShutDown();
 }
 
-float WindowsWindow::GetWidth() const
+int WindowsWindow::GetWidth() const
 {
 	return TheWindowData.Width;
 }
 
-float WindowsWindow::GetHeight() const
+int WindowsWindow::GetHeight() const
 {
 	return TheWindowData.Height;
 }
@@ -41,11 +41,6 @@ void WindowsWindow::OnUpdate()
 {
 	glfwPollEvents();
 	glfwSwapBuffers(TheGLFWWindow);
-}
-
-void WindowsWindow::SetEventCallback(std::function<void(Event&)> inFunction)
-{
-	TheWindowData.CallbackFunction = inFunction;
 }
 
 void WindowsWindow::SetIsVSyncEnabled(const bool enabled)
@@ -70,8 +65,8 @@ bool WindowsWindow::GetIsVSyncEnabled() const
 void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 {
 	const std::string windowTitle = inWindowProps.Title;
-	const float windowWidth = inWindowProps.Width;
-	const float windowHeight = inWindowProps.Height;
+	const int windowWidth = inWindowProps.Width;
+	const int windowHeight = inWindowProps.Height;
 	
 	TheWindowData.Title = windowTitle;
 	TheWindowData.Width = windowWidth;

@@ -1,21 +1,19 @@
 #pragma once
 
 #include "Public/PCH.h"
-#include "Public/Events/Event.h"
 #include "Public/EventData/EventDataBase.h"
 #include "Public/Events/MulticastDelegate.h"
 
-extern class GLFWwindow;
+struct GLFWwindow;
 
-struct FWindowData
+struct GameEngine_API FWindowData
 {
 	FWindowData() : bIsVSyncEnabled(false) {}
 
 	std::string Title = "Window";
-	float Height = 100.0f;
-	float Width = 100.0f;
+	int Height = 100;
+	int Width = 100;
 	bool bIsVSyncEnabled : 1;
-	std::function<void(Event&)> CallbackFunction;
 
 	/* Param1 Button: like GLFW_MOUSE_BUTTON_LEFT or GLFW_KEY_SPACE
 	* Param2 ScanCode: The scancode of a key is specific to that platform or sometimes even to that machine.

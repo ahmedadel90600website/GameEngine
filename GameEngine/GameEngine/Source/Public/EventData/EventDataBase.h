@@ -3,6 +3,8 @@
 
 struct GameEngine_API FEventDataBase
 {
-
+    FEventDataBase() : bHasBeenHandled(false){}
     virtual ~FEventDataBase() {}
+
+    bool bHasBeenHandled : 1;
 };

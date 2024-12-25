@@ -83,8 +83,7 @@
       <AdditionalIncludeDirectories>Source;ThirdParty\spdlog\include;ThirdParty\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MDd %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /wd4251 /MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -107,8 +106,7 @@
       <AdditionalIncludeDirectories>Source;ThirdParty\spdlog\include;ThirdParty\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /wd4251 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -134,8 +132,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /wd4251 /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -160,18 +157,9 @@
     <ClInclude Include="Source\Public\EventData\MouseScrollEventData.h" />
     <ClInclude Include="Source\Public\EventData\WindowClosedEventData.h" />
     <ClInclude Include="Source\Public\EventData\WindowResizedEvenetData.h" />
-    <ClInclude Include="Source\Public\Events\Event.h" />
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonPressed.h" />
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonReleased.h" />
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardEvent.h" />
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseKeyEvent.h" />
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseMovedEvent.h" />
-    <ClInclude Include="Source\Public\Events\MouseEvents\MousePressedEvent.h" />
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseReleasedEvent.h" />
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseScrolledEvent.h" />
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h" />
-    <ClInclude Include="Source\Public\Events\WindowEvents\WindowClosedEvent.h" />
-    <ClInclude Include="Source\Public\Events\WindowEvents\WindowResizedEvent.h" />
+    <ClInclude Include="Source\Public\Layers\LayerBase.h" />
+    <ClInclude Include="Source\Public\Layers\Overlays\OverlayBase.h" />
     <ClInclude Include="Source\Public\Log.h" />
     <ClInclude Include="Source\Public\PCH.h" />
     <ClInclude Include="Source\Public\Windows\Structs\WindowData.h" />
@@ -181,17 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp" />
-    <ClCompile Include="Source\Private\Events\Event.cpp" />
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardButtonPressed.cpp" />
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardButtonReleased.cpp" />
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseKeyEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseMovedEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\MouseEvents\MousePressedEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseReleasedEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseScrolledEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\WindowEvents\WindowClosedEvent.cpp" />
-    <ClCompile Include="Source\Private\Events\WindowEvents\WindowResizedEvent.cpp" />
     <ClCompile Include="Source\Private\Log.cpp" />
     <ClCompile Include="Source\Private\PCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

@@ -4,18 +4,6 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Private\Events">
-      <UniqueIdentifier>{E4EA29C7-D0B8-1DCD-B94C-8EF3A5B9F931}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Private\Events\KeyboardEvents">
-      <UniqueIdentifier>{597F4017-C597-2741-8E44-B7DAFA1BBCDA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Private\Events\MouseEvents">
-      <UniqueIdentifier>{B1BAD39C-9DCA-7F6D-0684-E48BF2B26E06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Private\Events\WindowEvents">
-      <UniqueIdentifier>{00E05FE3-6CED-8DC9-F5D3-89B461E05980}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
     </Filter>
@@ -28,14 +16,11 @@
     <Filter Include="Public\Events">
       <UniqueIdentifier>{E8EFCF4B-54B0-4B82-1DEB-94FF896A905E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\Events\KeyboardEvents">
-      <UniqueIdentifier>{DD7BB8E5-C936-A891-72EE-20DC5E88F221}</UniqueIdentifier>
+    <Filter Include="Public\Layers">
+      <UniqueIdentifier>{C3DAB25A-2F9B-2E91-F8D5-770E6455736D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\Events\MouseEvents">
-      <UniqueIdentifier>{B5652563-2128-59ED-6AD8-E779D6D931CB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Public\Events\WindowEvents">
-      <UniqueIdentifier>{84EBE673-70FB-9244-D9B4-F762C5E381DD}</UniqueIdentifier>
+    <Filter Include="Public\Layers\Overlays">
+      <UniqueIdentifier>{47EEFA50-33E8-23A3-1C55-BAB308EE890F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Windows">
       <UniqueIdentifier>{BE6EB011-AA3C-A417-93D0-143E7F3D807C}</UniqueIdentifier>
@@ -72,41 +57,14 @@
     <ClInclude Include="Source\Public\EventData\WindowResizedEvenetData.h">
       <Filter>Public\EventData</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Events\Event.h">
-      <Filter>Public\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonPressed.h">
-      <Filter>Public\Events\KeyboardEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardButtonReleased.h">
-      <Filter>Public\Events\KeyboardEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\KeyboardEvents\KeyboardEvent.h">
-      <Filter>Public\Events\KeyboardEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseKeyEvent.h">
-      <Filter>Public\Events\MouseEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseMovedEvent.h">
-      <Filter>Public\Events\MouseEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\MouseEvents\MousePressedEvent.h">
-      <Filter>Public\Events\MouseEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseReleasedEvent.h">
-      <Filter>Public\Events\MouseEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Events\MouseEvents\MouseScrolledEvent.h">
-      <Filter>Public\Events\MouseEvents</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h">
       <Filter>Public\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Events\WindowEvents\WindowClosedEvent.h">
-      <Filter>Public\Events\WindowEvents</Filter>
+    <ClInclude Include="Source\Public\Layers\LayerBase.h">
+      <Filter>Public\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Events\WindowEvents\WindowResizedEvent.h">
-      <Filter>Public\Events\WindowEvents</Filter>
+    <ClInclude Include="Source\Public\Layers\Overlays\OverlayBase.h">
+      <Filter>Public\Layers\Overlays</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Log.h">
       <Filter>Public</Filter>
@@ -130,39 +88,6 @@
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
       <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\Event.cpp">
-      <Filter>Private\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardButtonPressed.cpp">
-      <Filter>Private\Events\KeyboardEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardButtonReleased.cpp">
-      <Filter>Private\Events\KeyboardEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\KeyboardEvents\KeyboardEvent.cpp">
-      <Filter>Private\Events\KeyboardEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseKeyEvent.cpp">
-      <Filter>Private\Events\MouseEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseMovedEvent.cpp">
-      <Filter>Private\Events\MouseEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\MouseEvents\MousePressedEvent.cpp">
-      <Filter>Private\Events\MouseEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseReleasedEvent.cpp">
-      <Filter>Private\Events\MouseEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\MouseEvents\MouseScrolledEvent.cpp">
-      <Filter>Private\Events\MouseEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\WindowEvents\WindowClosedEvent.cpp">
-      <Filter>Private\Events\WindowEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Events\WindowEvents\WindowResizedEvent.cpp">
-      <Filter>Private\Events\WindowEvents</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Log.cpp">
       <Filter>Private</Filter>

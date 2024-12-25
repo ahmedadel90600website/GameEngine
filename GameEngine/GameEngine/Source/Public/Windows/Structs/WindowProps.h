@@ -5,10 +5,10 @@
 struct FWindowProps
 {
 	std::string Title = "Window";
-	float Height = 100.0f;
-	float Width = 100.0f;
+	int Height = 100;
+	int Width = 100;
 	FWindowProps() {}
-	FWindowProps(const std::string& inTitle, float inHeight, float inWidth) :
+	FWindowProps(const std::string& inTitle, int inHeight, int inWidth) :
 		Title(inTitle),
 		Height(inHeight),
 		Width(inWidth)

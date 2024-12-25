@@ -1,6 +1,6 @@
 #pragma once
 
-class GLFWwindow;
+struct GLFWwindow;
 
 #pragma once
 #include "Public/EventData/EventDataBase.h"

@@ -43,8 +43,10 @@ project "GameEngine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        --staticruntime "On"
         systemversion "latest"
+		
+		buildoptions {"/utf-8", "/wd4251"}
 
         defines {
             "GameEngine_Platform_Windows",
@@ -58,17 +60,17 @@ project "GameEngine"
     filter "configurations:Debug"
         defines {"GameEngine_Debug", "GameEngine_AssertsEnabled"}
         symbols "On"
-		buildoptions {"/utf-8", "/MDd"}
+		buildoptions {"/MDd"}
 
     filter "configurations:Development"
         defines "GameEngine_Development"
         symbols "On"
-		buildoptions {"/utf-8", "/MD"}
+		buildoptions {"/MD"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
-		buildoptions {"/utf-8", "/MD"}
+		buildoptions {"/MD"}
 
 -----------------------------------------------------------------------------------------------------
 project "Sandbox"
@@ -96,7 +98,7 @@ project "Sandbox"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        --staticruntime "On"
         systemversion "latest"
 
         defines {
@@ -106,15 +108,15 @@ project "Sandbox"
     filter "configurations:Debug"
         defines "GameEngine_Debug"
         symbols "On"
-		buildoptions {"/utf-8", "/MDd"}
+		buildoptions {"/utf-8"}
 		
     filter "configurations:Development"
         defines "GameEngine_Development"
         optimize "On"
-		buildoptions {"/utf-8", "/MD"}
+		buildoptions {"/utf-8"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
         symbols "off"
-		buildoptions {"/utf-8", "/MDd"}
+		buildoptions {"/utf-8"}
