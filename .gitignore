@@ -2,6 +2,7 @@
 *.d
 Bins/
 .vs/
+*.vcxproj
 
 
 # Compiled Object files

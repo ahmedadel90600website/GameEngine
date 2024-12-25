@@ -109,12 +109,16 @@ project "Sandbox"
     filter "configurations:Debug"
         defines "GameEngine_Debug"
         symbols "On"
+		buildoptions {"/MDd"}
+
 		
     filter "configurations:Development"
         defines "GameEngine_Development"
         optimize "On"
+		buildoptions {"/MD"}
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
         symbols "off"
+		buildoptions {"/MD"}
