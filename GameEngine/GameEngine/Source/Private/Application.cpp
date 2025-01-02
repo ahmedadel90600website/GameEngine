@@ -14,9 +14,14 @@
 // Third party
 #include "GLAD/glad.h"
 
+Application* Application::ApplicationSingleton = nullptr;
+
 Application::Application() :
 	bIsRunning(true)
 {
+	GameEngine_Assert(ApplicationSingleton == nullptr, "You can't create more than one application instance");
+
+	ApplicationSingleton = this;
 	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
 	if (ApplicationWindow != nullptr)
 	{
@@ -39,7 +44,6 @@ void Application::Tick()
 	{
 		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		ApplicationWindow->OnUpdate();
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);
@@ -47,7 +51,19 @@ void Application::Tick()
 		{
 			currentLayer->Tick();
 		}
+
+		ApplicationWindow->OnUpdate();
 	}
+}
+
+Application* Application::Get()
+{
+	return ApplicationSingleton;
+}
+
+const WindowBase& Application::GetWindow() const
+{
+	return *ApplicationWindow.get();
 }
 
 void Application::PushLayer(const std::shared_ptr<LayerBase> inLayer)

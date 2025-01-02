@@ -4,6 +4,12 @@
     <Filter Include="Private">
       <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\ImGui">
+      <UniqueIdentifier>{2AD4B099-9694-2CD0-5FCF-754DCB4E71AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Layers">
+      <UniqueIdentifier>{BFD50CD6-ABA3-00DC-9437-710280A4DC40}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
     </Filter>
@@ -15,6 +21,9 @@
     </Filter>
     <Filter Include="Public\Events">
       <UniqueIdentifier>{E8EFCF4B-54B0-4B82-1DEB-94FF896A905E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\ImGui">
+      <UniqueIdentifier>{AE486867-9AAB-F70B-4331-30C22F73C38E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Layers">
       <UniqueIdentifier>{C3DAB25A-2F9B-2E91-F8D5-770E6455736D}</UniqueIdentifier>
@@ -60,6 +69,12 @@
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h">
       <Filter>Public\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\ImGui\ImGuiOpenGLRenderer.h">
+      <Filter>Public\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Layers\ImGuiLayer.h">
+      <Filter>Public\Layers</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\Layers\LayerBase.h">
       <Filter>Public\Layers</Filter>
     </ClInclude>
@@ -88,6 +103,12 @@
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
       <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\ImGui\ImGuiOpenGLRenderer.cpp">
+      <Filter>Private\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Layers\ImGuiLayer.cpp">
+      <Filter>Private\Layers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Log.cpp">
       <Filter>Private</Filter>

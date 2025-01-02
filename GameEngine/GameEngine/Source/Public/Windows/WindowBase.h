@@ -14,6 +14,9 @@ public:
 	virtual ~WindowBase() {}
 	virtual void OnUpdate() = 0;
 
+	virtual int GetWidth() const = 0;
+	virtual int GetHeight() const = 0;
+
 	virtual void SetIsVSyncEnabled(const bool enabled) = 0;
 	virtual bool GetIsVSyncEnabled() const = 0;
 

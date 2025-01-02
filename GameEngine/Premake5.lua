@@ -13,6 +13,7 @@ OutputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include the GLFW Premake file to include it as a project
 include "GameEngine/ThirdParty/GLFW"
 include "GameEngine/ThirdParty/GLAD"
+include "GameEngine/ThirdParty/ImGui"
 
 -----------------------------------------------------------------------------------------------------
 project "GameEngine"
@@ -26,6 +27,7 @@ project "GameEngine"
     links{
         "GLFW",
 		"GLAD",
+		"ImGui",
         "opengl32.lib"
     }
 
@@ -41,7 +43,8 @@ project "GameEngine"
         "%{prj.name}/Source",
         "%{prj.name}/ThirdParty/spdlog/include",
         "%{prj.name}/ThirdParty/GLFW/include",
-        "%{prj.name}/ThirdParty/GLAD/include"
+        "%{prj.name}/ThirdParty/GLAD/include",
+        "%{prj.name}/ThirdParty/ImGui"
     }
 
     filter "system:windows"

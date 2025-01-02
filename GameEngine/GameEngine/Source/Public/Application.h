@@ -17,6 +17,9 @@ public:
 	virtual ~Application();
 	virtual void Tick();
 
+	static Application* Get();
+	const WindowBase& GetWindow() const;
+
 	// Layer functions
 	void PushLayer(const std::shared_ptr<LayerBase> inLayer);
 	void RemoveLayer(const std::shared_ptr<LayerBase> inLayer);
@@ -47,6 +50,7 @@ private:
 	std::vector<std::shared_ptr<LayerBase>> LayersStack;
 	std::vector<std::shared_ptr<OverlayBase>> OverlayStack;
 
+	static Application* ApplicationSingleton;
 	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
 	bool bIsRunning : 1;
 };

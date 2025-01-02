@@ -5,7 +5,7 @@
 
 struct GLFWwindow;
 
-class WindowsWindow : public WindowBase
+class GameEngine_API WindowsWindow : public WindowBase
 {
 public:
 
@@ -13,8 +13,8 @@ public:
 
 	virtual ~WindowsWindow();
 
-	int GetWidth() const;
-	int GetHeight() const;
+	int GetWidth() const override;
+	int GetHeight() const override;
 	void Test(GLFWwindow* window) {}
 	// WindowBase ///////////////////////////////////////////////////////////////////
 	void OnUpdate() override;

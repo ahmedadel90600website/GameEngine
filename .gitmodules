@@ -4,3 +4,6 @@
 [submodule "GameEngine/GameEngine/ThirdParty/GLFW"]
 	path = GameEngine/GameEngine/ThirdParty/GLFW
 	url = https://github.com/TheCherno/GLFW
+[submodule "GameEngine/GameEngine/ThirdParty/ImGui"]
+	path = GameEngine/GameEngine/ThirdParty/ImGui
+	url = https://github.com/TheCherno/imgui

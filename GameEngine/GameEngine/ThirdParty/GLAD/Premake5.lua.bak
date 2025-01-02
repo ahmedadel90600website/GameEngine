@@ -10,10 +10,6 @@ project "Glad"
     {
 	    "include/**.h",
         "src/**.c"
-
-        --"include/glad/glad.h",
-        --"include/KHR/khrplatform.h",
-        --"src/glad.c"
     }
 
     includedirs
@@ -28,6 +24,11 @@ project "Glad"
         runtime "Debug"
         symbols "on"
 		buildoptions {"/MDd"}
+		
+    filter "configurations:Development"
+        runtime "Debug"
+        symbols "on"
+		buildoptions {"/MD"}
 
     filter "configurations:Release"
         runtime "Release"

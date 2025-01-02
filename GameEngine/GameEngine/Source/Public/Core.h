@@ -14,7 +14,7 @@
 #endif
 
 #ifdef GameEngine_AssertsEnabled
-	#define GameEngine_Assert(x, ...) if(!x) {GameEngine_LOG(error, "Assertion failed: {0}", ##__VA_ARGS__); __debugbreak();}
+	#define GameEngine_Assert(x, ...) if(!(x)) {GameEngine_LOG(error, "Assertion failed: {0}", ##__VA_ARGS__); __debugbreak();}
 #else
 	#define GameEngine_Assert(x, ...)
 

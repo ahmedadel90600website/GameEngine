@@ -24,6 +24,11 @@ project "Glad"
         runtime "Debug"
         symbols "on"
 		buildoptions {"/MDd"}
+		
+    filter "configurations:Development"
+        runtime "Debug"
+        symbols "on"
+		buildoptions {"/MD"}
 
     filter "configurations:Release"
         runtime "Release"
