@@ -6,6 +6,7 @@
 #include "Public/EventData/MouseScrollEventData.h"
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/EventData/WindowResizedEvenetData.h"
+#include "Public/EventData/CharEventData.h"
 
 // Third party
 #include "GLFW/glfw3.h"
@@ -102,6 +103,12 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
 			windowData.OnGLFWEvent.Broadcast(FMouseScrollEventData(xOffset, yOffset));
+		});
+
+	glfwSetCharCallback(TheGLFWWindow, [](GLFWwindow* window, unsigned int codePoint)
+		{
+			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
+			windowData.OnGLFWEvent.Broadcast(FCharEventData(codePoint));
 		});
 
 	glfwSetMouseButtonCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int action, int mods)

@@ -152,6 +152,7 @@
     <ClInclude Include="Source\Public\Core.h" />
     <ClInclude Include="Source\Public\EntryPoint.h" />
     <ClInclude Include="Source\Public\EventData\ButtonActionEventData.h" />
+    <ClInclude Include="Source\Public\EventData\CharEventData.h" />
     <ClInclude Include="Source\Public\EventData\EventDataBase.h" />
     <ClInclude Include="Source\Public\EventData\MouseMoveEventData.h" />
     <ClInclude Include="Source\Public\EventData\MouseScrollEventData.h" />
