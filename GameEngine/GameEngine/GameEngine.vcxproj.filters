@@ -51,6 +51,9 @@
     <ClInclude Include="Source\Public\EventData\ButtonActionEventData.h">
       <Filter>Public\EventData</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\EventData\CharEventData.h">
+      <Filter>Public\EventData</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\EventData\EventDataBase.h">
       <Filter>Public\EventData</Filter>
     </ClInclude>
@@ -99,7 +102,6 @@
     <ClInclude Include="Source\Public\Windows\WindowsWindow.h">
       <Filter>Public\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\EventData\CharEventData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">

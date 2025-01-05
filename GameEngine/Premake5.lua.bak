@@ -1,5 +1,6 @@
 workspace "GameEngine"
     architecture "x64"
+	startproject "Sandbox"
 
     configurations {
         "Debug",
@@ -44,12 +45,13 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/spdlog/include",
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
-        "%{prj.name}/ThirdParty/ImGui/include"
+        "%{prj.name}/ThirdParty/ImGui"
     }
+
+    staticruntime "off"
 
     filter "system:windows"
         cppdialect "C++17"
-        --staticruntime "On"
         systemversion "latest"
 		
 		buildoptions {"/utf-8", "/wd4251"}
@@ -67,17 +69,17 @@ project "GameEngine"
     filter "configurations:Debug"
         defines {"GameEngine_Debug", "GameEngine_AssertsEnabled"}
         symbols "On"
-		buildoptions {"/MDd"}
+		runtime "Debug"
 
     filter "configurations:Development"
         defines "GameEngine_Development"
         symbols "On"
-		buildoptions {"/MD"}
+		runtime "Release"
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
-		buildoptions {"/MD"}
+		runtime "Release"
 
 -----------------------------------------------------------------------------------------------------
 project "Sandbox"
@@ -103,9 +105,10 @@ project "Sandbox"
         "GameEngine/Source"
     }
 
+        staticruntime "off"
+
     filter "system:windows"
         cppdialect "C++17"
-        --staticruntime "On"
         systemversion "latest"
 		buildoptions {"/utf-8", "/wd4251"}
 
@@ -116,16 +119,16 @@ project "Sandbox"
     filter "configurations:Debug"
         defines "GameEngine_Debug"
         symbols "On"
-		buildoptions {"/MDd"}
+		runtime "Debug"
 
 		
     filter "configurations:Development"
         defines "GameEngine_Development"
         optimize "On"
-		buildoptions {"/MD"}
+		runtime "Release"
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
         symbols "off"
-		buildoptions {"/MD"}
+		runtime "Release"
