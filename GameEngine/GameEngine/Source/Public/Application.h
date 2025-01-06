@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Public/Core.h"
-#include "Public/Windows/WindowBase.h"
+#include "Public/WindowClass/WindowBase.h"
 #include "Public/EventData/EventDataBase.h"
 
 struct GLFWwindow;
@@ -18,7 +18,7 @@ public:
 	virtual void Tick();
 
 	static Application* Get();
-	const WindowBase& GetWindow() const;
+	static const WindowBase& GetWindow();
 
 	// Layer functions
 	void PushLayer(const std::shared_ptr<LayerBase> inLayer);

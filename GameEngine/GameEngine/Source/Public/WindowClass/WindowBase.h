@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Public/Core.h"
-#include "Public/Windows/Structs/WindowProps.h"
+#include "Public/WindowClass/Structs/WindowProps.h"
 #include "Public/Events/MulticastDelegate.h"
-#include "Public/Windows/Structs/WindowData.h"
+#include "Public/WindowClass/Structs/WindowData.h"
 
 struct GLFWwindow;
 
@@ -19,6 +19,8 @@ public:
 
 	virtual void SetIsVSyncEnabled(const bool enabled) = 0;
 	virtual bool GetIsVSyncEnabled() const = 0;
+
+	virtual void* GetNativeWindow() const = 0;
 
 	MulticastDelegate<FEventDataBase&>& GetOnGLFWEvent();
 

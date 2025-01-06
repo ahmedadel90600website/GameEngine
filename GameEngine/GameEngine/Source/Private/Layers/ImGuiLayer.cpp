@@ -3,7 +3,7 @@
 #include "Public/Application.h"
 #include "Public/ImGui/ImGuiOpenGLRenderer.h"
 #include "Public/ImGui/ImGuiOpenGLRenderer.h"
-#include "Public/Windows/WindowBase.h"
+#include "Public/WindowClass/WindowBase.h"
 #include "Public/EventData/ButtonActionEventData.h"
 #include "Public/EventData/MouseMoveEventData.h"
 #include "Public/EventData/MouseScrollEventData.h"
@@ -59,11 +59,8 @@ void ImGuiLayer::OnRemoved()
 void ImGuiLayer::Tick()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	if (Application* application = Application::Get())
-	{
-		const WindowBase& window = application->GetWindow();
-		io.DisplaySize = ImVec2(window.GetWidth(), window.GetHeight());
-	}
+	const WindowBase& window = Application::GetWindow();
+	io.DisplaySize = ImVec2(window.GetWidth(), window.GetHeight());
 
 	const float currentUpdatedTime = glfwGetTime();
 	const float deltaTime = currentUpdatedTime - CurrentTime;
@@ -116,6 +113,7 @@ bool ImGuiLayer::OnButtonActionEvent(FButtonActionEventData& buttonActionEventDa
 	const int button = buttonActionEventData.Button;
 	const int action = buttonActionEventData.Action;
 	const bool isKeyPressed = action != GLFW_RELEASE;
+	// 5 is the size of io.MouseDown
 	if (button < 5)
 	{
 		io.MouseDown[button] = isKeyPressed;

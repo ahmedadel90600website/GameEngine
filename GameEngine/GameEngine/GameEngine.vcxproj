@@ -163,26 +163,32 @@
     <ClInclude Include="Source\Public\EventData\WindowResizedEvenetData.h" />
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h" />
     <ClInclude Include="Source\Public\ImGui\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="Source\Public\Input\Input.h" />
     <ClInclude Include="Source\Public\Layers\ImGuiLayer.h" />
     <ClInclude Include="Source\Public\Layers\LayerBase.h" />
     <ClInclude Include="Source\Public\Layers\Overlays\OverlayBase.h" />
     <ClInclude Include="Source\Public\Log.h" />
+    <ClInclude Include="Source\Public\Maths\MathsTypes.h" />
     <ClInclude Include="Source\Public\PCH.h" />
-    <ClInclude Include="Source\Public\Windows\Structs\WindowData.h" />
-    <ClInclude Include="Source\Public\Windows\Structs\WindowProps.h" />
-    <ClInclude Include="Source\Public\Windows\WindowBase.h" />
-    <ClInclude Include="Source\Public\Windows\WindowsWindow.h" />
+    <ClInclude Include="Source\Public\Platforms\Windows\Input\WindowsInput.h" />
+    <ClInclude Include="Source\Public\Platforms\Windows\WindowClass\WindowsWindow.h" />
+    <ClInclude Include="Source\Public\WindowClass\Structs\WindowData.h" />
+    <ClInclude Include="Source\Public\WindowClass\Structs\WindowProps.h" />
+    <ClInclude Include="Source\Public\WindowClass\WindowBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp" />
     <ClCompile Include="Source\Private\ImGui\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="Source\Private\Input\Input.cpp" />
     <ClCompile Include="Source\Private\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="Source\Private\Log.cpp" />
+    <ClCompile Include="Source\Private\Maths\MathsTypes.cpp" />
     <ClCompile Include="Source\Private\PCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source\Private\Windows\WindowBase.cpp" />
-    <ClCompile Include="Source\Private\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="Source\Private\Platforms\Windows\Input\WindowsInput.cpp" />
+    <ClCompile Include="Source\Private\Platforms\Windows\WindowClass\WindowsWindow.cpp" />
+    <ClCompile Include="Source\Private\WindowClass\WindowBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ThirdParty\GLFW\GLFW.vcxproj">

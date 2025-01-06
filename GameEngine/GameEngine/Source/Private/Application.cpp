@@ -2,7 +2,7 @@
 
 // Engine
 #include "Public/Application.h"
-#include "Public/Windows/Structs/WindowProps.h"
+#include "Public/WindowClass/Structs/WindowProps.h"
 
 #include "Public/EventData/ButtonActionEventData.h"
 #include "Public/EventData/MouseMoveEventData.h"
@@ -61,9 +61,9 @@ Application* Application::Get()
 	return ApplicationSingleton;
 }
 
-const WindowBase& Application::GetWindow() const
+const WindowBase& Application::GetWindow()
 {
-	return *ApplicationWindow.get();
+	return *(ApplicationSingleton->ApplicationWindow.get());
 }
 
 void Application::PushLayer(const std::shared_ptr<LayerBase> inLayer)

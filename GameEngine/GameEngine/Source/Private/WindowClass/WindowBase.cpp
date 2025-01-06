@@ -1,5 +1,5 @@
 #include "Public/PCH.h"
-#include "Public/Windows/WindowBase.h"
+#include "Public/WindowClass/WindowBase.h"
 
 MulticastDelegate<FEventDataBase&>& WindowBase::GetOnGLFWEvent()
 {

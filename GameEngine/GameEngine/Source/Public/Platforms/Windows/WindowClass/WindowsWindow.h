@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Public/Windows/WindowBase.h"
-#include "Public/Windows/Structs/WindowProps.h"
+#include "Public/WindowClass/WindowBase.h"
+#include "Public/WindowClass/Structs/WindowProps.h"
 
 struct GLFWwindow;
 
-class GameEngine_API WindowsWindow : public WindowBase
+class WindowsWindow : public WindowBase
 {
 public:
 
@@ -15,11 +15,11 @@ public:
 
 	int GetWidth() const override;
 	int GetHeight() const override;
-	void Test(GLFWwindow* window) {}
 	// WindowBase ///////////////////////////////////////////////////////////////////
 	void OnUpdate() override;
 	void SetIsVSyncEnabled(const bool enabled) override;
 	bool GetIsVSyncEnabled() const override;
+	void* GetNativeWindow() const override;
 	// WindowBase ///////////////////////////////////////////////////////////////////
 
 	static MulticastDelegate<double, double> OnMouseMoved;

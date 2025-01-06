@@ -7,8 +7,26 @@
     <Filter Include="Private\ImGui">
       <UniqueIdentifier>{2AD4B099-9694-2CD0-5FCF-754DCB4E71AC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\Input">
+      <UniqueIdentifier>{FF0EB299-6BCF-2DD0-340A-774DA08972AC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Private\Layers">
       <UniqueIdentifier>{BFD50CD6-ABA3-00DC-9437-710280A4DC40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Maths">
+      <UniqueIdentifier>{6C5FF399-D81F-6FD0-A15A-B84D0DDAB3AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Platforms">
+      <UniqueIdentifier>{47A63503-B3BC-3399-FC33-BFBA68890421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Platforms\Windows">
+      <UniqueIdentifier>{81A70CEE-ED69-4078-361A-CF04A21B1956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Platforms\Windows\Input">
+      <UniqueIdentifier>{4034D0C1-AC17-DF01-B51A-0D3E217DA552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Platforms\Windows\WindowClass">
+      <UniqueIdentifier>{DE74E727-4A39-E617-139F-16E27F22824D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{3AC949F8-A654-B7BC-AF65-3AB11B7013BD}</UniqueIdentifier>
@@ -25,11 +43,29 @@
     <Filter Include="Public\ImGui">
       <UniqueIdentifier>{AE486867-9AAB-F70B-4331-30C22F73C38E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Public\Input">
+      <UniqueIdentifier>{83836967-6FE6-F80B-186C-31C204AEC48E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public\Layers">
       <UniqueIdentifier>{C3DAB25A-2F9B-2E91-F8D5-770E6455736D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Layers\Overlays">
       <UniqueIdentifier>{47EEFA50-33E8-23A3-1C55-BAB308EE890F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Maths">
+      <UniqueIdentifier>{F0D3AA67-DC36-3A0C-85BC-72C271FE058F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Platforms">
+      <UniqueIdentifier>{CBBCDB10-B7B5-FA62-E0E7-DFE7CC3FDA6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Platforms\Windows">
+      <UniqueIdentifier>{05029303-F126-E283-1A72-C71306F6E0A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Platforms\Windows\Input">
+      <UniqueIdentifier>{C461390E-B087-0375-99CD-884085922841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Platforms\Windows\WindowClass">
+      <UniqueIdentifier>{62B5C50C-4E9C-8704-F7EC-ED21E3B2006B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Public\Windows">
       <UniqueIdentifier>{BE6EB011-AA3C-A417-93D0-143E7F3D807C}</UniqueIdentifier>
@@ -75,6 +111,9 @@
     <ClInclude Include="Source\Public\ImGui\ImGuiOpenGLRenderer.h">
       <Filter>Public\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\Input\Input.h">
+      <Filter>Public\Input</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\Layers\ImGuiLayer.h">
       <Filter>Public\Layers</Filter>
     </ClInclude>
@@ -87,8 +126,17 @@
     <ClInclude Include="Source\Public\Log.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Public\Maths\MathsTypes.h">
+      <Filter>Public\Maths</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Public\PCH.h">
       <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Platforms\Windows\Input\WindowsInput.h">
+      <Filter>Public\Platforms\Windows\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Public\Platforms\Windows\WindowClass\WindowsWindow.h">
+      <Filter>Public\Platforms\Windows\WindowClass</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Windows\Structs\WindowData.h">
       <Filter>Public\Windows\Structs</Filter>
@@ -99,9 +147,6 @@
     <ClInclude Include="Source\Public\Windows\WindowBase.h">
       <Filter>Public\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Windows\WindowsWindow.h">
-      <Filter>Public\Windows</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
@@ -110,19 +155,28 @@
     <ClCompile Include="Source\Private\ImGui\ImGuiOpenGLRenderer.cpp">
       <Filter>Private\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Private\Input\Input.cpp">
+      <Filter>Private\Input</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Private\Layers\ImGuiLayer.cpp">
       <Filter>Private\Layers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Log.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Private\Maths\MathsTypes.cpp">
+      <Filter>Private\Maths</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Private\PCH.cpp">
       <Filter>Private</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\Windows\WindowBase.cpp">
-      <Filter>Private\Windows</Filter>
+    <ClCompile Include="Source\Private\Platforms\Windows\Input\WindowsInput.cpp">
+      <Filter>Private\Platforms\Windows\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\Windows\WindowsWindow.cpp">
+    <ClCompile Include="Source\Private\Platforms\Windows\WindowClass\WindowsWindow.cpp">
+      <Filter>Private\Platforms\Windows\WindowClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\Windows\WindowBase.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
   </ItemGroup>

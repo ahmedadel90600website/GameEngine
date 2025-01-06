@@ -1,6 +1,6 @@
 #include "Public/PCH.h"
 
-#include "Public/Windows/WindowsWindow.h"
+#include "Public/Platforms/Windows/WindowClass/WindowsWindow.h"
 #include "Public/EventData/ButtonActionEventData.h"
 #include "Public/EventData/MouseMoveEventData.h"
 #include "Public/EventData/MouseScrollEventData.h"
@@ -62,6 +62,11 @@ void WindowsWindow::SetIsVSyncEnabled(const bool enabled)
 bool WindowsWindow::GetIsVSyncEnabled() const
 {
 	return TheWindowData.bIsVSyncEnabled;
+}
+
+void* WindowsWindow::GetNativeWindow() const
+{
+	return TheGLFWWindow;
 }
 
 void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
