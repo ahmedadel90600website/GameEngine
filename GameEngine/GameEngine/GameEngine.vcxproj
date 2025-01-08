@@ -164,6 +164,7 @@
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h" />
     <ClInclude Include="Source\Public\ImGui\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="Source\Public\Input\Input.h" />
+    <ClInclude Include="Source\Public\Input\KeyCodes.h" />
     <ClInclude Include="Source\Public\Layers\ImGuiLayer.h" />
     <ClInclude Include="Source\Public\Layers\LayerBase.h" />
     <ClInclude Include="Source\Public\Layers\Overlays\OverlayBase.h" />

@@ -138,15 +138,10 @@
     <ClInclude Include="Source\Public\Platforms\Windows\WindowClass\WindowsWindow.h">
       <Filter>Public\Platforms\Windows\WindowClass</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\Windows\Structs\WindowData.h">
-      <Filter>Public\Windows\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Windows\Structs\WindowProps.h">
-      <Filter>Public\Windows\Structs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Windows\WindowBase.h">
-      <Filter>Public\Windows</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\Public\WindowClass\Structs\WindowData.h" />
+    <ClInclude Include="Source\Public\WindowClass\Structs\WindowProps.h" />
+    <ClInclude Include="Source\Public\WindowClass\WindowBase.h" />
+    <ClInclude Include="Source\Public\Input\KeyCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Private\Application.cpp">
@@ -176,8 +171,6 @@
     <ClCompile Include="Source\Private\Platforms\Windows\WindowClass\WindowsWindow.cpp">
       <Filter>Private\Platforms\Windows\WindowClass</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\Windows\WindowBase.cpp">
-      <Filter>Private\Windows</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\Private\WindowClass\WindowBase.cpp" />
   </ItemGroup>
 </Project>
