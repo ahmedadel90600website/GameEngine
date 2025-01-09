@@ -34,7 +34,9 @@ project "GameEngine"
 
     files {
         "%{prj.name}/Source/Public/**.h",
-        "%{prj.name}/Source/Private/**.cpp"
+        "%{prj.name}/Source/Private/**.cpp",
+		"%{prj.name}/ThirdParty/GLM/glm/**.hpp",
+        "%{prj.name}/ThirdParty/GLM/glm/**.inl"
     }
 
     pchheader "Public/PCH.h"
@@ -45,7 +47,8 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/spdlog/include",
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
-        "%{prj.name}/ThirdParty/ImGui"
+        "%{prj.name}/ThirdParty/ImGui",
+        "%{prj.name}/ThirdParty/GLM"
     }
 
     staticruntime "off"
@@ -96,13 +99,14 @@ project "Sandbox"
 
     files {
         "%{prj.name}/Source/Public/**.h",
-        "%{prj.name}/Source/Private/**.cpp"
+        "%{prj.name}/Source/Private/**.cpp",
     }
 
     includedirs {
         "%{prj.name}/Source",
         "GameEngine/ThirdParty/spdlog/include",
-        "GameEngine/Source"
+        "GameEngine/Source",
+		"GameEngine/ThirdParty/GLM"
     }
 
     staticruntime "off"
