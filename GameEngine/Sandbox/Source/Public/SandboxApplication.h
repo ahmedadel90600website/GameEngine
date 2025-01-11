@@ -2,7 +2,6 @@
 
 // Engine
 #include "Public/Application.h"
-#include "Public/Layers/ImGuiLayer.h"
 
 class SandboxApplication : public Application
 {
@@ -13,6 +12,4 @@ public:
 	void Tick() override;
 
 private:
-
-	std::shared_ptr<ImGuiLayer> TheImGuiLayer = nullptr;
 };

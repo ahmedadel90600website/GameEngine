@@ -3,6 +3,7 @@
 #include "Public/Core.h"
 #include "Public/WindowClass/WindowBase.h"
 #include "Public/EventData/EventDataBase.h"
+#include "Public/ImGui/Layers/ImGuiLayer.h"
 
 struct GLFWwindow;
 class LayerBase;
@@ -52,6 +53,7 @@ private:
 
 	static Application* ApplicationSingleton;
 	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
+	std::shared_ptr<ImGuiLayer> TheImGuiOverlayLay = nullptr;
 	bool bIsRunning : 1;
 };
 

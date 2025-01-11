@@ -48,7 +48,7 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
         "%{prj.name}/ThirdParty/ImGui",
-        "%{prj.name}/ThirdParty/GLM/glm"
+        "%{prj.name}/ThirdParty/GLM"
     }
 
     staticruntime "off"
@@ -106,7 +106,7 @@ project "Sandbox"
         "%{prj.name}/Source",
         "GameEngine/ThirdParty/spdlog/include",
         "GameEngine/Source",
-		"GameEngine/ThirdParty/GLM/glm"
+		"GameEngine/ThirdParty/GLM"
     }
 
     staticruntime "off"

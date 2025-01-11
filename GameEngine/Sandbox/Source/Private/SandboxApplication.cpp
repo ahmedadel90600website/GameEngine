@@ -6,8 +6,6 @@
 
 SandboxApplication::SandboxApplication()
 {
-	TheImGuiLayer = std::make_shared<ImGuiLayer>();
-	PushLayer(TheImGuiLayer);
 }
 
 SandboxApplication::~SandboxApplication()

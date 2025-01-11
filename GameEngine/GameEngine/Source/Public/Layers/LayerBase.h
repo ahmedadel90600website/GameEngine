@@ -11,4 +11,5 @@ public:
 	virtual void OnRemoved() {}
 	virtual void Tick() {}
 	virtual void OnEvent(FEventDataBase& inEvent) {}
+	virtual void OnImGuiRender() {}
 };

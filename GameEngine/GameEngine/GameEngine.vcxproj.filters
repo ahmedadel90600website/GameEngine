@@ -10,11 +10,11 @@
     <Filter Include="Source\Private\ImGui">
       <UniqueIdentifier>{6A1D94EB-56AC-1DB5-FFCA-31B0EB382E5B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Private\ImGui\Layers">
+      <UniqueIdentifier>{E938CCBF-5546-FAA5-DE2C-F6904A39C65C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Private\Input">
       <UniqueIdentifier>{3F5895EB-2BE7-1EB5-D405-33B0C0732F5B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Private\Layers">
-      <UniqueIdentifier>{FF465964-6BB3-145F-34A7-ACBCA0D236C7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Private\Maths">
       <UniqueIdentifier>{ACA8D6EB-9837-60B5-4156-74B02DC4705B}</UniqueIdentifier>
@@ -45,6 +45,9 @@
     </Filter>
     <Filter Include="Source\Public\ImGui">
       <UniqueIdentifier>{EE696779-5ACB-4487-E338-8B394F997B46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Public\ImGui\Layers">
+      <UniqueIdentifier>{EDC8637F-D9D8-0F50-4292-746E2EC1FEE8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Public\Input">
       <UniqueIdentifier>{C3A46879-2F06-4687-B873-8C3924D47C46}</UniqueIdentifier>
@@ -132,17 +135,14 @@
     <ClInclude Include="Source\Public\Events\MulticastDelegate.h">
       <Filter>Source\Public\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Public\ImGui\ImGuiOpenGLRenderer.h">
-      <Filter>Source\Public\ImGui</Filter>
+    <ClInclude Include="Source\Public\ImGui\Layers\ImGuiLayer.h">
+      <Filter>Source\Public\ImGui\Layers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Input\Input.h">
       <Filter>Source\Public\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Input\KeyCodes.h">
       <Filter>Source\Public\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Public\Layers\ImGuiLayer.h">
-      <Filter>Source\Public\Layers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Public\Layers\LayerBase.h">
       <Filter>Source\Public\Layers</Filter>
@@ -1427,14 +1427,14 @@
     <ClCompile Include="Source\Private\Application.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Private\ImGui\ImGuiOpenGLRenderer.cpp">
-      <Filter>Source\Private\ImGui</Filter>
+    <ClCompile Include="Source\Private\ImGui\Layers\ImGuiBuild.cpp">
+      <Filter>Source\Private\ImGui\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Private\ImGui\Layers\ImGuiLayer.cpp">
+      <Filter>Source\Private\ImGui\Layers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Input\Input.cpp">
       <Filter>Source\Private\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Private\Layers\ImGuiLayer.cpp">
-      <Filter>Source\Private\Layers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Private\Log.cpp">
       <Filter>Source\Private</Filter>

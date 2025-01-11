@@ -27,6 +27,9 @@ Application::Application() :
 	{
 		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(Application, this, OnGLFWEvent);
 	}
+
+	TheImGuiOverlayLay = std::make_shared<ImGuiLayer>();
+	PushOverlay(TheImGuiOverlayLay);
 }
 
 Application::~Application()
@@ -51,6 +54,14 @@ void Application::Tick()
 		{
 			currentLayer->Tick();
 		}
+
+		TheImGuiOverlayLay->BeginRendering();
+		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
+		{
+			currentLayer->OnImGuiRender();
+		}
+
+		TheImGuiOverlayLay->EndRendering();
 
 		ApplicationWindow->OnUpdate();
 	}

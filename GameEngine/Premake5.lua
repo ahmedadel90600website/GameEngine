@@ -47,7 +47,7 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/spdlog/include",
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
-        "%{prj.name}/ThirdParty/ImGui",
+        "%{prj.name}/ThirdParty",
         "%{prj.name}/ThirdParty/GLM"
     }
 
