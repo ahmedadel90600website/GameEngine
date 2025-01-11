@@ -3,7 +3,8 @@
 Bins/
 .vs/
 *.vcxproj
-
+*.vcxproj.filters
+*.vcxproj.user
 
 # Compiled Object files
 *.slo
