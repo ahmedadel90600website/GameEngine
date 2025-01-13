@@ -47,7 +47,7 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/spdlog/include",
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
-        "%{prj.name}/ThirdParty/ImGui",
+        "%{prj.name}/ThirdParty",
         "%{prj.name}/ThirdParty/GLM"
     }
 
@@ -117,7 +117,8 @@ project "Sandbox"
 		buildoptions {"/utf-8", "/wd4251"}
 
         defines {
-            "GameEngine_Platform_Windows"
+            "GameEngine_Platform_Windows",
+			"IMGUI_API=__declspec(dllimport)"
         }
 
     filter "configurations:Debug"

@@ -105,6 +105,7 @@ project "Sandbox"
     includedirs {
         "%{prj.name}/Source",
         "GameEngine/ThirdParty/spdlog/include",
+		"GameEngine/ThirdParty",
         "GameEngine/Source",
 		"GameEngine/ThirdParty/GLM"
     }
@@ -117,7 +118,8 @@ project "Sandbox"
 		buildoptions {"/utf-8", "/wd4251"}
 
         defines {
-            "GameEngine_Platform_Windows"
+            "GameEngine_Platform_Windows",
+			"IMGUI_API=__declspec(dllimport)"
         }
 
     filter "configurations:Debug"
