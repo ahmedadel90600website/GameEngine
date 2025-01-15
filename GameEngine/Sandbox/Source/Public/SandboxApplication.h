@@ -8,7 +8,7 @@ class SandboxApplication : public Application
 public:
 
 	SandboxApplication();
-	~SandboxApplication();
+	~SandboxApplication(); 
 	void Tick() override;
 
 private:

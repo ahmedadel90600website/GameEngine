@@ -26,7 +26,7 @@ FVector2 WindowsInput::GetMousePositionImplementation() const
 	double yPos = 0.0;
 	glfwGetCursorPos(GetGLFWWindow(), &xPos, &yPos);
 
-	return FVector2(xPos, yPos);
+	return FVector2((float)xPos, (float)yPos);
 }
 
 GLFWwindow* WindowsInput::GetGLFWWindow() const

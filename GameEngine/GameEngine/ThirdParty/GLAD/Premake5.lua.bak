@@ -4,7 +4,7 @@ project "Glad"
     staticruntime "on"
     
     targetdir ("Bins/bin/" .. OutputDir .. "/%{prj.name}")
-    objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
+    objdir ("Bins/Intermediate/" .. OutputDir .. "/%{prj.name}")
 
     files
     {
@@ -26,8 +26,9 @@ project "Glad"
 
     filter "configurations:Development"
         runtime "Debug"
-        symbols "on"
+        optimize "on"
 
     filter "configurations:Release"
         runtime "Release"
         optimize "on"
+		        symbols "off"

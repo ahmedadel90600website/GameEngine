@@ -19,9 +19,11 @@ include "GameEngine/ThirdParty/ImGui"
 -----------------------------------------------------------------------------------------------------
 project "GameEngine"
     location "GameEngine"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-
+	cppdialect "C++17"
+	staticruntime "on"
+	
     targetdir("Bins/bin/"..OutputDir.."/%{prj.name}")
     objdir("Bins/Intermediate/"..OutputDir.."/%{prj.name}")
 
@@ -51,22 +53,15 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/GLM"
     }
 
-    staticruntime "off"
-
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
 		
-		buildoptions {"/utf-8", "/wd4251"}
+		buildoptions {"/utf-8"}--, "/wd4251"}
 
         defines {
             "GameEngine_Platform_Windows",
             "GameEngine_Build_DLL",
 			"GLFW_INCLUDE_NONE"
-        }
-
-        postbuildcommands {
-            "{COPY} %{cfg.buildtarget.relpath} ../Bins/bin/"..OutputDir.."/Sandbox"
         }
 
     filter "configurations:Debug"
@@ -76,12 +71,13 @@ project "GameEngine"
 
     filter "configurations:Development"
         defines "GameEngine_Development"
-        symbols "On"
+        optimize "On"
 		runtime "Release"
 
     filter "configurations:Release"
         defines "GameEngine_Release"
         optimize "On"
+		symbols "off"
 		runtime "Release"
 
 -----------------------------------------------------------------------------------------------------
@@ -89,7 +85,9 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-
+	cppdialect "C++17"
+	staticruntime "on"
+	
     targetdir("Bins/bin/"..OutputDir.."/%{prj.name}")
     objdir("Bins/Intermediate/"..OutputDir.."/%{prj.name}")
 
@@ -105,35 +103,32 @@ project "Sandbox"
     includedirs {
         "%{prj.name}/Source",
         "GameEngine/ThirdParty/spdlog/include",
+		"GameEngine/ThirdParty",
         "GameEngine/Source",
 		"GameEngine/ThirdParty/GLM"
     }
 
-    staticruntime "off"
-
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
-		buildoptions {"/utf-8", "/wd4251"}
+		buildoptions {"/utf-8"}--, "/wd4251"}
 
         defines {
-            "GameEngine_Platform_Windows",
-			"IMGUI_API=__declspec(dllimport)"
-        }
+            "GameEngine_Platform_Windows"        }
 
     filter "configurations:Debug"
         defines "GameEngine_Debug"
-        symbols "On"
+        symbols "on"
 		runtime "Debug"
 
 		
     filter "configurations:Development"
         defines "GameEngine_Development"
-        optimize "On"
+        optimize "on"
 		runtime "Release"
 
     filter "configurations:Release"
         defines "GameEngine_Release"
-        optimize "On"
-        symbols "off"
+        optimize "on"
 		runtime "Release"
+        symbols "off"
+

@@ -99,7 +99,7 @@ void ImGuiLayer::EndRendering()
 
 	const WindowBase& window = app->GetWindow();
 	ImGuiIO& io = ImGui::GetIO();
-	io.DisplaySize = ImVec2(window.GetWidth(), window.GetHeight());
+	io.DisplaySize = ImVec2((float) window.GetWidth(), (float) window.GetHeight());
 
 	// Rendering
 	ImGui::Render();
