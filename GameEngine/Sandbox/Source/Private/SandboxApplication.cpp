@@ -4,15 +4,15 @@
 // Engine
 #include "Public/EntryPoint.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
-//#include "ImGui/imgui.h"
+#include "ImGui/imgui.h"
 
 class TestOverlay : public OverlayBase
 {
 	virtual void OnImGuiRender() override
 	{
-		//ImGui::Begin("Test");
-		//ImGui::Text("Hello World");
-		//ImGui::End();
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 };
