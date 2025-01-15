@@ -65,7 +65,7 @@ project "GameEngine"
         }
 
     filter "configurations:Debug"
-        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled"}
+        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled", "_CRT_SECURE_NO_WARNINGS"}
         symbols "On"
 		runtime "Debug"
 

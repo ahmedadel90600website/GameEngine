@@ -65,7 +65,7 @@ project "GameEngine"
         }
 
     filter "configurations:Debug"
-        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled"}
+        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled", _CRT_SECURE_NO_WARNINGS}
         symbols "On"
 		runtime "Debug"
 
@@ -113,7 +113,8 @@ project "Sandbox"
 		buildoptions {"/utf-8"}--, "/wd4251"}
 
         defines {
-            "GameEngine_Platform_Windows"        }
+            "GameEngine_Platform_Windows"
+			}
 
     filter "configurations:Debug"
         defines "GameEngine_Debug"

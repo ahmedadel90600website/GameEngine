@@ -14,7 +14,6 @@ class TestOverlay : public OverlayBase
 		ImGui::Text("Hello World");
 		ImGui::End();
 	}
-
 };
 
 SandboxApplication::SandboxApplication()
