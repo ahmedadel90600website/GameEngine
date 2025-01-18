@@ -20,13 +20,13 @@ bool WindowsInput::IsAMouseKeyImplementation(const int inKey) const
 	return inKey >= GLFW_MOUSE_BUTTON_1 && inKey <= GLFW_MOUSE_BUTTON_LAST;
 }
 
-FVector2 WindowsInput::GetMousePositionImplementation() const
+glm::vec2 WindowsInput::GetMousePositionImplementation() const
 {
 	double xPos = 0.0;
 	double yPos = 0.0;
 	glfwGetCursorPos(GetGLFWWindow(), &xPos, &yPos);
 
-	return FVector2((float)xPos, (float)yPos);
+	return glm::vec2((float)xPos, (float)yPos);
 }
 
 GLFWwindow* WindowsInput::GetGLFWWindow() const

@@ -10,7 +10,7 @@ private:
 
 	virtual bool IsKeyDownImplementation(const int inKey) const override;
 	virtual bool IsAMouseKeyImplementation(const int inKey) const override;
-	virtual FVector2 GetMousePositionImplementation() const override;
+	virtual glm::vec2 GetMousePositionImplementation() const override;
 	GLFWwindow* GetGLFWWindow() const;
 
 	static std::unique_ptr<Input> InputSingleton;

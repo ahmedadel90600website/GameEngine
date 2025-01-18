@@ -10,7 +10,6 @@
 
 // Third party
 #include "GLFW/glfw3.h"
-#include "GLAD/glad.h"
 
 static bool IsGLFWInitialized = false;
 
@@ -42,7 +41,10 @@ int WindowsWindow::GetHeight() const
 void WindowsWindow::OnUpdate()
 {
 	glfwPollEvents();
-	glfwSwapBuffers(TheGLFWWindow);
+	if (TheGraphicsContext != nullptr)
+	{
+		TheGraphicsContext->SwapBuffers();
+	}
 }
 
 void WindowsWindow::SetIsVSyncEnabled(const bool enabled)
@@ -89,10 +91,9 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	}
 
 	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
-	glfwMakeContextCurrent(TheGLFWWindow);
-
-	int gladInitialization = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	GameEngine_Assert(gladInitialization, "WindowsWindow::Initialize. Wasn't able to init GLAD");
+	TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
+	GameEngine_Assert(TheGraphicsContext, "WindowsWindow::Initialize. Wasn't able to create TheGraphicsContext");
+	TheGraphicsContext->Initialize();
 
 	glfwSetWindowUserPointer(TheGLFWWindow, &TheWindowData);
 	SetIsVSyncEnabled(true);

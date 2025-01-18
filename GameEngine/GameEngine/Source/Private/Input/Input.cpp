@@ -21,12 +21,12 @@ bool Input::IsAMouseKey(const int inKey)
 	return false;
 }
 
-FVector2 Input::GetMousePosition()
+glm::vec2 Input::GetMousePosition()
 {
 	if (InputSingleton != nullptr)
 	{
 		return InputSingleton->GetMousePositionImplementation();
 	}
 
-	return FVector2();
+	return glm::vec2();
 }
