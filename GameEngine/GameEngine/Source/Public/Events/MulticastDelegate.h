@@ -27,7 +27,7 @@ public:
 		}
 	}
 	
-#define ADD_OBJECT(ClassType, ClassInstance, FunctionName) AddObject_Internal<ClassType>(ClassInstance, &ClassType::FunctionName, #FunctionName);
+#define ADD_OBJECT(ClassInstance, Function) AddObject_Internal(ClassInstance, Function, #Function);
 
 	void RemoveAll(void* inObjectToRemoveFrom)
 	{
@@ -39,7 +39,7 @@ public:
 
 	// Call ADD_OBJECT instead of directly calling AddObject as it makes sure that name of the passed function pointer, and the function name is the same.
 	template<class UserClass>
-	void AddObject_Internal(UserClass* inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionName)
+	void AddObject_Internal(UserClass* const inObjectToAdd, void(UserClass::* inFunction)(Paramtypes...), const std::string& functionPtrAsName)
 	{
 		if (inObjectToAdd == nullptr)
 		{
@@ -51,6 +51,15 @@ public:
 		{
 			GameEngine_LOG(error, "MulticastDelegate::AddObject, inFunction is nullptr.");
 			return;
+		}
+
+		std::string functionName = "";
+		const int8_t indexToSplitFrom = static_cast<int8_t>(functionPtrAsName.find_last_of(':'));
+		const int8_t functionNameSize = static_cast<int8_t>(functionPtrAsName.size() - indexToSplitFrom);
+		functionName.reserve(functionNameSize);
+		for (int i = 0; i < functionNameSize; ++i)
+		{
+			functionName.push_back(functionPtrAsName[indexToSplitFrom + 1 + i]);
 		}
 
 		if (functionName.length() == 0)

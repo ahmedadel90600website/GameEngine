@@ -26,7 +26,7 @@ Application::Application() :
 	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
 	if (ApplicationWindow != nullptr)
 	{
-		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(Application, this, OnGLFWEvent);
+		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(this, &Application::OnGLFWEvent);
 	}
 
 	TheImGuiOverlayLay = std::make_shared<ImGuiLayer>();
