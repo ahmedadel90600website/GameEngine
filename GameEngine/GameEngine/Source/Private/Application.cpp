@@ -22,6 +22,7 @@ Application::Application() :
 	GameEngine_Assert(ApplicationSingleton == nullptr, "You can't create more than one application instance");
 
 	ApplicationSingleton = this;
+
 	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
 	if (ApplicationWindow != nullptr)
 	{
@@ -41,12 +42,36 @@ Application::~Application()
 	}
 }
 
-void Application::Tick()
+void Application::Run()
 {
+	constexpr int indicesSize = 6;
+	float indices[indicesSize] = {
+		-0.5f, 0.0f,
+		 0.0f, 0.5f,
+		 0.5f, 0.0f
+	};
+
+	GLuint vertexArrayHandle;
+	glGenVertexArrays(1, &vertexArrayHandle);
+	glBindVertexArray(vertexArrayHandle);
+
+	GLuint bufferHandle;
+	glGenBuffers(1, &bufferHandle);
+	glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+	glBufferData(GL_ARRAY_BUFFER, indicesSize * sizeof(float), indices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT,GL_FALSE, 2 * sizeof(float), (const void*)(0));
+
+	auto x = glGetString(GL_VERSION);
 	while (bIsRunning)
 	{
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glBindVertexArray(vertexArrayHandle);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(0);
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);

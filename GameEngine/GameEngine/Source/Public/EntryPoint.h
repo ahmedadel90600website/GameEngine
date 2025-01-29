@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 {
 	GameEngineLog::Initialize();
 	Application* app = CreateApplication();
-	app->Tick();
+	app->Run();
 	delete app;
 
 	return 0;

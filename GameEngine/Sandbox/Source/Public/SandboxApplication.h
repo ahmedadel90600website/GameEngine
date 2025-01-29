@@ -9,7 +9,7 @@ public:
 
 	SandboxApplication();
 	~SandboxApplication(); 
-	void Tick() override;
+	void Run() override;
 
 private:
 };

@@ -26,9 +26,9 @@ SandboxApplication::~SandboxApplication()
 {
 }
 
-void SandboxApplication::Tick()
+void SandboxApplication::Run()
 {
-	Application::Tick();
+	Application::Run();
 
 }
 

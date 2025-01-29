@@ -16,7 +16,7 @@ public:
 
 	Application();
 	virtual ~Application();
-	virtual void Tick();
+	virtual void Run();
 
 	static Application* Get();
 	static const WindowBase& GetWindow();
