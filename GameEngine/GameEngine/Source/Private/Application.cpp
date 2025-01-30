@@ -66,7 +66,7 @@ void Application::Run()
 
 	const std::string& fragmentShader = R"(
 	#version 460 core
-	out vec4 a_color;
+	layout(location = 0) out vec4 a_color;
 	
 	void main()
 	{
