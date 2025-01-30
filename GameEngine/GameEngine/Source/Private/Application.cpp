@@ -3,6 +3,7 @@
 // Engine
 #include "Public/Application.h"
 #include "Public/WindowClass/Structs/WindowProps.h"
+#include "Public/Rendering/ShaderProgram.h"
 
 #include "Public/EventData/ButtonActionEventData.h"
 #include "Public/EventData/MouseMoveEventData.h"
@@ -44,33 +45,64 @@ Application::~Application()
 
 void Application::Run()
 {
-	constexpr int indicesSize = 6;
-	float indices[indicesSize] = {
-		-0.5f, 0.0f,
-		 0.0f, 0.5f,
-		 0.5f, 0.0f
+	constexpr int verticesSize = 9;
+	constexpr int vertexSize = 3;
+	float vertices[verticesSize] = {
+		-0.5f, 0.0f, 0.0f,
+		 0.0f, 0.5f, 0.0f,
+		 0.5f, 0.0f, 0.0f
 	};
 
-	GLuint vertexArrayHandle;
+	const std::string& vertexShader = R"(
+	#version 460 core
+	layout(location = 0) in vec3 a_Position;
+	
+	void main()
+	{
+		gl_Position = vec4(a_Position, 1.0f);
+	}
+)";
+
+
+	const std::string& fragmentShader = R"(
+	#version 460 core
+	out vec4 a_color;
+	
+	void main()
+	{
+		a_color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	}
+)";
+
+	ShaderProgram* shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
+
+	shaderProgram->Bind();
+	unsigned int vertexArrayHandle;
 	glGenVertexArrays(1, &vertexArrayHandle);
 	glBindVertexArray(vertexArrayHandle);
 
-	GLuint bufferHandle;
+	unsigned int bufferHandle;
 	glGenBuffers(1, &bufferHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
-	glBufferData(GL_ARRAY_BUFFER, indicesSize * sizeof(float), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT,GL_FALSE, 2 * sizeof(float), (const void*)(0));
+	glVertexAttribPointer(0, vertexSize, GL_FLOAT,GL_FALSE, vertexSize * sizeof(float), (const void*)(0));
 
-	auto x = glGetString(GL_VERSION);
+	unsigned int indexBufferHandle;
+	glGenBuffers(1, &indexBufferHandle);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferHandle);
+
+	unsigned int indices[3] = {0, 2, 1};
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	while (bIsRunning)
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glBindVertexArray(vertexArrayHandle);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 		glBindVertexArray(0);
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
@@ -90,6 +122,8 @@ void Application::Run()
 
 		ApplicationWindow->OnUpdate();
 	}
+
+	delete shaderProgram;
 }
 
 Application* Application::Get()
