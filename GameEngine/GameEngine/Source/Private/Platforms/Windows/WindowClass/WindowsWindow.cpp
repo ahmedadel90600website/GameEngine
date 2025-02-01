@@ -7,6 +7,7 @@
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/EventData/CharEventData.h"
+#include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
 
 // Third party
 #include "GLFW/glfw3.h"

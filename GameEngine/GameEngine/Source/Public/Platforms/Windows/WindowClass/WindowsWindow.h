@@ -2,7 +2,7 @@
 
 #include "Public/WindowClass/WindowBase.h"
 #include "Public/WindowClass/Structs/WindowProps.h"
-#include "Public/Platforms/Rendering/OpenGLGraphicsContext.h"
+#include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
 
 struct GLFWwindow;
 

@@ -1,6 +1,6 @@
 #include "Public/PCH.h"
 
-#include "Public/Platforms/Rendering/OpenGLGraphicsContext.h"
+#include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
 #include "GLAD/glad.h"
 
 OpenGLGraphicsContext::OpenGLGraphicsContext(GLFWwindow* const inWindowHandle) :

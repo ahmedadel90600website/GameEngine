@@ -11,6 +11,8 @@
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
+#include "Public/Rendering/Buffers/VertexBuffer.h"
+#include "Public/Rendering/Buffers/IndexBuffer.h"
 
 // Third party
 #include "GLAD/glad.h"
@@ -75,26 +77,19 @@ void Application::Run()
 )";
 
 	ShaderProgram* shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
 	shaderProgram->Bind();
+
 	unsigned int vertexArrayHandle;
 	glGenVertexArrays(1, &vertexArrayHandle);
 	glBindVertexArray(vertexArrayHandle);
 
-	unsigned int bufferHandle;
-	glGenBuffers(1, &bufferHandle);
-	glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	std::unique_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, vertexSize, GL_FLOAT,GL_FALSE, vertexSize * sizeof(float), (const void*)(0));
 
-	unsigned int indexBufferHandle;
-	glGenBuffers(1, &indexBufferHandle);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferHandle);
-
 	unsigned int indices[3] = {0, 2, 1};
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	std::unique_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
 
 	while (bIsRunning)
 	{

@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 #include "Public/Rendering/GraphicsContext.h"
 #include "GLFW/glfw3.h"

@@ -3,7 +3,6 @@
 #include "Public/PCH.h"
 #include "Public/Core.h"
 
-// TODO: Make sure you make std types not imported by making pointers to them.
 template<class... Paramtypes>
 class GameEngine_API MulticastDelegate
 {
