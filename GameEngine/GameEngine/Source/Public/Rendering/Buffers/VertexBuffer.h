@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+class BufferLayout;
+
 class VertexBuffer
 {
 public:
@@ -11,6 +13,8 @@ public:
 	static std::unique_ptr<VertexBuffer> Create(uint32_t sizeInBytes, const float* const vertexData, uint32_t drawType);
 	virtual void Bind() const = 0;
 	virtual void unBind() const = 0;
+	virtual const BufferLayout& GetLayout() const = 0;
+	virtual void SetLayout(const BufferLayout& inLayout) = 0;
 
 protected:
 

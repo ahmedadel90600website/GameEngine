@@ -13,6 +13,7 @@
 #include "Public/Layers/Overlays/OverlayBase.h"
 #include "Public/Rendering/Buffers/VertexBuffer.h"
 #include "Public/Rendering/Buffers/IndexBuffer.h"
+#include "Public/Rendering/Buffers/BufferLayout.h"
 
 // Third party
 #include "GLAD/glad.h"
@@ -47,20 +48,22 @@ Application::~Application()
 
 void Application::Run()
 {
-	constexpr int verticesSize = 9;
-	constexpr int vertexSize = 3;
-	float vertices[verticesSize] = {
-		-0.5f, 0.0f, 0.0f,
-		 0.0f, 0.5f, 0.0f,
-		 0.5f, 0.0f, 0.0f
+	constexpr int vertexSize = 7;
+	float vertices[3 * vertexSize] = {
+		-0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
 	};
 
 	const std::string& vertexShader = R"(
 	#version 460 core
 	layout(location = 0) in vec3 a_Position;
+	layout(location = 1) in vec4 a_Color;
 	
+	out vec4 v_Color;
 	void main()
 	{
+		v_Color = a_Color;
 		gl_Position = vec4(a_Position, 1.0f);
 	}
 )";
@@ -70,9 +73,11 @@ void Application::Run()
 	#version 460 core
 	layout(location = 0) out vec4 a_color;
 	
+	in vec4 v_Color;
+
 	void main()
 	{
-		a_color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		a_color = v_Color;
 	}
 )";
 
@@ -85,15 +90,30 @@ void Application::Run()
 
 	std::unique_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, vertexSize, GL_FLOAT,GL_FALSE, vertexSize * sizeof(float), (const void*)(0));
+	std::vector<BufferElement> bufferElements;
+	bufferElements.emplace_back("a_Position", EShaderDataType::FLOAT3, false);
+	bufferElements.emplace_back("a_Color", EShaderDataType::FLOAT4, false);
+	BufferLayout layout(bufferElements);
+
+	vertexBuffer->SetLayout(layout);
+
+	for (int i = 0; i < 2; ++i)
+	{
+		const  BufferElement& currentAttribute = layout.GetBufferElements()[i];
+		const uint8_t numberOfElements = currentAttribute.GetNumberOfElements();
+		const uint32_t strideSize = vertexBuffer->GetLayout().GetStrideSize();
+		const uint32_t attributeByteSize = currentAttribute.GetSize();
+		glEnableVertexAttribArray(i);
+		// GL_FLOAT should be converted from EShaderDataType
+		glVertexAttribPointer(i, numberOfElements, GL_FLOAT, currentAttribute.bIsNormalized, strideSize, (const void*)(currentAttribute.Offset));
+	}
 
 	unsigned int indices[3] = {0, 2, 1};
 	std::unique_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
 
 	while (bIsRunning)
 	{
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glBindVertexArray(vertexArrayHandle);

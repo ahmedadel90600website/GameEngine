@@ -6,7 +6,7 @@ public:
 
 	ShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource);
 	~ShaderProgram();
-	inline unsigned int GetProgramID() const;
+	inline unsigned int GetProgramID() const { return ProgramID; }
 
 	void Bind();
 	void UnBind();

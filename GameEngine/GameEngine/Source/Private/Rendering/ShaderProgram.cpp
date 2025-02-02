@@ -15,11 +15,6 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(ProgramID);
 }
 
-inline unsigned int ShaderProgram::GetProgramID() const
-{
-	return ProgramID;
-}
-
 void ShaderProgram::Bind()
 {
 	glUseProgram(ProgramID);
