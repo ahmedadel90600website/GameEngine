@@ -8,9 +8,10 @@ public:
 
 	virtual ~IndexBuffer() {};
 
-	static std::unique_ptr<IndexBuffer> Create(uint32_t sizeInBytes, const uint32_t* const indexData, uint32_t drawType);
+	static std::shared_ptr<IndexBuffer> Create(const uint32_t* const indexData, const uint32_t inCount, uint32_t drawType);
 	virtual void Bind() const = 0;
-	virtual void unBind() const = 0;
+	virtual void UnBind() const = 0;
+	virtual uint32_t GetCount() const = 0;
 
 protected:
 

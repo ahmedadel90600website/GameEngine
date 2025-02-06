@@ -8,6 +8,7 @@
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/EventData/CharEventData.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
+#include "Public/Rendering/Renderer.h"
 
 // Third party
 #include "GLFW/glfw3.h"
@@ -101,7 +102,11 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	*/
 
 	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
-	TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
+	if (Renderer::GetRendererAPI() == ERendererAPI::OPENGL)
+	{
+		TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
+	}
+
 	GameEngine_Assert(TheGraphicsContext, "WindowsWindow::Initialize. Wasn't able to create TheGraphicsContext");
 	TheGraphicsContext->Initialize();
 

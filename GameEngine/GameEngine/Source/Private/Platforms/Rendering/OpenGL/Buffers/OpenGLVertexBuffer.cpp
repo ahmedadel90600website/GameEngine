@@ -10,6 +10,7 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t sizeInBytes, const float* const 
 	glCreateBuffers(1, &VertexBufferHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferHandle);
 	glBufferData(GL_ARRAY_BUFFER, sizeInBytes, vertexData, drawType);
+	UnBind();
 }
 
 OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -22,7 +23,7 @@ void OpenGLVertexBuffer::Bind() const
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferHandle);
 }
 
-void OpenGLVertexBuffer::unBind() const
+void OpenGLVertexBuffer::UnBind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

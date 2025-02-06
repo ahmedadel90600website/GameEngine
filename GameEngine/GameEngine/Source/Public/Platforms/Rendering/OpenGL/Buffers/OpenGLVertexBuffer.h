@@ -11,7 +11,7 @@ public:
 	virtual ~OpenGLVertexBuffer();
 
 	void Bind() const override;
-	void unBind() const override;
+	void UnBind() const override;
 	inline const BufferLayout& GetLayout() const override { return Layout; }
 	void SetLayout(const BufferLayout& inLayput) override;
 

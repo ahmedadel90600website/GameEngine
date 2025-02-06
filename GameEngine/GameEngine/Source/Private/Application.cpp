@@ -5,15 +5,14 @@
 #include "Public/WindowClass/Structs/WindowProps.h"
 #include "Public/Rendering/ShaderProgram.h"
 
-#include "Public/EventData/ButtonActionEventData.h"
-#include "Public/EventData/MouseMoveEventData.h"
-#include "Public/EventData/MouseScrollEventData.h"
 #include "Public/EventData/WindowClosedEventData.h"
-#include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
 #include "Public/Rendering/Buffers/VertexBuffer.h"
 #include "Public/Rendering/Buffers/IndexBuffer.h"
 #include "Public/Rendering/Buffers/BufferLayout.h"
+#include "Public/Rendering/VertexArray.h"
+
+#include <stdint.h>
 
 // Third party
 #include "GLAD/glad.h"
@@ -84,41 +83,32 @@ void Application::Run()
 	ShaderProgram* shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
 	shaderProgram->Bind();
 
-	unsigned int vertexArrayHandle;
-	glGenVertexArrays(1, &vertexArrayHandle);
-	glBindVertexArray(vertexArrayHandle);
+	std::shared_ptr<VertexArray> vertexArray = VertexArray::Create();
+	GameEngine_Assert(vertexArray != nullptr, "Application::Run(). Vertex array was nullptr");
 
-	std::unique_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+	std::shared_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
 	std::vector<BufferElement> bufferElements;
 	bufferElements.emplace_back("a_Position", EShaderDataType::FLOAT3, false);
 	bufferElements.emplace_back("a_Color", EShaderDataType::FLOAT4, false);
 	BufferLayout layout(bufferElements);
-
 	vertexBuffer->SetLayout(layout);
 
-	for (int i = 0; i < 2; ++i)
-	{
-		const  BufferElement& currentAttribute = layout.GetBufferElements()[i];
-		const uint8_t numberOfElements = currentAttribute.GetNumberOfElements();
-		const uint32_t strideSize = vertexBuffer->GetLayout().GetStrideSize();
-		const uint32_t attributeByteSize = currentAttribute.GetSize();
-		glEnableVertexAttribArray(i);
-		// GL_FLOAT should be converted from EShaderDataType
-		glVertexAttribPointer(i, numberOfElements, GL_FLOAT, currentAttribute.bIsNormalized, strideSize, (const void*)(currentAttribute.Offset));
-	}
 
-	unsigned int indices[3] = {0, 2, 1};
-	std::unique_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices, GL_STATIC_DRAW);
+	uint32_t indices[3] = { 0, 2, 1 };
+	std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t), GL_STATIC_DRAW);
+
+	VertexArray& vertexArrayRef = *vertexArray;
+	vertexArrayRef.BindVertexBuffer(vertexBuffer);
+	vertexArrayRef.BindIndexBuffer(indexBuffer);
 
 	while (bIsRunning)
 	{
 		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBindVertexArray(vertexArrayHandle);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-		glBindVertexArray(0);
+		vertexArrayRef.Bind();
+		glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+		vertexArrayRef.UnBind();
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);

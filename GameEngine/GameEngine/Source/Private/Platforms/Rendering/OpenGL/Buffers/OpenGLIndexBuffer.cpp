@@ -4,11 +4,13 @@
 // Third party
 #include "glad/glad.h"
 
-OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t sizeInBytes, const uint32_t* const indexData, uint32_t drawType)
+OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* const indexData, const uint32_t inCount, const uint32_t drawType)
 {
+	Count = inCount;
 	glCreateBuffers(1, &IndexBufferHandle);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferHandle);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeInBytes, indexData, drawType);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Count * sizeof(uint32_t), indexData, drawType);
+	UnBind();
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -21,7 +23,7 @@ void OpenGLIndexBuffer::Bind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferHandle);
 }
 
-void OpenGLIndexBuffer::unBind() const
+void OpenGLIndexBuffer::UnBind() const
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
