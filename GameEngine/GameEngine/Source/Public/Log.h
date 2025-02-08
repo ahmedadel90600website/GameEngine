@@ -1,7 +1,6 @@
 #pragma once
 
 // Engine
-#include "Public/Core.h"
 #include "spdlog/Logger.h"
 
 #ifdef GameEngine_Platform_Windows
@@ -30,7 +29,7 @@ namespace std
 	class shared_ptr;
 }
 
-class GameEngine_API GameEngineLog
+class GameEngineLog
 {
 public:
 

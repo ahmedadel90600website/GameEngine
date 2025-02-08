@@ -7,4 +7,4 @@
 #include <vector>
 #include <map>
 
-#include "Public/Log.h"
+#include "Public/Core.h"

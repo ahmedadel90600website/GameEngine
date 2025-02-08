@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Public/Log.h"
+
 #ifdef GameEngine_Platform_Windows
 	#ifdef GameEngine_ENABLE_DLL
 

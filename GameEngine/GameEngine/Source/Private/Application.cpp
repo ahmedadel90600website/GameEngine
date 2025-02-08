@@ -11,6 +11,7 @@
 #include "Public/Rendering/Buffers/IndexBuffer.h"
 #include "Public/Rendering/Buffers/BufferLayout.h"
 #include "Public/Rendering/VertexArray.h"
+#include "Public/Rendering/RendererAPI.h"
 
 #include <stdint.h>
 
@@ -101,13 +102,20 @@ void Application::Run()
 	vertexArrayRef.BindVertexBuffer(vertexBuffer);
 	vertexArrayRef.BindIndexBuffer(indexBuffer);
 
+	const std::shared_ptr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
+	if (renderingAPI == nullptr)
+	{
+		return;
+	}
+
+	const RendererAPI& renderingAPIRef = *renderingAPI;
 	while (bIsRunning)
 	{
-		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
+		renderingAPIRef.Clear();
 
 		vertexArrayRef.Bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+		renderingAPIRef.DrawIndexed(vertexArrayRef);
 		vertexArrayRef.UnBind();
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;

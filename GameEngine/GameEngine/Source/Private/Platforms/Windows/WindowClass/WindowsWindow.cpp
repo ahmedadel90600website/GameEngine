@@ -8,7 +8,7 @@
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/EventData/CharEventData.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
-#include "Public/Rendering/Renderer.h"
+#include "Public/Rendering/RendererAPI.h"
 
 // Third party
 #include "GLFW/glfw3.h"
@@ -102,7 +102,7 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	*/
 
 	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
-	if (Renderer::GetRendererAPI() == ERendererAPI::OPENGL)
+	if (RendererAPI::GetTheRendererAPIType() == ERendererAPIType::OPENGL)
 	{
 		TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
 	}
