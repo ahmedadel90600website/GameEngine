@@ -12,6 +12,7 @@
 #include "Public/Rendering/Buffers/BufferLayout.h"
 #include "Public/Rendering/VertexArray.h"
 #include "Public/Rendering/RendererAPI.h"
+#include "Public/Rendering/Renderer.h"
 
 #include <stdint.h>
 
@@ -114,9 +115,13 @@ void Application::Run()
 		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		renderingAPIRef.Clear();
 
+		Renderer::BeginScene();
+
 		vertexArrayRef.Bind();
-		renderingAPIRef.DrawIndexed(vertexArrayRef);
+		Renderer::Submit(vertexArrayRef);
 		vertexArrayRef.UnBind();
+
+		Renderer::EndScene();
 
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);

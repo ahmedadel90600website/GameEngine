@@ -2,11 +2,13 @@
 
 #include <stdint.h>
 
+class VertexArray;
+
 class Renderer
 {
 public:
 
-
-private:
-
+	static void BeginScene();
+	static void EndScene();
+	static void Submit(const VertexArray& inVertexArray);
 };
