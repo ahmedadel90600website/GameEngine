@@ -18,11 +18,13 @@
 
 // Third party
 #include "GLAD/glad.h"
+#include "glm/ext/matrix_clip_space.hpp"
 
 Application* Application::ApplicationSingleton = nullptr;
 
 Application::Application() :
-	bIsRunning(true)
+	bIsRunning(true),
+	SceneCamera(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f))
 {
 	GameEngine_Assert(ApplicationSingleton == nullptr, "You can't create more than one application instance");
 
@@ -62,10 +64,12 @@ void Application::Run()
 	layout(location = 1) in vec4 a_Color;
 	
 	out vec4 v_Color;
+
+	uniform mat4 u_ViewProjection;
 	void main()
 	{
 		v_Color = a_Color;
-		gl_Position = vec4(a_Position, 1.0f);
+		gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 	}
 )";
 
@@ -82,8 +86,7 @@ void Application::Run()
 	}
 )";
 
-	ShaderProgram* shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-	shaderProgram->Bind();
+	ShaderProgram* const shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
 
 	std::shared_ptr<VertexArray> vertexArray = VertexArray::Create();
 	GameEngine_Assert(vertexArray != nullptr, "Application::Run(). Vertex array was nullptr");
@@ -109,16 +112,15 @@ void Application::Run()
 		return;
 	}
 
+	//SceneCamera.SetRotation(glm::quat(glm::vec3(0.0f, 0.0f, -45.0f)));
 	const RendererAPI& renderingAPIRef = *renderingAPI;
 	while (bIsRunning)
 	{
 		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		renderingAPIRef.Clear();
 
-		Renderer::BeginScene();
-
-		vertexArrayRef.Bind();
-		Renderer::Submit(vertexArrayRef);
+		Renderer::BeginScene(SceneCamera);
+		Renderer::Submit(vertexArrayRef, *shaderProgram);
 		vertexArrayRef.UnBind();
 
 		Renderer::EndScene();

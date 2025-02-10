@@ -9,8 +9,8 @@ public:
 
 	OpenGLVertexArray();
 
-	void Bind() override;
-	void UnBind() override;
+	void Bind() const override;
+	void UnBind() const override;
 
 	void BindVertexBuffer(const std::shared_ptr<VertexBuffer>& inVertexBuffer) override;
 	void BindIndexBuffer(const std::shared_ptr<IndexBuffer>& inIndexBuffer) override;

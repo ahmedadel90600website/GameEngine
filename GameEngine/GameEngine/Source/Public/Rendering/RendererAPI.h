@@ -16,7 +16,7 @@ class RendererAPI
 public:
 
 	static const std::shared_ptr<RendererAPI>& GetTheRendererAPI();
-	static ERendererAPIType GetTheRendererAPIType();
+	inline static ERendererAPIType GetTheRendererAPIType() { return APIType; }
 
 	virtual void SetClearColor(const glm::vec4& inClearColor) const = 0;
 	virtual void Clear() const = 0;

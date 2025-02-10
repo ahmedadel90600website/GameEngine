@@ -12,8 +12,8 @@ public:
 
 	static std::shared_ptr<VertexArray> Create();
 
-	virtual void Bind() = 0;
-	virtual void UnBind() = 0;
+	virtual void Bind() const = 0;
+	virtual void UnBind() const = 0;
 
 	virtual void BindVertexBuffer(const std::shared_ptr<VertexBuffer>& inVertexBuffer) = 0;
 	virtual void BindIndexBuffer(const std::shared_ptr<IndexBuffer>& inIndexBuffer) = 0;

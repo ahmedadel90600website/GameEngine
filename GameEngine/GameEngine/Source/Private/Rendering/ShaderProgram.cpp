@@ -1,8 +1,11 @@
 #include "Public/PCH.h"
 #include "Public/Rendering/ShaderProgram.h"
 
+#include "Public/PCH.h"
+
 // Third party
 #include "glad/glad.h"
+#include "glm/gtc/type_ptr.hpp"
 
 ShaderProgram::ShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
@@ -15,12 +18,17 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(ProgramID);
 }
 
-void ShaderProgram::Bind()
+void ShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(ProgramID, uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
+}
+
+void ShaderProgram::Bind() const
 {
 	glUseProgram(ProgramID);
 }
 
-void ShaderProgram::UnBind()
+void ShaderProgram::UnBind() const
 {
 	glUseProgram(0);
 }
@@ -50,7 +58,7 @@ unsigned int ShaderProgram::CreateAndCompileShader(const int type, const char* c
 	return shaderID;
 }
 
-void ShaderProgram::CreateAndCompileShaderProgram(const unsigned int vertexShaderID, const unsigned int fragmentShaderID)
+void ShaderProgram::CreateAndCompileShaderProgram(const uint32_t vertexShaderID, const uint32_t fragmentShaderID)
 {
 	ProgramID = glCreateProgram();
 

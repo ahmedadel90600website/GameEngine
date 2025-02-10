@@ -24,8 +24,3 @@ const std::shared_ptr<RendererAPI>& RendererAPI::GetTheRendererAPI()
 
 	return TheRendererAPI;
 }
-
-ERendererAPIType RendererAPI::GetTheRendererAPIType()
-{
-	return APIType;
-}

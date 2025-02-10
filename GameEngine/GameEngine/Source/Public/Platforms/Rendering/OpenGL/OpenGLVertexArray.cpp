@@ -11,12 +11,12 @@ OpenGLVertexArray::OpenGLVertexArray()
 	glGenVertexArrays(1, &Handle);
 }
 
-void OpenGLVertexArray::Bind()
+void OpenGLVertexArray::Bind() const
 {
 	glBindVertexArray(Handle);
 }
 
-void OpenGLVertexArray::UnBind()
+void OpenGLVertexArray::UnBind() const
 {
 	glBindVertexArray(0);
 }
