@@ -14,7 +14,7 @@ Camera::Camera(const glm::mat4& inProjectionMatrix) :
 
 void Camera::SetLocation(const glm::vec3& inPosition)
 {
-	Position = inPosition;
+	Location = inPosition;
 	CalculateViewMatrix();
 }
 
@@ -31,6 +31,6 @@ glm::mat4 Camera::GetViewProjectionMatrix() const
 
 void Camera::CalculateViewMatrix()
 {
-	const glm::mat4& transform = glm::translate(glm::mat4(1.0f), Position) * glm::mat4(Rotation);
+	const glm::mat4& transform = glm::translate(glm::mat4(1.0f), Location) * glm::mat4(Rotation);
 	ViewMatrix = glm::inverse(transform);
 }

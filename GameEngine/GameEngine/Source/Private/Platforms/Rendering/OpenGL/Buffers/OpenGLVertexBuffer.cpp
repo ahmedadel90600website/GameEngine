@@ -5,11 +5,11 @@
 // Third party
 #include "glad/glad.h"
 
-OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t sizeInBytes, const float* const vertexData, uint32_t drawType)
+OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t sizeInBytes, const float* const vertexData)
 {
 	glCreateBuffers(1, &VertexBufferHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeInBytes, vertexData, drawType);
+	glBufferData(GL_ARRAY_BUFFER, sizeInBytes, vertexData, GL_STATIC_DRAW);
 	UnBind();
 }
 

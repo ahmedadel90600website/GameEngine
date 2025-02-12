@@ -1,7 +1,7 @@
 #include "Public/PCH.h"
 
 #include "Public/Rendering/Buffers/BufferLayout.h"
-#include "OpenGLVertexArray.h"
+#include "Public/Platforms/Rendering/OpenGL/OpenGLVertexArray.h"
 
 // Third party
 #include "glad/glad.h"

@@ -3,16 +3,9 @@
 // Engine
 #include "Public/Application.h"
 #include "Public/WindowClass/Structs/WindowProps.h"
-#include "Public/Rendering/ShaderProgram.h"
 
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
-#include "Public/Rendering/Buffers/VertexBuffer.h"
-#include "Public/Rendering/Buffers/IndexBuffer.h"
-#include "Public/Rendering/Buffers/BufferLayout.h"
-#include "Public/Rendering/VertexArray.h"
-#include "Public/Rendering/RendererAPI.h"
-#include "Public/Rendering/Renderer.h"
 
 #include <stdint.h>
 
@@ -22,9 +15,7 @@
 
 Application* Application::ApplicationSingleton = nullptr;
 
-Application::Application() :
-	bIsRunning(true),
-	SceneCamera(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f))
+Application::Application() : bIsRunning(true)
 {
 	GameEngine_Assert(ApplicationSingleton == nullptr, "You can't create more than one application instance");
 
@@ -51,80 +42,8 @@ Application::~Application()
 
 void Application::Run()
 {
-	constexpr int vertexSize = 7;
-	float vertices[3 * vertexSize] = {
-		-0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
-	};
-
-	const std::string& vertexShader = R"(
-	#version 460 core
-	layout(location = 0) in vec3 a_Position;
-	layout(location = 1) in vec4 a_Color;
-	
-	out vec4 v_Color;
-
-	uniform mat4 u_ViewProjection;
-	void main()
-	{
-		v_Color = a_Color;
-		gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
-	}
-)";
-
-
-	const std::string& fragmentShader = R"(
-	#version 460 core
-	layout(location = 0) out vec4 a_color;
-	
-	in vec4 v_Color;
-
-	void main()
-	{
-		a_color = v_Color;
-	}
-)";
-
-	ShaderProgram* const shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-	std::shared_ptr<VertexArray> vertexArray = VertexArray::Create();
-	GameEngine_Assert(vertexArray != nullptr, "Application::Run(). Vertex array was nullptr");
-
-	std::shared_ptr<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices, GL_STATIC_DRAW);
-	std::vector<BufferElement> bufferElements;
-	bufferElements.emplace_back("a_Position", EShaderDataType::FLOAT3, false);
-	bufferElements.emplace_back("a_Color", EShaderDataType::FLOAT4, false);
-	BufferLayout layout(bufferElements);
-	vertexBuffer->SetLayout(layout);
-
-
-	uint32_t indices[3] = { 0, 2, 1 };
-	std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t), GL_STATIC_DRAW);
-
-	VertexArray& vertexArrayRef = *vertexArray;
-	vertexArrayRef.BindVertexBuffer(vertexBuffer);
-	vertexArrayRef.BindIndexBuffer(indexBuffer);
-
-	const std::shared_ptr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
-	if (renderingAPI == nullptr)
-	{
-		return;
-	}
-
-	//SceneCamera.SetRotation(glm::quat(glm::vec3(0.0f, 0.0f, -45.0f)));
-	const RendererAPI& renderingAPIRef = *renderingAPI;
 	while (bIsRunning)
 	{
-		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
-		renderingAPIRef.Clear();
-
-		Renderer::BeginScene(SceneCamera);
-		Renderer::Submit(vertexArrayRef, *shaderProgram);
-		vertexArrayRef.UnBind();
-
-		Renderer::EndScene();
-
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);
 		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
@@ -142,8 +61,6 @@ void Application::Run()
 
 		ApplicationWindow->OnUpdate();
 	}
-
-	delete shaderProgram;
 }
 
 Application* Application::Get()

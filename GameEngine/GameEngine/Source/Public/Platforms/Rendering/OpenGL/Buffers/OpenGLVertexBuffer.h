@@ -7,7 +7,7 @@ class OpenGLVertexBuffer : public VertexBuffer
 {
 public:
 
-	OpenGLVertexBuffer(uint32_t sizeInBytes, const float* const vertexData, uint32_t drawType);
+	OpenGLVertexBuffer(uint32_t sizeInBytes, const float* const vertexData);
 	virtual ~OpenGLVertexBuffer();
 
 	void Bind() const override;

@@ -3,7 +3,7 @@
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Platforms/Rendering/OpenGL/Buffers/OpenGLIndexBuffer.h"
 
-std::shared_ptr<IndexBuffer> IndexBuffer::Create(const uint32_t* const indexData, const uint32_t count, uint32_t drawType)
+std::shared_ptr<IndexBuffer> IndexBuffer::Create(const uint32_t* const indexData, const uint32_t count)
 {
     const ERendererAPIType rendererAPI = RendererAPI::GetTheRendererAPIType();
     if (rendererAPI == ERendererAPIType::NONE)
@@ -13,7 +13,7 @@ std::shared_ptr<IndexBuffer> IndexBuffer::Create(const uint32_t* const indexData
     }
     else if (rendererAPI == ERendererAPIType::OPENGL)
     {
-        return std::make_unique<OpenGLIndexBuffer>(indexData, count, drawType);
+        return std::make_unique<OpenGLIndexBuffer>(indexData, count);
     }
 
     GameEngine_Assert(false, "IndexBuffer::Create, unsupported rendering API.");

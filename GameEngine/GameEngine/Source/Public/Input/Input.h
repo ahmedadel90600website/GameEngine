@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Public/Core.h"
-
+#include "Public/Input/KeyCodes.h"
 #include "glm/vec2.hpp"
 
 class GameEngine_API Input

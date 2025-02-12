@@ -4,7 +4,6 @@
 #include "Public/WindowClass/WindowBase.h"
 #include "Public/EventData/EventDataBase.h"
 #include "Public/ImGui/Layers/ImGuiLayer.h"
-#include "Public/Rendering/Cameras/Camera.h"
 
 struct GLFWwindow;
 class LayerBase;
@@ -56,7 +55,6 @@ private:
 	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
 	std::shared_ptr<ImGuiLayer> TheImGuiOverlayLay = nullptr;
 
-	Camera SceneCamera;
 	bool bIsRunning : 1;
 };
 

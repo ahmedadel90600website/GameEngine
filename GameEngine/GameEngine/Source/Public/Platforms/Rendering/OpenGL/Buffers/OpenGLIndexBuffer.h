@@ -6,7 +6,7 @@ class OpenGLIndexBuffer : public IndexBuffer
 {
 public:
 
-	OpenGLIndexBuffer(const uint32_t* const indexData, const uint32_t inCount, const uint32_t drawType);
+	OpenGLIndexBuffer(const uint32_t* const indexData, const uint32_t inCount);
 	virtual ~OpenGLIndexBuffer();
 
 	virtual void Bind() const;

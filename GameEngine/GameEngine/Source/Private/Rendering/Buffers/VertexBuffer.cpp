@@ -3,7 +3,7 @@
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Platforms/Rendering/OpenGL/Buffers/OpenGLVertexBuffer.h"
 
-std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const float* const vertexData, uint32_t drawType)
+std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const float* const vertexData)
 {
     const ERendererAPIType rendererAPI = RendererAPI::GetTheRendererAPIType();
     if (rendererAPI == ERendererAPIType::NONE)
@@ -13,7 +13,7 @@ std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const f
     }
     else if (rendererAPI == ERendererAPIType::OPENGL)
     {
-        return std::make_shared<OpenGLVertexBuffer>(sizeInBytes, vertexData, drawType);
+        return std::make_shared<OpenGLVertexBuffer>(sizeInBytes, vertexData);
     }
 
     GameEngine_Assert(false, "VertexBuffer::Create, unsupported rendering API.");

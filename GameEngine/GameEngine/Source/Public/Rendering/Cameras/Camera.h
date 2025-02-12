@@ -15,6 +15,8 @@ public:
 	glm::mat4 GetViewProjectionMatrix() const;
 	inline const glm::mat4& GetProjectionMatrix() const { return ProjectionMatrix; }
 	inline const glm::mat4& GetViewMatrix() const { return ViewMatrix; }
+	inline const glm::vec3& GetLocation() const { return Location; }
+	inline const glm::quat& GetRotation() const { return Rotation; }
 
 private:
 
@@ -24,5 +26,5 @@ private:
 	glm::mat4 ViewMatrix = glm::mat4(1.0f);
 
 	glm::quat Rotation = glm::quat(glm::highp_vec3(0.0f));
-	glm::vec3 Position = glm::vec3(0.0f);
+	glm::vec3 Location = glm::vec3(0.0f);
 };
