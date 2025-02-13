@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 // Third party
-#include "GLAD/glad.h"
+#include "glfw/glfw3.h"
 #include "glm/ext/matrix_clip_space.hpp"
 
 Application* Application::ApplicationSingleton = nullptr;
@@ -44,11 +44,14 @@ void Application::Run()
 {
 	while (bIsRunning)
 	{
+		const float currentTime = (float) glfwGetTime();
+		DeltaTime = currentTime - TimeLastFrame;
+		TimeLastFrame = currentTime;
 		std::vector<std::shared_ptr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);
 		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
 		{
-			currentLayer->Tick();
+			currentLayer->Tick(DeltaTime);
 		}
 
 		TheImGuiOverlayLay->BeginRendering();

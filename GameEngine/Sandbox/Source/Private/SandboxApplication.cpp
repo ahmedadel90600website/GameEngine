@@ -14,6 +14,7 @@
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Rendering/Renderer.h"
 #include "Public/Input/Input.h"
+#include "Public/Log.h"
 
 class TestOverlay : public OverlayBase
 {
@@ -81,7 +82,7 @@ public:
 
 private:
 
-	void Tick() override
+	void Tick(const float deltaTime) override
 	{
 		const std::shared_ptr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
 		if (renderingAPI == nullptr)
@@ -91,7 +92,6 @@ private:
 
 		VertexArray& vertexArrayRef = *TheVertexArray;
 
-		//SceneCamera.SetRotation(glm::quat(glm::vec3(0.0f, 0.0f, -45.0f)));
 		const RendererAPI& renderingAPIRef = *renderingAPI;
 		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		renderingAPIRef.Clear();
@@ -102,7 +102,7 @@ private:
 
 		Camera& cameraRef = *SceneCamera;
 		const glm::vec3& currentLocation = cameraRef.GetLocation();
-		const float cameraSpeed = 0.05f;
+		const float cameraSpeed = 1.0f * deltaTime;
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_UP))
 		{
 			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, -cameraSpeed, 0.0f));
@@ -121,14 +121,15 @@ private:
 			cameraRef.SetLocation(currentLocation + glm::vec3(cameraSpeed, 0.0f, 0.0f));
 		}
 
+		const float cameraRotationSpeed = glm::radians(180.0f) * deltaTime;
 		const glm::quat& currentRotation = cameraRef.GetRotation();
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_D))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraSpeed)));
+			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraRotationSpeed)));
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_A))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -cameraSpeed)));
+			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -cameraRotationSpeed)));
 		}
 	}
 

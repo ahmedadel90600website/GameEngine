@@ -54,7 +54,9 @@ private:
 	static Application* ApplicationSingleton;
 	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
 	std::shared_ptr<ImGuiLayer> TheImGuiOverlayLay = nullptr;
-
+	
+	float TimeLastFrame = 0.0f;
+	float DeltaTime = 0.0f;
 	bool bIsRunning : 1;
 };
 

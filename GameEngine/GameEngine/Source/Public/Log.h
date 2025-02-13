@@ -9,7 +9,7 @@
 		#define	GameEngine_LOG(type, ...) GameEngineLog::GetGameEngineLogger()->type(##__VA_ARGS__);
 	#else
 		// Warn yellow, error red, info green
-		#define	Application_LOG(type, message) GameEngineLog::GetApplicationLogger()->type(message);
+		#define	Application_LOG(type, ...) GameEngineLog::GetApplicationLogger()->type(__VA_ARGS__);
 
 	#endif
 
