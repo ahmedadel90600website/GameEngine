@@ -105,31 +105,31 @@ private:
 		const float cameraSpeed = 1.0f * deltaTime;
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_UP))
 		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, -cameraSpeed, 0.0f));
+			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, cameraSpeed, 0.0f));
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_DOWN))
 		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, cameraSpeed, 0.0f));
+			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, -cameraSpeed, 0.0f));
 		}
 
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_RIGHT))
 		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(-cameraSpeed, 0.0f, 0.0f));
+			cameraRef.SetLocation(currentLocation + glm::vec3(cameraSpeed, 0.0f, 0.0f));
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_LEFT))
 		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(cameraSpeed, 0.0f, 0.0f));
+			cameraRef.SetLocation(currentLocation + glm::vec3(-cameraSpeed, 0.0f, 0.0f));
 		}
 
 		const float cameraRotationSpeed = glm::radians(180.0f) * deltaTime;
 		const glm::quat& currentRotation = cameraRef.GetRotation();
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_D))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraRotationSpeed)));
+			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -cameraRotationSpeed)));
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_A))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -cameraRotationSpeed)));
+			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraRotationSpeed)));
 		}
 	}
 
