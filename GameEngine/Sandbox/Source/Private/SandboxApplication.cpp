@@ -39,10 +39,11 @@ public:
 	out vec4 v_Color;
 
 	uniform mat4 u_ViewProjection;
+	uniform mat4 u_ObjectTransform;
 	void main()
 	{
 		v_Color = a_Color;
-		gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
+		gl_Position = u_ViewProjection * u_ObjectTransform * vec4(a_Position, 1.0f);
 	}
 )";
 
@@ -71,7 +72,6 @@ public:
 		BufferLayout layout(bufferElements);
 		TheVertexBuffer->SetLayout(layout);
 
-
 		uint32_t indices[3] = { 0, 2, 1 };
 		TheIndexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 
@@ -97,12 +97,13 @@ private:
 		renderingAPIRef.Clear();
 
 		Renderer::BeginScene(*SceneCamera);
-		Renderer::Submit(vertexArrayRef, *TheShaderProgram);
 		vertexArrayRef.UnBind();
 
 		Camera& cameraRef = *SceneCamera;
 		const glm::vec3& currentLocation = cameraRef.GetLocation();
 		const float cameraSpeed = 1.0f * deltaTime;
+
+		// Camera movement
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_UP))
 		{
 			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, cameraSpeed, 0.0f));
@@ -131,6 +132,29 @@ private:
 		{
 			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraRotationSpeed)));
 		}
+
+		// Object movement
+		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_L))
+		{
+			ObjectLocation.x += cameraSpeed;
+		}
+		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_J))
+		{
+			ObjectLocation.x -= cameraSpeed;
+		}
+
+		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_I))
+		{
+			ObjectLocation.y += cameraSpeed;
+		}
+		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_K))
+		{
+			ObjectLocation.y -= cameraSpeed;
+		}
+
+		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation));
+
+		Renderer::EndScene();
 	}
 
 	void OnImGuiRender() override
@@ -145,6 +169,7 @@ private:
 	std::shared_ptr<VertexBuffer> TheVertexBuffer = nullptr;
 	std::shared_ptr<IndexBuffer> TheIndexBuffer = nullptr;
 	std::shared_ptr<Camera> SceneCamera;
+	glm::vec3 ObjectLocation = glm::vec3(0.0f);
 };
 
 SandboxApplication::SandboxApplication()

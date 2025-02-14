@@ -16,13 +16,14 @@ void Renderer::EndScene()
 {
 }
 
-void Renderer::Submit(const VertexArray& inVertexArray, const ShaderProgram& inShaderProgram)
+void Renderer::Submit(const VertexArray& inVertexArray, const ShaderProgram& inShaderProgram, const glm::mat4& transform)
 {
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::Submit. TheSceneData was nullptr")
 
 	inShaderProgram.Bind();
 	inVertexArray.Bind();
 	inShaderProgram.UploadUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
+	inShaderProgram.UploadUniform("u_ObjectTransform", transform);
 	if (const std::shared_ptr<RendererAPI>& rendererAPI = RendererAPI::GetTheRendererAPI())
 	{
 		rendererAPI->DrawIndexed(inVertexArray);

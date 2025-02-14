@@ -22,7 +22,7 @@ public:
 
 	static void BeginScene(const Camera& inCamera);
 	static void EndScene();
-	static void Submit(const VertexArray& inVertexArray, const ShaderProgram& inShaderProgram);
+	static void Submit(const VertexArray& inVertexArray, const ShaderProgram& inShaderProgram, const glm::mat4& transform = glm::mat4(1.0f));
 
 	static std::shared_ptr<SceneData> TheSceneData;
 };
