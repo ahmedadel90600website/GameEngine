@@ -23,6 +23,11 @@ void ShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat
 	glUniformMatrix4fv(glGetUniformLocation(ProgramID, uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
+void ShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec4& vector) const
+{
+	glUniform4f(glGetUniformLocation(ProgramID, uniformName.c_str()), vector.x, vector.y, vector.z, vector.a);
+}
+
 void ShaderProgram::Bind() const
 {
 	glUseProgram(ProgramID);

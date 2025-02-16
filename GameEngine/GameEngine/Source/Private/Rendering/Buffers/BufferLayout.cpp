@@ -5,7 +5,7 @@
 BufferElement::BufferElement(const std::string& name, const EShaderDataType dataType, bool isNormalized) :
 	Name(name),
 	DataType(dataType),
-	bIsNormalized(isNormalized)
+	bShouldNormalize(isNormalized)
 
 {
 }

@@ -15,6 +15,7 @@ public:
 	inline uint32_t GetProgramID() const { return ProgramID; }
 
 	void UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform) const;
+	void UploadUniform(const std::string& uniformName, const glm::vec4& vector) const;
 	void Bind() const;
 	void UnBind() const;
 

@@ -36,10 +36,10 @@ void OpenGLVertexArray::BindVertexBuffer(const std::shared_ptr<VertexBuffer>& in
 	inVertexBufferRef.Bind();
 	for (uint16_t i = 0; i < bufferElementsCount; ++i)
 	{
-		const  BufferElement& currentAttribute = bufferElements[i];
+		const BufferElement& currentAttribute = bufferElements[i];
 		glEnableVertexAttribArray(i);
 		// GL_FLOAT should be converted from EShaderDataType
-		glVertexAttribPointer(i, currentAttribute.GetNumberOfElements(), GL_FLOAT, currentAttribute.bIsNormalized, layout.GetStrideSize(), (const void*)(currentAttribute.Offset));
+		glVertexAttribPointer(i, currentAttribute.GetNumberOfElements(), GL_FLOAT, currentAttribute.bShouldNormalize, layout.GetStrideSize(), (const void*)(currentAttribute.Offset));
 	}
 
 	VertexBuffers.push_back(inVertexBuffer);

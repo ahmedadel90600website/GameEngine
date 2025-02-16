@@ -23,10 +23,11 @@ public:
 	TestOverlay()
 	{
 		constexpr int vertexSize = 7;
-		float vertices[3 * vertexSize] = {
+		float vertices[4 * vertexSize] = {
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
+			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f
 		};
 
 		SceneCamera = std::make_shared<Camera>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
@@ -53,10 +54,10 @@ public:
 	layout(location = 0) out vec4 a_color;
 	
 	in vec4 v_Color;
-
+	uniform vec4 u_TheColor;
 	void main()
 	{
-		a_color = v_Color;
+		a_color = u_TheColor;
 	}
 )";
 
@@ -72,7 +73,8 @@ public:
 		BufferLayout layout(bufferElements);
 		TheVertexBuffer->SetLayout(layout);
 
-		uint32_t indices[3] = { 0, 2, 1 };
+		uint32_t indices[] = { 0, 1, 2, 2, 3, 0 };
+		//uint32_t indices[] = { 0, 3, 2, 2, 1, 0 }; // Clock wise
 		TheIndexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 
 		VertexArray& vertexArrayRef = *TheVertexArray;
@@ -97,7 +99,6 @@ private:
 		renderingAPIRef.Clear();
 
 		Renderer::BeginScene(*SceneCamera);
-		vertexArrayRef.UnBind();
 
 		Camera& cameraRef = *SceneCamera;
 		const glm::vec3& currentLocation = cameraRef.GetLocation();
@@ -152,7 +153,22 @@ private:
 			ObjectLocation.y -= cameraSpeed;
 		}
 
-		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation));
+		const glm::mat4& scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
+		for (int i = 0; i < 10; ++i)
+		{
+			const glm::vec3& finalLocation = ObjectLocation + glm::vec3(i * 0.11f, 0.0f, 0.0f);
+			const glm::mat4& finalTransform = glm::translate(glm::mat4(1.0f), finalLocation) * scaleMatrix;
+			if (i % 2 == 0)
+			{
+				TheShaderProgram->UploadUniform("u_TheColor", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+			}
+			else
+			{
+				TheShaderProgram->UploadUniform("u_TheColor", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+			}
+			
+			Renderer::Submit(vertexArrayRef, *TheShaderProgram, finalTransform);
+		}
 
 		Renderer::EndScene();
 	}

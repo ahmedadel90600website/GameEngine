@@ -25,7 +25,7 @@ struct BufferElement
 	std::string Name = "";
 	uint16_t Offset = 0;
 	EShaderDataType DataType = EShaderDataType::NONE;
-	uint8_t bIsNormalized : 1;
+	uint8_t bShouldNormalize : 1;
 };
 
 class BufferLayout

@@ -5,6 +5,12 @@
 // Third party
 #include "glad/glad.h"
 
+OpenGLRendererAPI::OpenGLRendererAPI()
+{
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+}
+
 void OpenGLRendererAPI::SetClearColor(const glm::vec4& inClearColor) const
 {
 	glClearColor(inClearColor.r, inClearColor.g, inClearColor.b, inClearColor.a);
