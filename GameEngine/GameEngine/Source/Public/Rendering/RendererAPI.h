@@ -15,6 +15,7 @@ class RendererAPI
 {
 public:
 
+	virtual ~RendererAPI() {}
 	static const std::shared_ptr<RendererAPI>& GetTheRendererAPI();
 	inline static ERendererAPIType GetTheRendererAPIType() { return APIType; }
 

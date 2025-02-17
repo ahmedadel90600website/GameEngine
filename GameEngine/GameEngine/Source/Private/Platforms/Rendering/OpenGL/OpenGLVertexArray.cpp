@@ -11,6 +11,11 @@ OpenGLVertexArray::OpenGLVertexArray()
 	glGenVertexArrays(1, &Handle);
 }
 
+OpenGLVertexArray::~OpenGLVertexArray()
+{
+	UnBind();
+}
+
 void OpenGLVertexArray::Bind() const
 {
 	glBindVertexArray(Handle);
@@ -43,9 +48,6 @@ void OpenGLVertexArray::BindVertexBuffer(const std::shared_ptr<VertexBuffer>& in
 	}
 
 	VertexBuffers.push_back(inVertexBuffer);
-
-	UnBind();
-	inVertexBufferRef.UnBind();
 }
 
 void OpenGLVertexArray::BindIndexBuffer(const std::shared_ptr<IndexBuffer>& inIndexBuffer)
@@ -53,10 +55,5 @@ void OpenGLVertexArray::BindIndexBuffer(const std::shared_ptr<IndexBuffer>& inIn
 	GameEngine_Assert(inIndexBuffer.get() != nullptr, "Invalid index buffer passed.");
 	TheIndexBuffer = inIndexBuffer;
 	Bind();
-
-	IndexBuffer& indexBufferRef = *TheIndexBuffer;
-	indexBufferRef.Bind();
-
-	UnBind();
-	indexBufferRef.UnBind();
+	TheIndexBuffer->Bind();
 }

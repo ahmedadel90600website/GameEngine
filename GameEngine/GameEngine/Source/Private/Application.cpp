@@ -27,8 +27,8 @@ Application::Application() : bIsRunning(true)
 		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(this, &Application::OnGLFWEvent);
 	}
 
-	TheImGuiOverlayLay = std::make_shared<ImGuiLayer>();
-	PushOverlay(TheImGuiOverlayLay);
+	TheImGuiOverlay = std::make_shared<ImGuiLayer>();
+	PushOverlay(TheImGuiOverlay);
 }
 
 Application::~Application()
@@ -54,13 +54,13 @@ void Application::Run()
 			currentLayer->Tick(DeltaTime);
 		}
 
-		TheImGuiOverlayLay->BeginRendering();
+		TheImGuiOverlay->BeginRendering();
 		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
 		{
 			currentLayer->OnImGuiRender();
 		}
 
-		TheImGuiOverlayLay->EndRendering();
+		TheImGuiOverlay->EndRendering();
 
 		ApplicationWindow->OnUpdate();
 	}

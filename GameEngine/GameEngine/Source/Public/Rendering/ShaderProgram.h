@@ -1,27 +1,13 @@
 #pragma once
-
-#include <string>
-#include <stdint.h>
-
-// Third party
-#include "glm/glm.hpp"
+#include <memory>
 
 class ShaderProgram
 {
 public:
 
-	ShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource);
-	~ShaderProgram();
-	inline uint32_t GetProgramID() const { return ProgramID; }
+	static std::shared_ptr<ShaderProgram> Create(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource);
 
-	void UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform) const;
-	void UploadUniform(const std::string& uniformName, const glm::vec4& vector) const;
-	void Bind() const;
-	void UnBind() const;
-
-private:
-
-	uint32_t CreateAndCompileShader(const int type, const char* const source);
-	void CreateAndCompileShaderProgram(const uint32_t vertexShaderID, const uint32_t fragmentShaderID);
-	uint32_t ProgramID = 0;
+	virtual ~ShaderProgram() {}
+	virtual void Bind() const = 0;
+	virtual void UnBind() const = 0;
 };

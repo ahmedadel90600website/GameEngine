@@ -15,6 +15,8 @@
 #include "Public/Rendering/Renderer.h"
 #include "Public/Input/Input.h"
 #include "Public/Log.h"
+#include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
+#include "glm/gtc/type_ptr.hpp"
 
 class TestOverlay : public OverlayBase
 {
@@ -54,14 +56,14 @@ public:
 	layout(location = 0) out vec4 a_color;
 	
 	in vec4 v_Color;
-	uniform vec4 u_TheColor;
+	uniform vec3 u_TheColor;
 	void main()
 	{
-		a_color = u_TheColor;
+		a_color = vec4(u_TheColor, 1.0f);
 	}
 )";
 
-		TheShaderProgram = std::make_shared<ShaderProgram>(vertexShader, fragmentShader);
+		TheShaderProgram = ShaderProgram::Create(vertexShader, fragmentShader);
 
 		TheVertexArray = VertexArray::Create();
 		GameEngine_Assert(TheVertexArray != nullptr, "Application::Run(). Vertex array was nullptr");
@@ -92,6 +94,14 @@ private:
 			return;
 		}
 
+		const std::shared_ptr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram);
+		if (openGLShaderProgram.get() == nullptr)
+		{
+			Application_LOG(error, "No OpenGL shader created");
+			return;
+		}
+
+		openGLShaderProgram->Bind();
 		VertexArray& vertexArrayRef = *TheVertexArray;
 
 		const RendererAPI& renderingAPIRef = *renderingAPI;
@@ -154,19 +164,11 @@ private:
 		}
 
 		const glm::mat4& scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
+		openGLShaderProgram->UploadUniform("u_TheColor", ObjectColor);
 		for (int i = 0; i < 10; ++i)
 		{
 			const glm::vec3& finalLocation = ObjectLocation + glm::vec3(i * 0.11f, 0.0f, 0.0f);
 			const glm::mat4& finalTransform = glm::translate(glm::mat4(1.0f), finalLocation) * scaleMatrix;
-			if (i % 2 == 0)
-			{
-				TheShaderProgram->UploadUniform("u_TheColor", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-			}
-			else
-			{
-				TheShaderProgram->UploadUniform("u_TheColor", glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-			}
-			
 			Renderer::Submit(vertexArrayRef, *TheShaderProgram, finalTransform);
 		}
 
@@ -175,8 +177,8 @@ private:
 
 	void OnImGuiRender() override
 	{
-		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square_Color", glm::value_ptr(ObjectColor));
 		ImGui::End();
 	}
 
@@ -186,6 +188,7 @@ private:
 	std::shared_ptr<IndexBuffer> TheIndexBuffer = nullptr;
 	std::shared_ptr<Camera> SceneCamera;
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);
+	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 };
 
 SandboxApplication::SandboxApplication()
