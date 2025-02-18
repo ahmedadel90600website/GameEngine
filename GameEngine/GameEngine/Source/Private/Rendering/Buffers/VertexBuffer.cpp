@@ -2,8 +2,9 @@
 #include "Public/Rendering/Buffers/VertexBuffer.h"
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Platforms/Rendering/OpenGL/Buffers/OpenGLVertexBuffer.h"
+#include "Public/Core.h"
 
-std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const float* const vertexData)
+TSharedPtr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const float* const vertexData)
 {
     const ERendererAPIType rendererAPI = RendererAPI::GetTheRendererAPIType();
     if (rendererAPI == ERendererAPIType::NONE)

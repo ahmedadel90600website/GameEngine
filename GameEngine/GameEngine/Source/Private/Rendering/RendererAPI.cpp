@@ -1,12 +1,13 @@
 #include "Public/PCH.h"
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLRendererAPI.h"
+#include "Public/Core.h"
 
 
-std::shared_ptr<RendererAPI> RendererAPI::TheRendererAPI = nullptr;
+TSharedPtr<RendererAPI> RendererAPI::TheRendererAPI = nullptr;
 ERendererAPIType RendererAPI::APIType = ERendererAPIType::OPENGL;
 
-const std::shared_ptr<RendererAPI>& RendererAPI::GetTheRendererAPI()
+const TSharedPtr<RendererAPI>& RendererAPI::GetTheRendererAPI()
 {
 	if (TheRendererAPI == nullptr)
 	{

@@ -22,13 +22,13 @@ public:
 	static const WindowBase& GetWindow();
 
 	// Layer functions
-	void PushLayer(const std::shared_ptr<LayerBase> inLayer);
-	void RemoveLayer(const std::shared_ptr<LayerBase> inLayer);
+	void PushLayer(const TSharedPtr<LayerBase> inLayer);
+	void RemoveLayer(const TSharedPtr<LayerBase> inLayer);
 
-	void PushOverlay(const std::shared_ptr<OverlayBase> inOverlay);
-	void RemoveOverlay(const std::shared_ptr<OverlayBase> inOverlay);
+	void PushOverlay(const TSharedPtr<OverlayBase> inOverlay);
+	void RemoveOverlay(const TSharedPtr<OverlayBase> inOverlay);
 
-	void GatherAllLayers(std::vector<std::shared_ptr<LayerBase>>& outAllLayers);
+	void GatherAllLayers(std::vector<TSharedPtr<LayerBase>>& outAllLayers);
 	// Layer funcitons
 
 private:
@@ -48,12 +48,12 @@ private:
 	void OnWindowClosed(GLFWwindow* closedWindow);
 	void OnWindowResized(GLFWwindow* closedWindow, int width, int height);
 
-	std::vector<std::shared_ptr<LayerBase>> LayersStack;
-	std::vector<std::shared_ptr<OverlayBase>> OverlayStack;
+	std::vector<TSharedPtr<LayerBase>> LayersStack;
+	std::vector<TSharedPtr<OverlayBase>> OverlayStack;
 
 	static Application* ApplicationSingleton;
-	std::unique_ptr<WindowBase> ApplicationWindow = nullptr;
-	std::shared_ptr<ImGuiLayer> TheImGuiOverlay = nullptr;
+	TUniquePtr<WindowBase> ApplicationWindow = nullptr;
+	TSharedPtr<ImGuiLayer> TheImGuiOverlay = nullptr;
 	
 	float TimeLastFrame = 0.0f;
 	float DeltaTime = 0.0f;

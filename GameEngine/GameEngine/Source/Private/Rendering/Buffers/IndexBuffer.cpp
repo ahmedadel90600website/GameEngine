@@ -2,8 +2,9 @@
 #include "Public/Rendering/Buffers/IndexBuffer.h"
 #include "Public/Rendering/RendererAPI.h"
 #include "Public/Platforms/Rendering/OpenGL/Buffers/OpenGLIndexBuffer.h"
+#include "Public/Core.h"
 
-std::shared_ptr<IndexBuffer> IndexBuffer::Create(const uint32_t* const indexData, const uint32_t count)
+TSharedPtr<IndexBuffer> IndexBuffer::Create(const uint32_t* const indexData, const uint32_t count)
 {
     const ERendererAPIType rendererAPI = RendererAPI::GetTheRendererAPIType();
     if (rendererAPI == ERendererAPIType::NONE)

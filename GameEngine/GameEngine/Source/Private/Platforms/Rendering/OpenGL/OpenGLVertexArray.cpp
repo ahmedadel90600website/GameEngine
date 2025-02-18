@@ -2,6 +2,7 @@
 
 #include "Public/Rendering/Buffers/BufferLayout.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLVertexArray.h"
+#include "Public/Core.h"
 
 // Third party
 #include "glad/glad.h"
@@ -26,7 +27,7 @@ void OpenGLVertexArray::UnBind() const
 	glBindVertexArray(0);
 }
 
-void OpenGLVertexArray::BindVertexBuffer(const std::shared_ptr<VertexBuffer>& inVertexBuffer)
+void OpenGLVertexArray::BindVertexBuffer(const TSharedPtr<VertexBuffer>& inVertexBuffer)
 {
 	VertexBuffer* const inVertexBufferRaw = inVertexBuffer.get();
 	GameEngine_Assert(inVertexBufferRaw != nullptr, "OpenGLVertexArray::BindVertexBuffer. Invalid index buffer passed.");
@@ -50,7 +51,7 @@ void OpenGLVertexArray::BindVertexBuffer(const std::shared_ptr<VertexBuffer>& in
 	VertexBuffers.push_back(inVertexBuffer);
 }
 
-void OpenGLVertexArray::BindIndexBuffer(const std::shared_ptr<IndexBuffer>& inIndexBuffer)
+void OpenGLVertexArray::BindIndexBuffer(const TSharedPtr<IndexBuffer>& inIndexBuffer)
 {
 	GameEngine_Assert(inIndexBuffer.get() != nullptr, "Invalid index buffer passed.");
 	TheIndexBuffer = inIndexBuffer;

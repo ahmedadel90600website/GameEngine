@@ -18,5 +18,5 @@ private:
 	virtual bool IsAMouseKeyImplementation(const int inKey) const = 0;
 	virtual glm::vec2 GetMousePositionImplementation() const = 0;
 
-	static std::unique_ptr<Input> InputSingleton;
+	static TUniquePtr<Input> InputSingleton;
 };

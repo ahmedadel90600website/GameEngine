@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Public/Core.h"
 #include <stdint.h>
 
 // Third party
@@ -24,5 +25,5 @@ public:
 	static void EndScene();
 	static void Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& transform = glm::mat4(1.0f));
 
-	static std::shared_ptr<SceneData> TheSceneData;
+	static TSharedPtr<SceneData> TheSceneData;
 };

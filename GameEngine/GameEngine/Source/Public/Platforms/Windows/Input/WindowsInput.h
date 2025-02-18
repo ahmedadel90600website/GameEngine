@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Public/Input/Input.h"
+#include "Public/Core.h"
 
 struct GLFWwindow;
 
@@ -13,5 +14,5 @@ private:
 	virtual glm::vec2 GetMousePositionImplementation() const override;
 	GLFWwindow* GetGLFWWindow() const;
 
-	static std::unique_ptr<Input> InputSingleton;
+	static TUniquePtr<Input> InputSingleton;
 };

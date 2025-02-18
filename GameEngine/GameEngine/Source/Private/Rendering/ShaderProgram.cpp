@@ -5,7 +5,7 @@
 #include "Public/Core.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 
-std::shared_ptr<ShaderProgram> ShaderProgram::Create(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
+TSharedPtr<ShaderProgram> ShaderProgram::Create(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
 	const ERendererAPIType rendererAPIType = RendererAPI::GetTheRendererAPIType();
 	if (rendererAPIType == ERendererAPIType::NONE)

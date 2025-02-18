@@ -3,6 +3,7 @@
 
 // Engine
 #include "Public/EntryPoint.h"
+#include "Public/Core.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
 #include "ImGui/imgui.h"
 #include "Public/Rendering/Cameras/Camera.h"
@@ -88,13 +89,13 @@ private:
 
 	void Tick(const float deltaTime) override
 	{
-		const std::shared_ptr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
+		const TSharedPtr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
 		if (renderingAPI == nullptr)
 		{
 			return;
 		}
 
-		const std::shared_ptr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram);
+		const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram);
 		if (openGLShaderProgram.get() == nullptr)
 		{
 			Application_LOG(error, "No OpenGL shader created");
@@ -182,19 +183,18 @@ private:
 		ImGui::End();
 	}
 
-	std::shared_ptr<ShaderProgram> TheShaderProgram = nullptr;
-	std::shared_ptr<VertexArray> TheVertexArray = nullptr;
-	std::shared_ptr<VertexBuffer> TheVertexBuffer = nullptr;
-	std::shared_ptr<IndexBuffer> TheIndexBuffer = nullptr;
-	std::shared_ptr<Camera> SceneCamera;
+	TSharedPtr<ShaderProgram> TheShaderProgram = nullptr;
+	TSharedPtr<VertexArray> TheVertexArray = nullptr;
+	TSharedPtr<VertexBuffer> TheVertexBuffer = nullptr;
+	TSharedPtr<IndexBuffer> TheIndexBuffer = nullptr;
+	TSharedPtr<Camera> SceneCamera;
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 };
 
 SandboxApplication::SandboxApplication()
 {
-	PushOverlay(static_cast<std::unique_ptr<TestOverlay>>(new TestOverlay()));
-
+	PushOverlay(static_cast<TUniquePtr<TestOverlay>>(new TestOverlay()));
 }
 
 SandboxApplication::~SandboxApplication()

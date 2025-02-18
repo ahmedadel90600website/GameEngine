@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include "Public/Core.h"
 #include "glm/glm.hpp"
 
 class VertexArray;
@@ -16,7 +16,7 @@ class RendererAPI
 public:
 
 	virtual ~RendererAPI() {}
-	static const std::shared_ptr<RendererAPI>& GetTheRendererAPI();
+	static const TSharedPtr<RendererAPI>& GetTheRendererAPI();
 	inline static ERendererAPIType GetTheRendererAPIType() { return APIType; }
 
 	virtual void SetClearColor(const glm::vec4& inClearColor) const = 0;
@@ -25,6 +25,6 @@ public:
 
 private:
 
-	static std::shared_ptr<RendererAPI> TheRendererAPI;
+	static TSharedPtr<RendererAPI> TheRendererAPI;
 	static ERendererAPIType APIType;
 };

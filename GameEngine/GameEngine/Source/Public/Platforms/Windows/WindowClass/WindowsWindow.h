@@ -3,6 +3,7 @@
 #include "Public/WindowClass/WindowBase.h"
 #include "Public/WindowClass/Structs/WindowProps.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
+#include "Public/Core.h"
 
 struct GLFWwindow;
 
@@ -31,5 +32,5 @@ private:
 	void ShutDown();
 
 	GLFWwindow* TheGLFWWindow = nullptr;
-	std::unique_ptr<GraphicsContext> TheGraphicsContext = nullptr;
+	TUniquePtr<GraphicsContext> TheGraphicsContext = nullptr;
 };

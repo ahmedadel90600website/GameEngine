@@ -1,6 +1,7 @@
 #include "Public/PCH.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLRendererAPI.h"
 #include "Public/Rendering/VertexArray.h"
+#include "Public/Core.h"
 
 // Third party
 #include "glad/glad.h"
@@ -23,7 +24,7 @@ void OpenGLRendererAPI::Clear() const
 
 void OpenGLRendererAPI::DrawIndexed(const VertexArray& inVertexArray) const
 {
-	const std::shared_ptr<IndexBuffer>& indexBuffer = inVertexArray.GetTheIndexBuffer();
+	const TSharedPtr<IndexBuffer>& indexBuffer = inVertexArray.GetTheIndexBuffer();
 	if (indexBuffer.get() == nullptr)
 	{
 		GameEngine_Assert(false, "OpenGLRendererAPI::DrawIndexed. Index buffer is invalid");

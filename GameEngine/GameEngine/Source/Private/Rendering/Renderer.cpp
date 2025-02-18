@@ -6,8 +6,9 @@
 #include "Public/Rendering/VertexArray.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 #include "Public/log.h"
+#include "Public/Core.h"
 
-std::shared_ptr<Renderer::SceneData> Renderer::TheSceneData = std::make_shared<Renderer::SceneData>();
+TSharedPtr<Renderer::SceneData> Renderer::TheSceneData = std::make_shared<Renderer::SceneData>();
 void Renderer::BeginScene(const Camera& inCamera)
 {
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::BeginScene. TheSceneData was nullptr")
@@ -33,7 +34,7 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 	inVertexArray.Bind();
 	openGLShaderProgramRaw->UploadUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
 	openGLShaderProgramRaw->UploadUniform("u_ObjectTransform", transform);
-	if (const std::shared_ptr<RendererAPI>& rendererAPI = RendererAPI::GetTheRendererAPI())
+	if (const TSharedPtr<RendererAPI>& rendererAPI = RendererAPI::GetTheRendererAPI())
 	{
 		rendererAPI->DrawIndexed(inVertexArray);
 	}

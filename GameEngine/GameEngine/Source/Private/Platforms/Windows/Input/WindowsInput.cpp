@@ -2,11 +2,12 @@
 #include "Public/Platforms/Windows/Input/WindowsInput.h"
 #include "Public/Application.h"
 #include "Public/WindowClass/WindowBase.h"
+#include "Public/Core.h"
 
 // Third party
 #include "GLFW/glfw3.h"
 
-std::unique_ptr<Input> Input::InputSingleton = static_cast<std::unique_ptr<Input>>(new WindowsInput());
+TUniquePtr<Input> Input::InputSingleton = static_cast<TUniquePtr<Input>>(new WindowsInput());
 
 bool WindowsInput::IsKeyDownImplementation(const int inKey) const
 {

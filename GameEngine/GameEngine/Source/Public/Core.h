@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Public/Log.h"
+#include <memory>
 
 #ifdef GameEngine_Platform_Windows
 	#ifdef GameEngine_ENABLE_DLL
@@ -27,3 +28,9 @@
 	#define GameEngine_Assert(x, ...)
 
 #endif
+
+template<class T>
+using TSharedPtr = std::shared_ptr<T>;
+
+template<class T>
+using TUniquePtr = std::unique_ptr<T>;

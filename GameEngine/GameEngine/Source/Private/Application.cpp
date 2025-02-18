@@ -8,6 +8,7 @@
 #include "Public/Layers/Overlays/OverlayBase.h"
 
 #include <stdint.h>
+#include "Public/Core.h"
 
 // Third party
 #include "glfw/glfw3.h"
@@ -21,7 +22,7 @@ Application::Application() : bIsRunning(true)
 
 	ApplicationSingleton = this;
 
-	ApplicationWindow = static_cast<std::unique_ptr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
+	ApplicationWindow = static_cast<TUniquePtr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
 	if (ApplicationWindow != nullptr)
 	{
 		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(this, &Application::OnGLFWEvent);
@@ -47,15 +48,15 @@ void Application::Run()
 		const float currentTime = (float) glfwGetTime();
 		DeltaTime = currentTime - TimeLastFrame;
 		TimeLastFrame = currentTime;
-		std::vector<std::shared_ptr<LayerBase>> allLayers;
+		std::vector<TSharedPtr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);
-		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
+		for (const TSharedPtr<LayerBase> currentLayer : allLayers)
 		{
 			currentLayer->Tick(DeltaTime);
 		}
 
 		TheImGuiOverlay->BeginRendering();
-		for (const std::shared_ptr<LayerBase> currentLayer : allLayers)
+		for (const TSharedPtr<LayerBase> currentLayer : allLayers)
 		{
 			currentLayer->OnImGuiRender();
 		}
@@ -76,7 +77,7 @@ const WindowBase& Application::GetWindow()
 	return *(ApplicationSingleton->ApplicationWindow.get());
 }
 
-void Application::PushLayer(const std::shared_ptr<LayerBase> inLayer)
+void Application::PushLayer(const TSharedPtr<LayerBase> inLayer)
 {
 	if (inLayer == nullptr)
 	{
@@ -88,7 +89,7 @@ void Application::PushLayer(const std::shared_ptr<LayerBase> inLayer)
 	inLayer->OnAttached();
 }
 
-void Application::RemoveLayer(const std::shared_ptr<LayerBase> inLayer)
+void Application::RemoveLayer(const TSharedPtr<LayerBase> inLayer)
 {
 	if (inLayer == nullptr)
 	{
@@ -96,8 +97,8 @@ void Application::RemoveLayer(const std::shared_ptr<LayerBase> inLayer)
 		return;
 	}
 
-	const std::vector<std::shared_ptr<LayerBase>>::iterator& layersStackEnd = LayersStack.end();
-	const std::vector<std::shared_ptr<LayerBase>>::iterator& foundLayer = std::find(LayersStack.begin(), layersStackEnd, inLayer);
+	const std::vector<TSharedPtr<LayerBase>>::iterator& layersStackEnd = LayersStack.end();
+	const std::vector<TSharedPtr<LayerBase>>::iterator& foundLayer = std::find(LayersStack.begin(), layersStackEnd, inLayer);
 	if (foundLayer != layersStackEnd)
 	{
 
@@ -107,7 +108,7 @@ void Application::RemoveLayer(const std::shared_ptr<LayerBase> inLayer)
 	}
 }
 
-void Application::PushOverlay(const std::shared_ptr<OverlayBase> inOverlay)
+void Application::PushOverlay(const TSharedPtr<OverlayBase> inOverlay)
 {
 	if (inOverlay == nullptr)
 	{
@@ -119,7 +120,7 @@ void Application::PushOverlay(const std::shared_ptr<OverlayBase> inOverlay)
 	inOverlay->OnAttached();
 }
 
-void Application::RemoveOverlay(const std::shared_ptr<OverlayBase> inOverlay)
+void Application::RemoveOverlay(const TSharedPtr<OverlayBase> inOverlay)
 {
 	if (inOverlay == nullptr)
 	{
@@ -127,8 +128,8 @@ void Application::RemoveOverlay(const std::shared_ptr<OverlayBase> inOverlay)
 		return;
 	}
 
-	const std::vector<std::shared_ptr<OverlayBase>>::iterator& overlayStackEnd = OverlayStack.end();
-	const std::vector<std::shared_ptr<OverlayBase>>::iterator& foundOverLay = std::find(OverlayStack.begin(), overlayStackEnd, inOverlay);
+	const std::vector<TSharedPtr<OverlayBase>>::iterator& overlayStackEnd = OverlayStack.end();
+	const std::vector<TSharedPtr<OverlayBase>>::iterator& foundOverLay = std::find(OverlayStack.begin(), overlayStackEnd, inOverlay);
 	if (foundOverLay != overlayStackEnd)
 	{
 
@@ -138,7 +139,7 @@ void Application::RemoveOverlay(const std::shared_ptr<OverlayBase> inOverlay)
 	}
 }
 
-void Application::GatherAllLayers(std::vector<std::shared_ptr<LayerBase>>& outAllLayers)
+void Application::GatherAllLayers(std::vector<TSharedPtr<LayerBase>>& outAllLayers)
 {
 	outAllLayers.clear();
 	outAllLayers.reserve(LayersStack.size() + OverlayStack.size());
@@ -154,13 +155,13 @@ void Application::OnGLFWEvent(FEventDataBase& inEvent)
 		OnWindowClosed(windowClosedEventData->TheGLFWWindow);
 	}
 
-	std::vector<std::shared_ptr<LayerBase>> allLayers;
+	std::vector<TSharedPtr<LayerBase>> allLayers;
 	GatherAllLayers(allLayers);
 
 	const int numberOfLayers = static_cast<int>(allLayers.size());
 	for (int i = numberOfLayers - 1; i >= 0; --i)
 	{
-		if (const std::shared_ptr<LayerBase> currentLayer = allLayers[i])
+		if (const TSharedPtr<LayerBase> currentLayer = allLayers[i])
 		{
 			currentLayer->OnEvent(inEvent);
 			// Make the layer consume the event.
