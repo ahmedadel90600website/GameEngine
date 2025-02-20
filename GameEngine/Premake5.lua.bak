@@ -38,7 +38,9 @@ project "GameEngine"
         "%{prj.name}/Source/Public/**.h",
         "%{prj.name}/Source/Private/**.cpp",
 		"%{prj.name}/ThirdParty/GLM/glm/**.hpp",
-        "%{prj.name}/ThirdParty/GLM/glm/**.inl"
+        "%{prj.name}/ThirdParty/GLM/glm/**.inl",
+        "%{prj.name}/ThirdParty/stb_image/**.h",
+        "%{prj.name}/ThirdParty/stb_image/**.cpp"
     }
 
     pchheader "Public/PCH.h"
@@ -50,7 +52,7 @@ project "GameEngine"
         "%{prj.name}/ThirdParty/GLFW/include",
         "%{prj.name}/ThirdParty/GLAD/include",
         "%{prj.name}/ThirdParty",
-        "%{prj.name}/ThirdParty/GLM"
+        "%{prj.name}/ThirdParty/GLM",
     }
 
     filter "system:windows"
@@ -65,7 +67,7 @@ project "GameEngine"
         }
 
     filter "configurations:Debug"
-        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled", _CRT_SECURE_NO_WARNINGS}
+        defines {"GameEngine_Debug", "GameEngine_AssertsEnabled", "_CRT_SECURE_NO_WARNINGS"}
         symbols "On"
 		runtime "Debug"
 

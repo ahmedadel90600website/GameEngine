@@ -38,7 +38,9 @@ project "GameEngine"
         "%{prj.name}/Source/Public/**.h",
         "%{prj.name}/Source/Private/**.cpp",
 		"%{prj.name}/ThirdParty/GLM/glm/**.hpp",
-        "%{prj.name}/ThirdParty/GLM/glm/**.inl"
+        "%{prj.name}/ThirdParty/GLM/glm/**.inl",
+        "%{prj.name}/ThirdParty/stb_image/**.h",
+        "%{prj.name}/ThirdParty/stb_image/**.cpp"
     }
 
     pchheader "Public/PCH.h"

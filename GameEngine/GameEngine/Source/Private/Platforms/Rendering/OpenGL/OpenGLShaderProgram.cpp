@@ -27,6 +27,11 @@ void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const gl
 	glUniformMatrix4fv(GetUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
+void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const int32_t inInteger)
+{
+	glUniform1i(GetUniformLocation(uniformName.c_str()), inInteger);
+}
+
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const float inFloat)
 {
 	glUniform1f(GetUniformLocation(uniformName.c_str()), inFloat);

@@ -5,7 +5,6 @@
 #include "Public/EntryPoint.h"
 #include "Public/Core.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
-#include "ImGui/imgui.h"
 #include "Public/Rendering/Cameras/Camera.h"
 #include "Public/Rendering/Buffers/VertexBuffer.h"
 #include "Public/Rendering/Buffers/IndexBuffer.h"
@@ -17,6 +16,10 @@
 #include "Public/Input/Input.h"
 #include "Public/Log.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
+#include "Public/Rendering/Textures/Texture2D.h"
+
+// Third party
+#include "ImGui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
 
 class TestOverlay : public OverlayBase
@@ -25,12 +28,11 @@ public:
 
 	TestOverlay()
 	{
-		constexpr int vertexSize = 7;
-		float vertices[4 * vertexSize] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f
+		float vertices[] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		SceneCamera = std::make_shared<Camera>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
@@ -38,15 +40,15 @@ public:
 		const std::string& vertexShader = R"(
 	#version 460 core
 	layout(location = 0) in vec3 a_Position;
-	layout(location = 1) in vec4 a_Color;
+	layout(location = 1) in vec2 a_TextureCoordinates;
 	
-	out vec4 v_Color;
-
+	out vec2 v_TextureCoordinates;
+	
 	uniform mat4 u_ViewProjection;
 	uniform mat4 u_ObjectTransform;
 	void main()
 	{
-		v_Color = a_Color;
+		v_TextureCoordinates = a_TextureCoordinates;
 		gl_Position = u_ViewProjection * u_ObjectTransform * vec4(a_Position, 1.0f);
 	}
 )";
@@ -56,11 +58,13 @@ public:
 	#version 460 core
 	layout(location = 0) out vec4 a_color;
 	
-	in vec4 v_Color;
+	in vec2 v_TextureCoordinates;
+
 	uniform vec3 u_TheColor;
+	uniform sampler2D u_TextureSlot;
 	void main()
 	{
-		a_color = vec4(u_TheColor, 1.0f);
+		a_color = texture(u_TextureSlot, v_TextureCoordinates);
 	}
 )";
 
@@ -72,7 +76,7 @@ public:
 		TheVertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices);
 		std::vector<BufferElement> bufferElements;
 		bufferElements.emplace_back("a_Position", EShaderDataType::FLOAT3, false);
-		bufferElements.emplace_back("a_Color", EShaderDataType::FLOAT4, false);
+		bufferElements.emplace_back("a_TextureCoordinates", EShaderDataType::FLOAT2, false);
 		BufferLayout layout(bufferElements);
 		TheVertexBuffer->SetLayout(layout);
 
@@ -83,6 +87,12 @@ public:
 		VertexArray& vertexArrayRef = *TheVertexArray;
 		vertexArrayRef.BindVertexBuffer(TheVertexBuffer);
 		vertexArrayRef.BindIndexBuffer(TheIndexBuffer);
+
+		The2DTexture = Texture2D::Create("Content/Textures/CJ.png");
+		if (const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram))
+		{
+			openGLShaderProgram->UploadUniform("u_TextureSlot", 0);
+		}
 	}
 
 private:
@@ -164,14 +174,16 @@ private:
 			ObjectLocation.y -= cameraSpeed;
 		}
 
-		const glm::mat4& scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
-		openGLShaderProgram->UploadUniform("u_TheColor", ObjectColor);
-		for (int i = 0; i < 10; ++i)
-		{
-			const glm::vec3& finalLocation = ObjectLocation + glm::vec3(i * 0.11f, 0.0f, 0.0f);
-			const glm::mat4& finalTransform = glm::translate(glm::mat4(1.0f), finalLocation) * scaleMatrix;
-			Renderer::Submit(vertexArrayRef, *TheShaderProgram, finalTransform);
-		}
+		//openGLShaderProgram->UploadUniform("u_TheColor", ObjectColor);
+		//for (int i = 0; i < 10; ++i)
+		//{
+		//	const glm::vec3& finalLocation = ObjectLocation + glm::vec3(i * 0.11f, 0.0f, 0.0f);
+		//	const glm::mat4& finalTransform = glm::translate(glm::mat4(1.0f), finalLocation) * scaleMatrix;
+		//	Renderer::Submit(vertexArrayRef, *TheShaderProgram, finalTransform);
+		//}
+
+		The2DTexture->Bind();
+		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation));
 
 		Renderer::EndScene();
 	}
@@ -188,6 +200,7 @@ private:
 	TSharedPtr<VertexBuffer> TheVertexBuffer = nullptr;
 	TSharedPtr<IndexBuffer> TheIndexBuffer = nullptr;
 	TSharedPtr<Camera> SceneCamera;
+	TSharedPtr<Texture2D> The2DTexture;
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 };

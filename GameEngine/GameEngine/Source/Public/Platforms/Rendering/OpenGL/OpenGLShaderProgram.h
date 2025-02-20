@@ -19,6 +19,7 @@ public:
 	void UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform);
 	void UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform);
 
+	void UploadUniform(const std::string& uniformName, const int32_t inInteger);
 	void UploadUniform(const std::string& uniformName, const float inFloat);
 	void UploadUniform(const std::string& uniformName, const glm::vec2& vector);
 	void UploadUniform(const std::string& uniformName, const glm::vec3& vector);
