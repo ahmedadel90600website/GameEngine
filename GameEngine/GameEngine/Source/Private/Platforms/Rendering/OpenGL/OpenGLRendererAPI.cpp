@@ -12,6 +12,12 @@ OpenGLRendererAPI::OpenGLRendererAPI()
 	glCullFace(GL_BACK);
 }
 
+void OpenGLRendererAPI::Init()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
 void OpenGLRendererAPI::SetClearColor(const glm::vec4& inClearColor) const
 {
 	glClearColor(inClearColor.r, inClearColor.g, inClearColor.b, inClearColor.a);

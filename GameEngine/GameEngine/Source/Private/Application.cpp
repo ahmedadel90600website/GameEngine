@@ -6,6 +6,7 @@
 
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
+#include "Public/Rendering/Renderer.h"
 
 #include <stdint.h>
 #include "Public/Core.h"
@@ -28,6 +29,7 @@ Application::Application() : bIsRunning(true)
 		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(this, &Application::OnGLFWEvent);
 	}
 
+	Renderer::Init();
 	TheImGuiOverlay = std::make_shared<ImGuiLayer>();
 	PushOverlay(TheImGuiOverlay);
 }

@@ -11,7 +11,7 @@
 #include "Public/Rendering/Buffers/BufferLayout.h"
 #include "Public/Rendering/VertexArray.h"
 #include "Public/Rendering/ShaderProgram.h"
-#include "Public/Rendering/RendererAPI.h"
+#include "Public/Rendering/RenderCommand.h"
 #include "Public/Rendering/Renderer.h"
 #include "Public/Input/Input.h"
 #include "Public/Log.h"
@@ -89,6 +89,7 @@ public:
 		vertexArrayRef.BindIndexBuffer(TheIndexBuffer);
 
 		The2DTexture = Texture2D::Create("Content/Textures/CJ.png");
+		The2DTextureTest = Texture2D::Create("Content/Textures/BigSmoke.png");
 		if (const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram))
 		{
 			openGLShaderProgram->UploadUniform("u_TextureSlot", 0);
@@ -99,7 +100,7 @@ private:
 
 	void Tick(const float deltaTime) override
 	{
-		const TSharedPtr<RendererAPI>& renderingAPI = RendererAPI::GetTheRendererAPI();
+		const TSharedPtr<RendererAPI>& renderingAPI = RenderCommand::GetTheRendererAPI();
 		if (renderingAPI == nullptr)
 		{
 			return;
@@ -116,8 +117,8 @@ private:
 		VertexArray& vertexArrayRef = *TheVertexArray;
 
 		const RendererAPI& renderingAPIRef = *renderingAPI;
-		renderingAPIRef.SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
-		renderingAPIRef.Clear();
+		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
+		RenderCommand::Clear();
 
 		Renderer::BeginScene(*SceneCamera);
 
@@ -185,6 +186,9 @@ private:
 		The2DTexture->Bind();
 		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation));
 
+		The2DTextureTest->Bind();
+		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation + glm::vec3(0.5f, 0.5f, 0.0f)));
+
 		Renderer::EndScene();
 	}
 
@@ -201,6 +205,7 @@ private:
 	TSharedPtr<IndexBuffer> TheIndexBuffer = nullptr;
 	TSharedPtr<Camera> SceneCamera;
 	TSharedPtr<Texture2D> The2DTexture;
+	TSharedPtr<Texture2D> The2DTextureTest;
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 };

@@ -15,13 +15,29 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
 	Width = width;
 	Height = height;
 
+	uint32_t textureStoreFormat = 0;
+	uint32_t textureDrawFormat = 0;
+	if (channels == 3)
+	{
+		textureStoreFormat = GL_RGB8;
+		textureDrawFormat = GL_RGB;
+	}
+	else if (channels == 4)
+	{
+		textureStoreFormat = GL_RGBA8;
+		textureDrawFormat = GL_RGBA;
+	}
+
+	GameEngine_Assert(textureStoreFormat != 0 && textureDrawFormat != 0, "OpenGLTexture2D::OpenGLTexture2D, unsupported number of channels for texture.");
+
 	glCreateTextures(GL_TEXTURE_2D, 1, &TextureID);
-	glTextureStorage2D(TextureID, 1, GL_RGBA8, Width, Height);
+	glTextureStorage2D(TextureID, 1, textureStoreFormat, Width, Height);
 
-	glTextureParameteri(TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	uint32_t colorInterType = GL_LINEAR;
+	glTextureParameteri(TextureID, GL_TEXTURE_MIN_FILTER, colorInterType);
+	glTextureParameteri(TextureID, GL_TEXTURE_MAG_FILTER, colorInterType);
 
-	glTextureSubImage2D(TextureID, 0, 0, 0, Width, Height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTextureSubImage2D(TextureID, 0, 0, 0, Width, Height, textureDrawFormat, GL_UNSIGNED_BYTE, data);
 
 	stbi_image_free(data);
 }

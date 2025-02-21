@@ -92,15 +92,6 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 		IsGLFWInitialized = true;
 	}
 
-	/* The the profile to core profile
-	// Set OpenGL version to 4.6 (or any version you want)
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	
-	// Request core profile
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	*/
-
 	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
 	if (RendererAPI::GetTheRendererAPIType() == ERendererAPIType::OPENGL)
 	{

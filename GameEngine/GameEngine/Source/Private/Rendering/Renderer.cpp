@@ -1,6 +1,6 @@
 #include "Public/PCH.h"
 #include "Public/Rendering/Renderer.h"
-#include "Public/Rendering/RendererAPI.h"
+#include "Public/Rendering/RenderCommand.h"
 #include "Public/Rendering/Cameras/Camera.h"
 #include "Public/Rendering/ShaderProgram.h"
 #include "Public/Rendering/VertexArray.h"
@@ -34,8 +34,5 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 	inVertexArray.Bind();
 	openGLShaderProgramRaw->UploadUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
 	openGLShaderProgramRaw->UploadUniform("u_ObjectTransform", transform);
-	if (const TSharedPtr<RendererAPI>& rendererAPI = RendererAPI::GetTheRendererAPI())
-	{
-		rendererAPI->DrawIndexed(inVertexArray);
-	}
+	RenderCommand::DrawIndexed(inVertexArray);
 }

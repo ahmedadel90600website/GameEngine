@@ -16,15 +16,14 @@ class RendererAPI
 public:
 
 	virtual ~RendererAPI() {}
-	static const TSharedPtr<RendererAPI>& GetTheRendererAPI();
 	inline static ERendererAPIType GetTheRendererAPIType() { return APIType; }
 
+	virtual void Init() = 0;
 	virtual void SetClearColor(const glm::vec4& inClearColor) const = 0;
 	virtual void Clear() const = 0;
 	virtual void DrawIndexed(const VertexArray& inVertexArray) const = 0;
 
 private:
 
-	static TSharedPtr<RendererAPI> TheRendererAPI;
 	static ERendererAPIType APIType;
 };
