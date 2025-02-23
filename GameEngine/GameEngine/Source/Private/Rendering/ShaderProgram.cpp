@@ -5,6 +5,23 @@
 #include "Public/Core.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 
+TSharedPtr<ShaderProgram> ShaderProgram::Create(const std::string& inShaderFilePath)
+{
+	const ERendererAPIType rendererAPIType = RendererAPI::GetTheRendererAPIType();
+	if (rendererAPIType == ERendererAPIType::NONE)
+	{
+		GameEngine_Assert(false, "ShaderProgram::Create no API specified");
+		return nullptr;
+	}
+	else if (rendererAPIType == ERendererAPIType::OPENGL)
+	{
+		return std::make_shared<OpenGLShaderProgram>(inShaderFilePath);
+	}
+
+	GameEngine_Assert(false, "ShaderProgram::Create. Unsupported API");
+	return nullptr;
+}
+
 TSharedPtr<ShaderProgram> ShaderProgram::Create(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
 	const ERendererAPIType rendererAPIType = RendererAPI::GetTheRendererAPIType();

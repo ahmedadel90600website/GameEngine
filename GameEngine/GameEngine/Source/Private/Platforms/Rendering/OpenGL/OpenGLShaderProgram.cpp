@@ -1,20 +1,95 @@
 #include "Public/PCH.h"
+#include "Public/Core.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
+#include <stdint.h>
+#include <fstream>
 
 // Third party
 #include "glad/glad.h"
 #include "glm/gtc/type_ptr.hpp"
 
+OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
+{
+	std::unordered_map<uint32_t, std::string> shaderSources;
+
+	std::string result;
+	std::ifstream in(inShaderFilePath, std::ios::in | std::ios::binary);
+	if (in)
+	{
+		in.seekg(0, std::ios::end);
+		result.resize(in.tellg());
+		in.seekg(0, std::ios::beg);
+		in.read(&result[0], result.size());
+		in.close();
+	}
+	else
+	{
+		GameEngine_LOG(error, "Could not open file '{0}'", inShaderFilePath);
+		return;
+	}
+
+	const char* const typeToken = "#type";
+	const size_t typeTokenSize = strlen(typeToken);
+	size_t pos = result.find(typeToken, 0);
+	while (pos != std::string::npos)
+	{
+		const size_t lineEnd = result.find_first_of("\r\n", pos);
+		GameEngine_Assert(lineEnd != std::string::npos, "Syntax error");
+
+		const size_t typeTokenEnd = pos + typeTokenSize;
+		const size_t beginingOfType = result.find_first_not_of(" ", typeTokenEnd);
+
+		const std::string& finalTypeAsString = result.substr(beginingOfType, lineEnd - beginingOfType);
+
+		uint32_t shaderType = GetShaderTypeFromString(finalTypeAsString);
+		GameEngine_Assert(shaderType != 0, "Invalid shader type specified");
+		
+		const size_t nextLinePos = result.find_first_not_of("\r\n", lineEnd);
+		pos = result.find(typeToken, nextLinePos);
+		
+		shaderSources[shaderType] = result.substr(
+			nextLinePos,
+			pos - (nextLinePos == std::string::npos ? result.size() - 1 : nextLinePos)
+		);
+	}
+
+	std::vector<uint32_t> shaders;
+	shaders.reserve(shaderSources.size());
+	for (const std::pair<uint32_t, std::string>& currentShaderTypeAndSource : shaderSources)
+	{
+		shaders.push_back(CreateAndCompileShader(currentShaderTypeAndSource.first, currentShaderTypeAndSource.second.c_str()));
+	}
+
+	CreateAndCompileShaderProgram(shaders);
+}
+
 OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
-	const unsigned int vertexShader = CreateAndCompileShader(GL_VERTEX_SHADER, inVertexShaderSource.c_str());
-	const unsigned int fragmentShader = CreateAndCompileShader(GL_FRAGMENT_SHADER, inFragmentShaderSource.c_str());
-	CreateAndCompileShaderProgram(vertexShader, fragmentShader);
+	std::vector<uint32_t> shaders;
+	shaders.reserve(2);
+	shaders.push_back(CreateAndCompileShader(GL_VERTEX_SHADER, inVertexShaderSource.c_str()));
+	shaders.push_back(CreateAndCompileShader(GL_FRAGMENT_SHADER, inFragmentShaderSource.c_str()));
+
+	CreateAndCompileShaderProgram(shaders);
 }
 
 OpenGLShaderProgram::~OpenGLShaderProgram()
 {
 	glDeleteProgram(ProgramID);
+}
+
+uint32_t OpenGLShaderProgram::GetShaderTypeFromString(const std::string& inString) const
+{
+	if (inString == "Vertex" || inString == "vertex")
+	{
+		return GL_VERTEX_SHADER;
+	}
+	else if (inString == "Fragment" || inString == "fragment" || inString == "Pixel" || inString == "pixel")
+	{
+		return GL_FRAGMENT_SHADER;
+	}
+
+	return 0;
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
@@ -99,12 +174,15 @@ uint32_t OpenGLShaderProgram::GetUniformLocation(const std::string& uniformName)
 	return shaderID;
 }
 
-void OpenGLShaderProgram::CreateAndCompileShaderProgram(const uint32_t vertexShaderID, const uint32_t fragmentShaderID)
+void OpenGLShaderProgram::CreateAndCompileShaderProgram(const std::vector<uint32_t>& inShaders)
 {
 	ProgramID = glCreateProgram();
 
-	glAttachShader(ProgramID, vertexShaderID);
-	glAttachShader(ProgramID, fragmentShaderID);
+	for (const uint32_t currentShader : inShaders)
+	{
+		glAttachShader(ProgramID, currentShader);
+	}
+
 	glLinkProgram(ProgramID);
 
 	int isLinked = 0;
@@ -116,14 +194,22 @@ void OpenGLShaderProgram::CreateAndCompileShaderProgram(const uint32_t vertexSha
 
 		char* infoLog = (char*)alloca(maxLength * sizeof(char));
 		glGetProgramInfoLog(ProgramID, maxLength, &maxLength, &infoLog[0]);
-		glDeleteProgram(ProgramID);
-		glDeleteShader(vertexShaderID);
-		glDeleteShader(fragmentShaderID);
+		for (const uint32_t currentShader : inShaders)
+		{
+			glDetachShader(ProgramID, currentShader);
+			glDeleteShader(currentShader);
+		}
 
+		glDeleteProgram(ProgramID);
 		GameEngine_LOG(error, "{0}", infoLog);
 		GameEngine_Assert(false, "Wasn't able to compile the shader program");
+
+		return;
 	}
 
-	glDetachShader(ProgramID, vertexShaderID);
-	glDetachShader(ProgramID, fragmentShaderID);
+	for (const uint32_t currentShader : inShaders)
+	{
+		glDetachShader(ProgramID, currentShader);
+		glDeleteShader(currentShader);
+	}
 }
