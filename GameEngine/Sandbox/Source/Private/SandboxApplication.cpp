@@ -17,6 +17,7 @@
 #include "Public/Log.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 #include "Public/Rendering/Textures/Texture2D.h"
+#include "Public/Rendering/ShaderLibrary.h"
 
 // Third party
 #include "ImGui/imgui.h"
@@ -36,7 +37,7 @@ public:
 		};
 
 		SceneCamera = std::make_shared<Camera>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
-		TheShaderProgram = ShaderProgram::Create("Content/Shaders/SandboxShader.glsl");
+		const TSharedPtr<ShaderProgram>& shaderProgram = ShaderLibraryTest.LoadShader("Content/Shaders/SandboxShader.glsl");
 
 		TheVertexArray = VertexArray::Create();
 		GameEngine_Assert(TheVertexArray != nullptr, "Application::Run(). Vertex array was nullptr");
@@ -58,7 +59,7 @@ public:
 
 		The2DTexture = Texture2D::Create("Content/Textures/CJ.png");
 		The2DTextureTest = Texture2D::Create("Content/Textures/BigSmoke.png");
-		if (const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram))
+		if (const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(shaderProgram))
 		{
 			openGLShaderProgram->UploadUniform("u_TextureSlot", 0);
 		}
@@ -74,7 +75,8 @@ private:
 			return;
 		}
 
-		const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(TheShaderProgram);
+		const TSharedPtr<ShaderProgram>& shaderProgram = ShaderLibraryTest.GetShader("SandboxShader");
+		const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(shaderProgram);
 		if (openGLShaderProgram.get() == nullptr)
 		{
 			Application_LOG(error, "No OpenGL shader created");
@@ -113,15 +115,18 @@ private:
 			cameraRef.SetLocation(currentLocation + glm::vec3(-cameraSpeed, 0.0f, 0.0f));
 		}
 
-		const float cameraRotationSpeed = glm::radians(180.0f) * deltaTime;
+		glm::quat objectsRotation;
+		const float rotationSpeed = glm::radians(180.0f) * deltaTime;
 		const glm::quat& currentRotation = cameraRef.GetRotation();
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_D))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -cameraRotationSpeed)));
+			//cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -rotationSpeed)));
+			ObjectsRotation = ObjectsRotation * glm::quat(glm::vec3(0.0f, 0.0f, -rotationSpeed));
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_A))
 		{
-			cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, cameraRotationSpeed)));
+			//cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, rotationSpeed)));
+			ObjectsRotation = ObjectsRotation * glm::quat(glm::vec3(0.0f, 0.0f, +rotationSpeed));
 		}
 
 		// Object movement
@@ -152,10 +157,10 @@ private:
 		//}
 
 		The2DTexture->Bind();
-		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation));
+		Renderer::Submit(vertexArrayRef, *shaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation) * glm::mat4(ObjectsRotation));
 
 		The2DTextureTest->Bind();
-		Renderer::Submit(vertexArrayRef, *TheShaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation + glm::vec3(0.5f, 0.5f, 0.0f)));
+		Renderer::Submit(vertexArrayRef, *shaderProgram, glm::translate(glm::mat4(1.0f), ObjectLocation + glm::vec3(0.5f, 0.5f, 0.0f)) * glm::mat4(ObjectsRotation));
 
 		Renderer::EndScene();
 	}
@@ -167,7 +172,8 @@ private:
 		ImGui::End();
 	}
 
-	TSharedPtr<ShaderProgram> TheShaderProgram = nullptr;
+	glm::quat ObjectsRotation = glm::quat(glm::vec3(0.0f, 0.0f, 0.0f));
+	ShaderLibrary ShaderLibraryTest;
 	TSharedPtr<VertexArray> TheVertexArray = nullptr;
 	TSharedPtr<VertexBuffer> TheVertexBuffer = nullptr;
 	TSharedPtr<IndexBuffer> TheIndexBuffer = nullptr;

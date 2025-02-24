@@ -10,6 +10,8 @@
 
 OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 {
+	GameEngine_Assert(inShaderFilePath.size() > 0, "Empty file path was passed");
+
 	std::unordered_map<uint32_t, std::string> shaderSources;
 
 	std::string result;
@@ -53,23 +55,37 @@ OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 		);
 	}
 
-	std::vector<uint32_t> shaders;
-	shaders.reserve(shaderSources.size());
+	GameEngine_Assert(shaderSources.size() <= MaxNumberOfShaders, "Can't handle more than 4 shaders for now. OpenGLShaderProgram::OpenGLShaderProgram");
+	std::array<uint32_t, MaxNumberOfShaders> shaders;
+	uint8_t counter = 0;
 	for (const std::pair<uint32_t, std::string>& currentShaderTypeAndSource : shaderSources)
 	{
-		shaders.push_back(CreateAndCompileShader(currentShaderTypeAndSource.first, currentShaderTypeAndSource.second.c_str()));
+		shaders[counter] = (CreateAndCompileShader(currentShaderTypeAndSource.first, currentShaderTypeAndSource.second.c_str()));
+		++counter;
 	}
 
 	CreateAndCompileShaderProgram(shaders);
+
+	const size_t indexOfLastBackOrForwardSlash = inShaderFilePath.find_last_of("/\\");
+	const size_t indexOfLastDot = inShaderFilePath.find_last_of('.');
+	GameEngine_Assert(indexOfLastDot != std::string::npos, "Shader file must have an extension. Example: .glsl");
+
+	const size_t indexOfLastLetterInShaderName = indexOfLastDot - 1;
+	if (indexOfLastBackOrForwardSlash == std::string::npos)
+	{
+		ShaderName = inShaderFilePath.substr(0, indexOfLastLetterInShaderName);
+	}
+	else
+	{
+		ShaderName = inShaderFilePath.substr(indexOfLastBackOrForwardSlash + 1, indexOfLastLetterInShaderName - indexOfLastBackOrForwardSlash);
+	}
 }
 
 OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
-	std::vector<uint32_t> shaders;
-	shaders.reserve(2);
-	shaders.push_back(CreateAndCompileShader(GL_VERTEX_SHADER, inVertexShaderSource.c_str()));
-	shaders.push_back(CreateAndCompileShader(GL_FRAGMENT_SHADER, inFragmentShaderSource.c_str()));
-
+	std::array<uint32_t, MaxNumberOfShaders> shaders;
+	shaders[0] = CreateAndCompileShader(GL_VERTEX_SHADER, inVertexShaderSource.c_str());
+	shaders[1] = CreateAndCompileShader(GL_FRAGMENT_SHADER, inFragmentShaderSource.c_str());
 	CreateAndCompileShaderProgram(shaders);
 }
 
@@ -90,6 +106,11 @@ uint32_t OpenGLShaderProgram::GetShaderTypeFromString(const std::string& inStrin
 	}
 
 	return 0;
+}
+
+const std::string& OpenGLShaderProgram::GetName() const
+{
+	return ShaderName;
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
@@ -174,7 +195,7 @@ uint32_t OpenGLShaderProgram::GetUniformLocation(const std::string& uniformName)
 	return shaderID;
 }
 
-void OpenGLShaderProgram::CreateAndCompileShaderProgram(const std::vector<uint32_t>& inShaders)
+void OpenGLShaderProgram::CreateAndCompileShaderProgram(const std::array<uint32_t, MaxNumberOfShaders>& inShaders)
 {
 	ProgramID = glCreateProgram();
 
