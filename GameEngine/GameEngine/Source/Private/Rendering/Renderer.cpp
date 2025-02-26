@@ -19,7 +19,7 @@ void Renderer::EndScene()
 {
 }
 
-void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& transform)
+void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& localTransform, const glm::mat4& worldTransform)
 {
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::Submit. TheSceneData was nullptr");
 
@@ -33,6 +33,7 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 	inShaderProgram.Bind();
 	inVertexArray.Bind();
 	openGLShaderProgramRaw->UploadUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
-	openGLShaderProgramRaw->UploadUniform("u_ObjectTransform", transform);
+	openGLShaderProgramRaw->UploadUniform("u_ObjectTransform", localTransform);
+	openGLShaderProgramRaw->UploadUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(inVertexArray);
 }

@@ -115,7 +115,6 @@ private:
 			cameraRef.SetLocation(currentLocation + glm::vec3(-cameraSpeed, 0.0f, 0.0f));
 		}
 
-		glm::quat objectsRotation;
 		const float rotationSpeed = glm::radians(180.0f) * deltaTime;
 		const glm::quat& currentRotation = cameraRef.GetRotation();
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_D))

@@ -7,10 +7,11 @@
 	
 	uniform mat4 u_ViewProjection;
 	uniform mat4 u_ObjectTransform;
+	uniform mat4 u_WorldTransform;
 	void main()
 	{
 		v_TextureCoordinates = a_TextureCoordinates;
-		gl_Position = u_ViewProjection * u_ObjectTransform * vec4(a_Position, 1.0f);
+		gl_Position = u_ViewProjection * u_WorldTransform * u_ObjectTransform * vec4(a_Position, 1.0f);
 	}
 
 
