@@ -1,7 +1,7 @@
 #include "Public/PCH.h"
 #include "Public/WindowClass/WindowBase.h"
 
-MulticastDelegate<FEventDataBase&>& WindowBase::GetOnGLFWEvent()
+MulticastDelegate<FEventDataBase*>& WindowBase::GetOnWindowEvent()
 {
-	return TheWindowData.OnGLFWEvent;
+	return TheWindowData.OnWindowEvent;
 }

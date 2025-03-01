@@ -2,14 +2,7 @@
 
 #include "Public/Layers/Overlays/OverlayBase.h"
 
-struct FButtonActionEventData;
-struct FMouseMoveEventData;
-struct FMouseScrollEventData;
-struct FWindowClosedEventData;
-struct FWindowResizedEventData;
-struct FCharEventData;
-
-class GameEngine_API ImGuiLayer : public OverlayBase
+class ImGuiLayer : public OverlayBase
 {
 
 public:

@@ -19,6 +19,7 @@ public:
 	virtual void Run();
 
 	static Application* Get();
+	static WindowBase& GetWindowRef();
 	static const WindowBase& GetWindow();
 
 	// Layer functions
@@ -33,7 +34,7 @@ public:
 
 private:
 
-	void OnGLFWEvent(FEventDataBase& inEvent);
+	void OnWindowEvent(FEventDataBase* inEvent);
 
 	// Mouse events
 	void OnMouseMoved(double xPos, double yPos);
@@ -52,7 +53,7 @@ private:
 	std::vector<TSharedPtr<OverlayBase>> OverlayStack;
 
 	static Application* ApplicationSingleton;
-	TUniquePtr<WindowBase> ApplicationWindow = nullptr;
+	TSharedPtr<WindowBase> ApplicationWindow = nullptr;
 	TSharedPtr<ImGuiLayer> TheImGuiOverlay = nullptr;
 	
 	float TimeLastFrame = 0.0f;

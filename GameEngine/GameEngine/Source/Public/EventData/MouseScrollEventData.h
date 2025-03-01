@@ -1,7 +1,7 @@
 #pragma once
 #include "Public/EventData/EventDataBase.h"
 
-struct GameEngine_API FMouseScrollEventData : public FEventDataBase
+struct FMouseScrollEventData : public FEventDataBase
 {
 	FMouseScrollEventData(const double xOffset, const double yOffset) :
 		XOffset(xOffset),

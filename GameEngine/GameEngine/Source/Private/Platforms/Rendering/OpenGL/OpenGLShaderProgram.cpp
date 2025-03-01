@@ -45,14 +45,12 @@ OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 
 		uint32_t shaderType = GetShaderTypeFromString(finalTypeAsString);
 		GameEngine_Assert(shaderType != 0, "Invalid shader type specified");
-		
+
 		const size_t nextLinePos = result.find_first_not_of("\r\n", lineEnd);
+		GameEngine_Assert(shaderType != std::string::npos, "No new line after #type");
+
 		pos = result.find(typeToken, nextLinePos);
-		
-		shaderSources[shaderType] = result.substr(
-			nextLinePos,
-			pos - (nextLinePos == std::string::npos ? result.size() - 1 : nextLinePos)
-		);
+		shaderSources[shaderType] = result.substr(nextLinePos, pos - nextLinePos);
 	}
 
 	GameEngine_Assert(shaderSources.size() <= MaxNumberOfShaders, "Can't handle more than 4 shaders for now. OpenGLShaderProgram::OpenGLShaderProgram");

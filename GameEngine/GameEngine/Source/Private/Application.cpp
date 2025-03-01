@@ -23,10 +23,10 @@ Application::Application() : bIsRunning(true)
 
 	ApplicationSingleton = this;
 
-	ApplicationWindow = static_cast<TUniquePtr<WindowBase>>(WindowBase::Create(FWindowProps("Test", 1000, 1000)));
+	ApplicationWindow = WindowBase::Create(FWindowProps("Test", 1000, 1000));
 	if (ApplicationWindow != nullptr)
 	{
-		ApplicationWindow->GetOnGLFWEvent().ADD_OBJECT(this, &Application::OnGLFWEvent);
+		ApplicationWindow->GetOnWindowEvent().ADD_OBJECT(this, &Application::OnWindowEvent);
 	}
 
 	Renderer::Init();
@@ -39,7 +39,7 @@ Application::~Application()
 	if (ApplicationWindow != nullptr)
 	{
 		WindowBase& applicationWindowRef = *ApplicationWindow;
-		applicationWindowRef.GetOnGLFWEvent().RemoveAll(this);
+		applicationWindowRef.GetOnWindowEvent().RemoveAll(this);
 	}
 }
 
@@ -72,6 +72,11 @@ void Application::Run()
 Application* Application::Get()
 {
 	return ApplicationSingleton;
+}
+
+WindowBase& Application::GetWindowRef()
+{
+	return *(ApplicationSingleton->ApplicationWindow.get());
 }
 
 const WindowBase& Application::GetWindow()
@@ -149,10 +154,14 @@ void Application::GatherAllLayers(std::vector<TSharedPtr<LayerBase>>& outAllLaye
 	outAllLayers.insert(outAllLayers.end(), OverlayStack.begin(), OverlayStack.end());
 }
 
-void Application::OnGLFWEvent(FEventDataBase& inEvent)
+void Application::OnWindowEvent(FEventDataBase* inEvent)
 {
-	FEventDataBase* inEventPtr = &inEvent;
-	if (FWindowClosedEventData* windowClosedEventData = dynamic_cast<FWindowClosedEventData*>(inEventPtr))
+	if (inEvent == nullptr)
+	{
+		return;
+	}
+
+	if (FWindowClosedEventData* windowClosedEventData = dynamic_cast<FWindowClosedEventData*>(inEvent))
 	{
 		OnWindowClosed(windowClosedEventData->TheGLFWWindow);
 	}
@@ -167,7 +176,7 @@ void Application::OnGLFWEvent(FEventDataBase& inEvent)
 		{
 			currentLayer->OnEvent(inEvent);
 			// Make the layer consume the event.
-			if (inEvent.bHasBeenHandled)
+			if (inEvent->bHasBeenHandled)
 			{
 				break;
 			}

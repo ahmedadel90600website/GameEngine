@@ -22,9 +22,9 @@ public:
 
 	virtual void* GetNativeWindow() const = 0;
 
-	MulticastDelegate<FEventDataBase&>& GetOnGLFWEvent();
+	MulticastDelegate<FEventDataBase*>& GetOnWindowEvent();
 
-	static WindowBase* Create(const FWindowProps& inProps);
+	static TSharedPtr<WindowBase> Create(const FWindowProps& inProps);
 
 protected:
 

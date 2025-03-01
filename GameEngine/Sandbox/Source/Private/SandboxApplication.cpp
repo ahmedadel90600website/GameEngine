@@ -5,7 +5,6 @@
 #include "Public/EntryPoint.h"
 #include "Public/Core.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
-#include "Public/Rendering/Cameras/Camera.h"
 #include "Public/Rendering/Buffers/VertexBuffer.h"
 #include "Public/Rendering/Buffers/IndexBuffer.h"
 #include "Public/Rendering/Buffers/BufferLayout.h"
@@ -18,6 +17,7 @@
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 #include "Public/Rendering/Textures/Texture2D.h"
 #include "Public/Rendering/ShaderLibrary.h"
+#include "Public/Rendering/Cameras/OrthographicCamera.h"
 
 // Third party
 #include "ImGui/imgui.h"
@@ -36,7 +36,9 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		SceneCamera = std::make_shared<Camera>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		SceneCamera = std::make_shared<OrthographicCamera>(-1.0f, 1.0f, -1.0f, 1.0f);
+		GameEngine_Assert(SceneCamera != nullptr, "Application::Run(). SceneCamera was nullptr");
+
 		const TSharedPtr<ShaderProgram>& shaderProgram = ShaderLibraryTest.LoadShader("Content/Shaders/SandboxShader.glsl");
 
 		TheVertexArray = VertexArray::Create();
@@ -90,61 +92,42 @@ private:
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		RenderCommand::Clear();
 
+		Camera& cameraRef = *SceneCamera;
+		cameraRef.Tick(deltaTime);
+
 		Renderer::BeginScene(*SceneCamera);
 
-		Camera& cameraRef = *SceneCamera;
 		const glm::vec3& currentLocation = cameraRef.GetLocation();
-		const float cameraSpeed = 1.0f * deltaTime;
-
-		// Camera movement
-		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_UP))
-		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, cameraSpeed, 0.0f));
-		}
-		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_DOWN))
-		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(0.0f, -cameraSpeed, 0.0f));
-		}
-
-		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_RIGHT))
-		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(cameraSpeed, 0.0f, 0.0f));
-		}
-		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_LEFT))
-		{
-			cameraRef.SetLocation(currentLocation + glm::vec3(-cameraSpeed, 0.0f, 0.0f));
-		}
+		const float movementSpeed = 1.0f * deltaTime;
 
 		const float rotationSpeed = glm::radians(180.0f) * deltaTime;
 		const glm::quat& currentRotation = cameraRef.GetRotation();
-		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_D))
+		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_O))
 		{
-			//cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, -rotationSpeed)));
 			ObjectsRotation = ObjectsRotation * glm::quat(glm::vec3(0.0f, 0.0f, -rotationSpeed));
 		}
-		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_A))
+		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_U))
 		{
-			//cameraRef.SetRotation(currentRotation * glm::quat(glm::vec3(0.0f, 0.0f, rotationSpeed)));
 			ObjectsRotation = ObjectsRotation * glm::quat(glm::vec3(0.0f, 0.0f, +rotationSpeed));
 		}
 
 		// Object movement
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_L))
 		{
-			ObjectLocation.x += cameraSpeed;
+			ObjectLocation.x += movementSpeed;
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_J))
 		{
-			ObjectLocation.x -= cameraSpeed;
+			ObjectLocation.x -= movementSpeed;
 		}
 
 		if (Input::IsKeyDown(GameEngineKeyCodes::KEY_I))
 		{
-			ObjectLocation.y += cameraSpeed;
+			ObjectLocation.y += movementSpeed;
 		}
 		else if (Input::IsKeyDown(GameEngineKeyCodes::KEY_K))
 		{
-			ObjectLocation.y -= cameraSpeed;
+			ObjectLocation.y -= movementSpeed;
 		}
 
 		//openGLShaderProgram->UploadUniform("u_TheColor", ObjectColor);
@@ -176,7 +159,7 @@ private:
 	TSharedPtr<VertexArray> TheVertexArray = nullptr;
 	TSharedPtr<VertexBuffer> TheVertexBuffer = nullptr;
 	TSharedPtr<IndexBuffer> TheIndexBuffer = nullptr;
-	TSharedPtr<Camera> SceneCamera;
+	TSharedPtr<OrthographicCamera> SceneCamera;
 	TSharedPtr<Texture2D> The2DTexture;
 	TSharedPtr<Texture2D> The2DTextureTest;
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);

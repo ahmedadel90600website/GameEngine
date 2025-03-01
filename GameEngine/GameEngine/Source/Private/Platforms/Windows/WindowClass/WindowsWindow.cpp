@@ -15,9 +15,9 @@
 
 static bool IsGLFWInitialized = false;
 
-WindowBase* WindowBase::Create(const FWindowProps& inProps)
+TSharedPtr<WindowBase> WindowBase::Create(const FWindowProps& inProps)
 {
-	return new WindowsWindow(inProps);
+	return std::make_shared<WindowsWindow>(inProps);
 }
 
 WindowsWindow::WindowsWindow(const FWindowProps& inProps)
@@ -108,25 +108,29 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	glfwSetCursorPosCallback(TheGLFWWindow, [](GLFWwindow* window, double xPos, double yPos)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FMouseMoveEventData(xPos, yPos));
+			FMouseMoveEventData mouseMoveEventData = FMouseMoveEventData(xPos, yPos);
+			windowData.OnWindowEvent.Broadcast(&mouseMoveEventData);
 		});
 
 	glfwSetScrollCallback(TheGLFWWindow, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FMouseScrollEventData(xOffset, yOffset));
+			FMouseScrollEventData mouseScrollEventData = FMouseScrollEventData(xOffset, yOffset);
+			windowData.OnWindowEvent.Broadcast(&mouseScrollEventData);
 		});
 
 	glfwSetCharCallback(TheGLFWWindow, [](GLFWwindow* window, unsigned int codePoint)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FCharEventData(codePoint));
+			FCharEventData charEvent = FCharEventData(codePoint);
+			windowData.OnWindowEvent.Broadcast(&charEvent);
 		});
 
 	glfwSetMouseButtonCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FButtonActionEventData(button, -1, action, mods));
+			FButtonActionEventData buttonActionEvent = FButtonActionEventData(button, -1, action, mods);
+			windowData.OnWindowEvent.Broadcast(&buttonActionEvent);
 		});
 	// Mouse actions //////////////////////////////////////////////////////////////////////////////////////
 
@@ -134,19 +138,22 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	glfwSetKeyCallback(TheGLFWWindow, [](GLFWwindow* window, int button, int scanCode, int action, int mods)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FButtonActionEventData(button, scanCode, action, mods));
+			FButtonActionEventData buttonActionEvenet = FButtonActionEventData(button, scanCode, action, mods);
+			windowData.OnWindowEvent.Broadcast(&buttonActionEvenet);
 		});
 
 	glfwSetWindowCloseCallback(TheGLFWWindow, [](GLFWwindow* window)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FWindowClosedEventData(window));
+			FWindowClosedEventData windowClosedEvent = FWindowClosedEventData(window);
+			windowData.OnWindowEvent.Broadcast(&windowClosedEvent);
 		});
 
 	glfwSetWindowSizeCallback(TheGLFWWindow, [](GLFWwindow* window, int width, int height)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			windowData.OnGLFWEvent.Broadcast(FWindowResizedEventData(window, width, height));
+			FWindowResizedEventData windowResizedEvent = FWindowResizedEventData(window, width, height);
+			windowData.OnWindowEvent.Broadcast(&windowResizedEvent);
 		});
 }
 

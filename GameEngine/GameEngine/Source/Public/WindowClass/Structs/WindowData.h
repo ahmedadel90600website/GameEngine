@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Public/PCH.h"
-#include "Public/EventData/EventDataBase.h"
 #include "Public/Events/MulticastDelegate.h"
 
-struct GLFWwindow;
-
+struct FEventDataBase;
 struct GameEngine_API FWindowData
 {
 	FWindowData() : bIsVSyncEnabled(false) {}
@@ -23,5 +21,5 @@ struct GameEngine_API FWindowData
 	* Param4 Mod: Another button held down with the mouse like shift.
 	*/
 
-	MulticastDelegate<FEventDataBase&> OnGLFWEvent;
+	MulticastDelegate<FEventDataBase*> OnWindowEvent;
 };
