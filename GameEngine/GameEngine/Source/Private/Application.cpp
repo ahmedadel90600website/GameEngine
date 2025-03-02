@@ -5,6 +5,7 @@
 #include "Public/WindowClass/Structs/WindowProps.h"
 
 #include "Public/EventData/WindowClosedEventData.h"
+#include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/Layers/Overlays/OverlayBase.h"
 #include "Public/Rendering/Renderer.h"
 
@@ -23,7 +24,7 @@ Application::Application() : bIsRunning(true)
 
 	ApplicationSingleton = this;
 
-	ApplicationWindow = WindowBase::Create(FWindowProps("Test", 1000, 1000));
+	ApplicationWindow = WindowBase::Create(FWindowProps("Test", 1920, 1080));
 	if (ApplicationWindow != nullptr)
 	{
 		ApplicationWindow->GetOnWindowEvent().ADD_OBJECT(this, &Application::OnWindowEvent);
@@ -47,17 +48,23 @@ void Application::Run()
 {
 	while (bIsRunning)
 	{
-		const float currentTime = (float) glfwGetTime();
+		const float currentTime = (float)glfwGetTime();
 		DeltaTime = currentTime - TimeLastFrame;
 		TimeLastFrame = currentTime;
+
 		std::vector<TSharedPtr<LayerBase>> allLayers;
 		GatherAllLayers(allLayers);
-		for (const TSharedPtr<LayerBase> currentLayer : allLayers)
+
+		if (!bIsMinimized)
 		{
-			currentLayer->Tick(DeltaTime);
+			for (const TSharedPtr<LayerBase> currentLayer : allLayers)
+			{
+				currentLayer->Tick(DeltaTime);
+			}
 		}
 
 		TheImGuiOverlay->BeginRendering();
+
 		for (const TSharedPtr<LayerBase> currentLayer : allLayers)
 		{
 			currentLayer->OnImGuiRender();
@@ -163,7 +170,11 @@ void Application::OnWindowEvent(FEventDataBase* inEvent)
 
 	if (FWindowClosedEventData* windowClosedEventData = dynamic_cast<FWindowClosedEventData*>(inEvent))
 	{
-		OnWindowClosed(windowClosedEventData->TheGLFWWindow);
+		OnWindowClosed();
+	}
+	else if (FWindowResizedEventData* windowResizedEventData = dynamic_cast<FWindowResizedEventData*>(inEvent))
+	{
+		OnWindowResized(windowResizedEventData->Width, windowResizedEventData->Height);
 	}
 
 	std::vector<TSharedPtr<LayerBase>> allLayers;
@@ -204,11 +215,13 @@ void Application::OnButtonReleased(int button, int scanCode, int mods)
 {
 }
 
-void Application::OnWindowClosed(GLFWwindow* closedWindow)
+void Application::OnWindowClosed()
 {
 	bIsRunning = false;
 }
 
-void Application::OnWindowResized(GLFWwindow* closedWindow, int width, int height)
+void Application::OnWindowResized(int width, int height)
 {
+	bIsMinimized = width == 0 || height == 0;
+	Renderer::SetViewPortDimensions(width, height);
 }

@@ -25,6 +25,11 @@ public:
 		TheRendererAPI->DrawIndexed(vertexArray);
 	}
 
+	inline static void SetViewPortDimensions(uint32_t width, uint32_t height)
+	{
+		TheRendererAPI->SetViewPortDimensions(width, height);
+	}
+
 private:
 
 	static TSharedPtr<RendererAPI> TheRendererAPI;

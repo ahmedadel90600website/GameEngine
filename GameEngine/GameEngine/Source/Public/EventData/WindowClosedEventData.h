@@ -7,11 +7,4 @@ struct GLFWwindow;
 
 struct GameEngine_API FWindowClosedEventData : public FEventDataBase
 {
-	FWindowClosedEventData(GLFWwindow* const inWindow) :
-		TheGLFWWindow(inWindow)
-	{
-
-	}
-
-	GLFWwindow* TheGLFWWindow = nullptr;
 };

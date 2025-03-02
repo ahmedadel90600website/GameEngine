@@ -26,6 +26,7 @@ public:
 	static void BeginScene(const Camera& inCamera);
 	static void EndScene();
 	static void Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& localtransform = glm::mat4(1.0f), const glm::mat4& worldTransform = glm::mat4(1.0f));
+	static void SetViewPortDimensions(uint32_t width, uint32_t height);
 
 	static TSharedPtr<SceneData> TheSceneData;
 };

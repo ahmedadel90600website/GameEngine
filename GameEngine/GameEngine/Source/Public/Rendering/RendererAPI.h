@@ -22,6 +22,7 @@ public:
 	virtual void SetClearColor(const glm::vec4& inClearColor) const = 0;
 	virtual void Clear() const = 0;
 	virtual void DrawIndexed(const VertexArray& inVertexArray) const = 0;
+	virtual void SetViewPortDimensions(uint32_t width, uint32_t height) const = 0;
 
 private:
 

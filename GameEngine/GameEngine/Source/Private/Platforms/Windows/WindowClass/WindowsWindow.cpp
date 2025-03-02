@@ -145,14 +145,14 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	glfwSetWindowCloseCallback(TheGLFWWindow, [](GLFWwindow* window)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			FWindowClosedEventData windowClosedEvent = FWindowClosedEventData(window);
+			FWindowClosedEventData windowClosedEvent;
 			windowData.OnWindowEvent.Broadcast(&windowClosedEvent);
 		});
 
 	glfwSetWindowSizeCallback(TheGLFWWindow, [](GLFWwindow* window, int width, int height)
 		{
 			FWindowData& windowData = *(FWindowData*)glfwGetWindowUserPointer(window);
-			FWindowResizedEventData windowResizedEvent = FWindowResizedEventData(window, width, height);
+			FWindowResizedEventData windowResizedEvent = FWindowResizedEventData(width, height);
 			windowData.OnWindowEvent.Broadcast(&windowResizedEvent);
 		});
 }

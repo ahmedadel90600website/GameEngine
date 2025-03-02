@@ -37,3 +37,8 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 	openGLShaderProgramRaw->UploadUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(inVertexArray);
 }
+
+void Renderer::SetViewPortDimensions(uint32_t width, uint32_t height)
+{
+	RenderCommand::SetViewPortDimensions(width, height);
+}

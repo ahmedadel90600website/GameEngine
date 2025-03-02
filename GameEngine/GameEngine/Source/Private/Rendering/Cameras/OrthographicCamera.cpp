@@ -28,13 +28,13 @@ void OrthographicCamera::OnWindowEvent(FEventDataBase* theEvent)
 	else if (FWindowResizedEventData* resizeEvent = dynamic_cast<FWindowResizedEventData*>(theEvent))
 	{
 		FWindowResizedEventData& resizeEventRef = *resizeEvent;
-		AspectRatio = resizeEventRef.Width / resizeEventRef.Height;
+		AspectRatio = (float)resizeEventRef.Width / resizeEventRef.Height;
 
 		shouldUpdateprojectionMatrix = true;
 	}
 
 	if (shouldUpdateprojectionMatrix)
 	{
-		ProjectionMatrix = glm::ortho(-AspectRatio * ZoomOutLevel, AspectRatio * ZoomOutLevel, -AspectRatio * ZoomOutLevel, AspectRatio * ZoomOutLevel);
+		ProjectionMatrix = glm::ortho(-AspectRatio * ZoomOutLevel, AspectRatio * ZoomOutLevel, -ZoomOutLevel, ZoomOutLevel);
 	}
 }

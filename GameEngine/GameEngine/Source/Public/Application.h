@@ -46,8 +46,8 @@ private:
 	void OnButtonReleased(int button, int scanCode, int mods);
 
 	// Window events
-	void OnWindowClosed(GLFWwindow* closedWindow);
-	void OnWindowResized(GLFWwindow* closedWindow, int width, int height);
+	void OnWindowClosed();
+	void OnWindowResized(int width, int height);
 
 	std::vector<TSharedPtr<LayerBase>> LayersStack;
 	std::vector<TSharedPtr<OverlayBase>> OverlayStack;
@@ -59,6 +59,7 @@ private:
 	float TimeLastFrame = 0.0f;
 	float DeltaTime = 0.0f;
 	bool bIsRunning : 1;
+	bool bIsMinimized : 1;
 };
 
 extern Application* CreateApplication();

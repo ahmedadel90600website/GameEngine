@@ -40,3 +40,8 @@ void OpenGLRendererAPI::DrawIndexed(const VertexArray& inVertexArray) const
 
 	glDrawElements(GL_TRIANGLES, indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
+
+void OpenGLRendererAPI::SetViewPortDimensions(uint32_t width, uint32_t height) const
+{
+	glViewport(0, 0, width, height);
+}
