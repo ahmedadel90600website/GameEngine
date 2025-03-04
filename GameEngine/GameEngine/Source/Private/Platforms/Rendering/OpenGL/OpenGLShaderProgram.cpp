@@ -50,7 +50,7 @@ OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 		GameEngine_Assert(shaderType != std::string::npos, "No new line after #type");
 
 		pos = result.find(typeToken, nextLinePos);
-		shaderSources[shaderType] = result.substr(nextLinePos, pos - nextLinePos);
+		shaderSources[shaderType] = result.substr(nextLinePos, (pos == std::string::npos ? (result.size()) : pos) - nextLinePos);
 	}
 
 	GameEngine_Assert(shaderSources.size() <= MaxNumberOfShaders, "Can't handle more than 4 shaders for now. OpenGLShaderProgram::OpenGLShaderProgram");

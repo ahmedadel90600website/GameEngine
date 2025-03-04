@@ -10,7 +10,6 @@ OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* const indexData, const uint
 	glCreateBuffers(1, &IndexBufferHandle);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferHandle);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Count * sizeof(uint32_t), indexData, GL_STATIC_DRAW);
-	UnBind();
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer()

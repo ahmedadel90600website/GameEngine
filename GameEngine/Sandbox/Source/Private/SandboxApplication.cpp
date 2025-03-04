@@ -18,6 +18,7 @@
 #include "Public/Rendering/Textures/Texture2D.h"
 #include "Public/Rendering/ShaderLibrary.h"
 #include "Public/Rendering/Cameras/OrthographicCamera.h"
+#include "Public/SandboxLayers/SandboxLayer2D.h"
 
 // Third party
 #include "ImGui/imgui.h"
@@ -86,9 +87,7 @@ private:
 		}
 
 		openGLShaderProgram->Bind();
-		VertexArray& vertexArrayRef = *TheVertexArray;
 
-		const RendererAPI& renderingAPIRef = *renderingAPI;
 		RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		RenderCommand::Clear();
 
@@ -130,6 +129,8 @@ private:
 			ObjectLocation.y -= movementSpeed;
 		}
 
+		VertexArray& vertexArrayRef = *TheVertexArray;
+
 		//openGLShaderProgram->UploadUniform("u_TheColor", ObjectColor);
 		//for (int i = 0; i < 10; ++i)
 		//{
@@ -168,7 +169,8 @@ private:
 
 SandboxApplication::SandboxApplication()
 {
-	PushOverlay(static_cast<TUniquePtr<TestOverlay>>(new TestOverlay()));
+	//PushOverlay(std::make_shared<TestOverlay>());
+	PushLayer(std::make_shared<SandboxLayer2D>());
 }
 
 SandboxApplication::~SandboxApplication()
