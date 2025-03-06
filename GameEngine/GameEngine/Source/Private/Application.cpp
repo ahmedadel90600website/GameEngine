@@ -65,7 +65,7 @@ void Application::Run()
 
 		TheImGuiOverlay->BeginRendering();
 
-		for (const TSharedPtr<LayerBase> currentLayer : allLayers)
+		for (const TSharedPtr<LayerBase>& currentLayer : allLayers)
 		{
 			currentLayer->OnImGuiRender();
 		}

@@ -22,7 +22,7 @@ private:
 
 public:
 
-	static void Init() { RenderCommand::Init(); }
+	static void Init();
 	static void BeginScene(const Camera& inCamera);
 	static void EndScene();
 	static void Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& localtransform = glm::mat4(1.0f), const glm::mat4& worldTransform = glm::mat4(1.0f));

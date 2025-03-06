@@ -14,6 +14,7 @@ void OrthographicCamera::OnWindowEvent(FEventDataBase* theEvent)
 {
 	Camera::OnWindowEvent(theEvent);
 
+	// Maybe this should be moved to Camera except for ProjectionMatrix = glm::ortho(-AspectRatio * ZoomOutLevel, AspectRatio * ZoomOutLevel, -ZoomOutLevel, ZoomOutLevel);
 	bool shouldUpdateprojectionMatrix = false;
 	if (FMouseScrollEventData* scrollEvent = dynamic_cast<FMouseScrollEventData*>(theEvent))
 	{

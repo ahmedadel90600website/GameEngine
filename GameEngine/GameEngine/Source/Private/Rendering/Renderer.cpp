@@ -1,5 +1,6 @@
 #include "Public/PCH.h"
 #include "Public/Rendering/Renderer.h"
+#include "Public/Rendering/Renderer2D.h"
 #include "Public/Rendering/RenderCommand.h"
 #include "Public/Rendering/Cameras/Camera.h"
 #include "Public/Rendering/ShaderProgram.h"
@@ -9,6 +10,12 @@
 #include "Public/Core.h"
 
 TSharedPtr<Renderer::SceneData> Renderer::TheSceneData = std::make_shared<Renderer::SceneData>();
+void Renderer::Init()
+{
+	RenderCommand::Init();
+	Renderer2D::Init();
+}
+
 void Renderer::BeginScene(const Camera& inCamera)
 {
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::BeginScene. TheSceneData was nullptr")

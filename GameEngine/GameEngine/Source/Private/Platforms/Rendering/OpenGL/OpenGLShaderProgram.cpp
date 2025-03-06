@@ -113,37 +113,37 @@ const std::string& OpenGLShaderProgram::GetName() const
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
 {
-	glUniformMatrix3fv(GetUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
+	glUniformMatrix3fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform)
 {
-	glUniformMatrix4fv(GetUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
+	glUniformMatrix4fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const int32_t inInteger)
 {
-	glUniform1i(GetUniformLocation(uniformName.c_str()), inInteger);
+	glUniform1i(GetAddUniformLocation(uniformName.c_str()), inInteger);
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const float inFloat)
 {
-	glUniform1f(GetUniformLocation(uniformName.c_str()), inFloat);
+	glUniform1f(GetAddUniformLocation(uniformName.c_str()), inFloat);
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec2& vector)
 {
-	glUniform2f(GetUniformLocation(uniformName.c_str()), vector.x, vector.y);
+	glUniform2f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y);
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec3& vector)
 {
-	glUniform3f(GetUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z);
+	glUniform3f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z);
 }
 
 void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec4& vector)
 {
-	glUniform4f(GetUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z, vector.a);
+	glUniform4f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z, vector.a);
 }
 
 void OpenGLShaderProgram::Bind() const
@@ -156,7 +156,7 @@ void OpenGLShaderProgram::UnBind() const
 	glUseProgram(0);
 }
 
-uint32_t OpenGLShaderProgram::GetUniformLocation(const std::string& uniformName)
+uint32_t OpenGLShaderProgram::GetAddUniformLocation(const std::string& uniformName)
 {
 	if (UniformByName.find(uniformName) != UniformByName.end())
 	{

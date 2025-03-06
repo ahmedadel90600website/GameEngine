@@ -18,7 +18,6 @@ public:
 	OpenGLShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource);
 	virtual ~OpenGLShaderProgram();
 
-	uint32_t GetShaderTypeFromString(const std::string& inString) const;
 	inline uint32_t GetProgramID() const { return ProgramID; }
 
 	const std::string& GetName() const override;
@@ -37,7 +36,8 @@ public:
 
 private:
 
-	uint32_t GetUniformLocation(const std::string& uniformName);
+	uint32_t GetShaderTypeFromString(const std::string& inString) const;
+	uint32_t GetAddUniformLocation(const std::string& uniformName);
 	uint32_t CreateAndCompileShader(const int type, const char* const source);
 	void CreateAndCompileShaderProgram(const std::array<uint32_t, MaxNumberOfShaders>& inShaders);
 
