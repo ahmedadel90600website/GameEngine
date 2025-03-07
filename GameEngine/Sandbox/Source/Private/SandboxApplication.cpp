@@ -64,7 +64,7 @@ public:
 		The2DTextureTest = Texture2D::Create("Content/Textures/BigSmoke.png");
 		if (const TSharedPtr<OpenGLShaderProgram>& openGLShaderProgram = std::dynamic_pointer_cast<OpenGLShaderProgram>(shaderProgram))
 		{
-			openGLShaderProgram->UploadUniform("u_TextureSlot", 0);
+			openGLShaderProgram->SetUniform("u_TextureSlot", 0);
 		}
 	}
 

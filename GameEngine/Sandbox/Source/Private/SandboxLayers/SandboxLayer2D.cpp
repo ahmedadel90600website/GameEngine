@@ -32,8 +32,9 @@ void SandboxLayer2D::Tick(const float deltaTime)
 	RenderCommand::Clear();
 	SceneCamera->Tick(deltaTime);
 
+	Application_LOG(info, "{0}", sizeof(glm::vec3));
 	Renderer2D::BeginScene(*SceneCamera);
-	Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f));
+	Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)) * glm::mat4(glm::quat(glm::lowp_fvec3(0.0f, 0.0f, glm::radians(45.0f)))));
 	Renderer2D::EndScene();
 }
 

@@ -30,18 +30,11 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 {
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::Submit. TheSceneData was nullptr");
 
-	OpenGLShaderProgram* const openGLShaderProgramRaw = dynamic_cast<OpenGLShaderProgram*>(&inShaderProgram);
-	if (openGLShaderProgramRaw == nullptr)
-	{
-		GameEngine_LOG(error, "No OpenGL shader created");
-		return;
-	}
-
 	inShaderProgram.Bind();
 	inVertexArray.Bind();
-	openGLShaderProgramRaw->UploadUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
-	openGLShaderProgramRaw->UploadUniform("u_ObjectTransform", localTransform);
-	openGLShaderProgramRaw->UploadUniform("u_WorldTransform", worldTransform);
+	inShaderProgram.SetUniform("u_ViewProjection", TheSceneData->ViewProjectionMatrix);
+	inShaderProgram.SetUniform("u_ObjectTransform", localTransform);
+	inShaderProgram.SetUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(inVertexArray);
 }
 

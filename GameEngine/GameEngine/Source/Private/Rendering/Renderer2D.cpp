@@ -55,18 +55,13 @@ void Renderer2D::Init()
 
 void Renderer2D::BeginScene(const OrthographicCamera& orthoCamera)
 {
-	OpenGLShaderProgram* const openGLShaderProgramRaw = dynamic_cast<OpenGLShaderProgram*>(TheData->TheShaderProgram.get());
-	if (openGLShaderProgramRaw == nullptr)
-	{
-		GameEngine_LOG(error, "No OpenGL shader created");
-		return;
-	}
+	ShaderProgram* const openGLShaderProgramRaw = TheData->TheShaderProgram.get();
 
 	openGLShaderProgramRaw->Bind();
-	openGLShaderProgramRaw->UploadUniform("u_ViewProjection", orthoCamera.GetViewProjectionMatrix());
+	openGLShaderProgramRaw->SetUniform("u_ViewProjection", orthoCamera.GetViewProjectionMatrix());
 }
 
-void Renderer2D::DrawQuad(const glm::vec4& inColor)
+void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransform, const glm::mat4& worldTransform)
 {
 	const TSharedPtr<VertexArray>& vertextArrayShared = TheData->TheVertexArray;
 	const VertexArray* const vertextArray = vertextArrayShared.get();
@@ -96,9 +91,9 @@ void Renderer2D::DrawQuad(const glm::vec4& inColor)
 
 	vertextArrayRef.Bind();
 	shaderProgramRef.Bind();
-	shaderProgramRef.UploadUniform("u_TheColor", glm::vec3(inColor.x, inColor.y, inColor.z));
-	shaderProgramRef.UploadUniform("u_ObjectTransform", glm::mat4(1.0f));
-	shaderProgramRef.UploadUniform("u_WorldTransform", glm::mat4(1.0f));
+	shaderProgramRef.SetUniform("u_TheColor", glm::vec3(inColor.x, inColor.y, inColor.z));
+	shaderProgramRef.SetUniform("u_ObjectTransform", localTransform);
+	shaderProgramRef.SetUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(vertextArrayRef);
 }
 

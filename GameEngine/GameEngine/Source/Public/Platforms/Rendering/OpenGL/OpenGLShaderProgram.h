@@ -22,14 +22,14 @@ public:
 
 	const std::string& GetName() const override;
 
-	void UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform);
-	void UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform);
+	void SetUniform(const std::string& uniformName, const glm::mat3& matrixUniform) override;
+	void SetUniform(const std::string& uniformName, const glm::mat4& matrixUniform) override;
 
-	void UploadUniform(const std::string& uniformName, const int32_t inInteger);
-	void UploadUniform(const std::string& uniformName, const float inFloat);
-	void UploadUniform(const std::string& uniformName, const glm::vec2& vector);
-	void UploadUniform(const std::string& uniformName, const glm::vec3& vector);
-	void UploadUniform(const std::string& uniformName, const glm::vec4& vector);
+	void SetUniform(const std::string& uniformName, const int32_t inInteger) override;
+	void SetUniform(const std::string& uniformName, const float inFloat) override;
+	void SetUniform(const std::string& uniformName, const glm::vec2& vector) override;
+	void SetUniform(const std::string& uniformName, const glm::vec3& vector) override;
+	void SetUniform(const std::string& uniformName, const glm::vec4& vector) override;
 
 	void Bind() const override;
 	void UnBind() const override;

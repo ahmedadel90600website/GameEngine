@@ -111,37 +111,37 @@ const std::string& OpenGLShaderProgram::GetName() const
 	return ShaderName;
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
 {
 	glUniformMatrix3fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::mat4& matrixUniform)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::mat4& matrixUniform)
 {
 	glUniformMatrix4fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const int32_t inInteger)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const int32_t inInteger)
 {
 	glUniform1i(GetAddUniformLocation(uniformName.c_str()), inInteger);
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const float inFloat)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const float inFloat)
 {
 	glUniform1f(GetAddUniformLocation(uniformName.c_str()), inFloat);
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec2& vector)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec2& vector)
 {
 	glUniform2f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y);
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec3& vector)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec3& vector)
 {
 	glUniform3f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z);
 }
 
-void OpenGLShaderProgram::UploadUniform(const std::string& uniformName, const glm::vec4& vector)
+void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec4& vector)
 {
 	glUniform4f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z, vector.a);
 }

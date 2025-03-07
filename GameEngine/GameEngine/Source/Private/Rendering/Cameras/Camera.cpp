@@ -63,8 +63,6 @@ void Camera::Tick(const float deltaTime)
 	{
 		SetRotation(Rotation * glm::quat(glm::vec3(0.0f, 0.0f, rotationSpeed)));
 	}
-
-	GameEngine_LOG(info, "X: {0}, Y: {1}", Location.x, Location.y);
 }
 
 void Camera::CalculateViewMatrix()
