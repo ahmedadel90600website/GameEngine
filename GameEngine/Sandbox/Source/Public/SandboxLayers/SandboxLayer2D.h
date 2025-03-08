@@ -5,6 +5,7 @@
 
 class ShaderProgram;
 class VertexArray;
+class Texture2D;
 class OrthographicCamera;
 
 class SandboxLayer2D : public LayerBase
@@ -20,7 +21,6 @@ private:
 
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 
-	TSharedPtr<ShaderProgram> TheShaderProgram = nullptr;
-	TSharedPtr<VertexArray> TheVertexArray = nullptr;
 	TSharedPtr<OrthographicCamera> SceneCamera = nullptr;
+	TSharedPtr<Texture2D> SandboxTexture2D = nullptr;
 };

@@ -37,6 +37,9 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
 	glTextureParameteri(TextureID, GL_TEXTURE_MIN_FILTER, colorInterType);
 	glTextureParameteri(TextureID, GL_TEXTURE_MAG_FILTER, colorInterType);
 
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
 	glTextureSubImage2D(TextureID, 0, 0, 0, Width, Height, textureDrawFormat, GL_UNSIGNED_BYTE, data);
 
 	stbi_image_free(data);
