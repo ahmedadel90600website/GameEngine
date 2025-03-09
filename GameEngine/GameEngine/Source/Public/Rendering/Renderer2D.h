@@ -23,7 +23,6 @@ private:
 	struct Renderer2DData
 	{
 		TSharedPtr<VertexArray> TheVertexArray;
-		TSharedPtr<ShaderProgram> FlatColorShaderProgram;
 		TSharedPtr<ShaderProgram> TextureShaderProgram;
 	};
 

@@ -21,7 +21,7 @@ void RenderCommand::Init()
 		}
 		else if (renderAPIType == ERendererAPIType::OPENGL)
 		{
-			TheRendererAPI = std::make_shared<OpenGLRendererAPI>();
+			TheRendererAPI = TMakeShared<OpenGLRendererAPI>();
 		}
 	}
 

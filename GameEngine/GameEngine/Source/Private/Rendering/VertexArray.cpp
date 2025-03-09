@@ -9,7 +9,7 @@ TSharedPtr<VertexArray> VertexArray::Create()
 	const ERendererAPIType renderAPIType = RendererAPI::GetTheRendererAPIType();
 	if (renderAPIType == ERendererAPIType::OPENGL)
 	{
-		return std::make_shared<OpenGLVertexArray>();
+		return TMakeShared<OpenGLVertexArray>();
 	}
 
 	return nullptr;

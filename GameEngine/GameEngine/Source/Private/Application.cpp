@@ -31,7 +31,7 @@ Application::Application() : bIsRunning(true)
 	}
 
 	Renderer::Init();
-	TheImGuiOverlay = std::make_shared<ImGuiLayer>();
+	TheImGuiOverlay = TMakeShared<ImGuiLayer>();
 	PushOverlay(TheImGuiOverlay);
 }
 

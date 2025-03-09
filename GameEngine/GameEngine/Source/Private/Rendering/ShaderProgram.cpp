@@ -15,7 +15,7 @@ TSharedPtr<ShaderProgram> ShaderProgram::Create(const std::string& inShaderFileP
 	}
 	else if (rendererAPIType == ERendererAPIType::OPENGL)
 	{
-		return std::make_shared<OpenGLShaderProgram>(inShaderFilePath);
+		return TMakeShared<OpenGLShaderProgram>(inShaderFilePath);
 	}
 
 	GameEngine_Assert(false, "ShaderProgram::Create. Unsupported API");
@@ -32,7 +32,7 @@ TSharedPtr<ShaderProgram> ShaderProgram::Create(const std::string& inVertexShade
 	}
 	else if (rendererAPIType == ERendererAPIType::OPENGL)
 	{
-		return std::make_shared<OpenGLShaderProgram>(inVertexShaderSource, inFragmentShaderSource);
+		return TMakeShared<OpenGLShaderProgram>(inVertexShaderSource, inFragmentShaderSource);
 	}
 
 	GameEngine_Assert(false, "ShaderProgram::Create. Unsupported API");

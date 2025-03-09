@@ -17,7 +17,7 @@ static bool IsGLFWInitialized = false;
 
 TSharedPtr<WindowBase> WindowBase::Create(const FWindowProps& inProps)
 {
-	return std::make_shared<WindowsWindow>(inProps);
+	return TMakeShared<WindowsWindow>(inProps);
 }
 
 WindowsWindow::WindowsWindow(const FWindowProps& inProps)

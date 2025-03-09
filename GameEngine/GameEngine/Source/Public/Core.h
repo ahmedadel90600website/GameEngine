@@ -34,3 +34,9 @@ using TSharedPtr = std::shared_ptr<T>;
 
 template<class T>
 using TUniquePtr = std::unique_ptr<T>;
+
+template<class T, class... params>
+TSharedPtr<T> TMakeShared(params&&... args)
+{
+	return std::make_shared<T>(std::forward<params>(args)...);
+}

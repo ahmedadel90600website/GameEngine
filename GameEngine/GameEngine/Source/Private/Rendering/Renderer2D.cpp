@@ -28,14 +28,6 @@ void Renderer2D::Init()
 		-0.5,  0.5, 0.0f, 0.0f, 1.0f
 	};
 
-	TSharedPtr<ShaderProgram>& flatColorShaderProgram = TheData->FlatColorShaderProgram;
-	flatColorShaderProgram = ShaderProgram::Create("Content/Shaders/FlatColor.glsl");
-	if (flatColorShaderProgram == nullptr)
-	{
-		GameEngine_LOG(error, "Renderer2D::Init(). flatColorShaderProgram failed to be created.");
-		return;
-	}
-
 	TSharedPtr<ShaderProgram>& textureShaderProgram = TheData->TextureShaderProgram;
 	textureShaderProgram = ShaderProgram::Create("Content/Shaders/SandboxShader.glsl");
 	if (textureShaderProgram == nullptr)
@@ -87,17 +79,6 @@ void Renderer2D::Init()
 
 void Renderer2D::BeginScene(const OrthographicCamera& orthoCamera)
 {
-	ShaderProgram* const flatColorShaderProgram = TheData->FlatColorShaderProgram.get();
-	if (flatColorShaderProgram == nullptr)
-	{
-		GameEngine_LOG(error, "Renderer2D::BeginScene. flatColorShaderProgram nullptr.");
-		return;
-	}
-
-	ShaderProgram& flatColorShaderProgramRef = *flatColorShaderProgram;
-	flatColorShaderProgramRef.Bind();
-	flatColorShaderProgramRef.SetUniform("u_ViewProjection", orthoCamera.GetViewProjectionMatrix());
-
 	ShaderProgram* const textureShaderProgram = TheData->TextureShaderProgram.get();
 	if (textureShaderProgram == nullptr)
 	{
@@ -120,7 +101,7 @@ void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransf
 		return;
 	}
 
-	const TSharedPtr<ShaderProgram>& flatColorshaderProgramShared = TheData->FlatColorShaderProgram;
+	const TSharedPtr<ShaderProgram>& flatColorshaderProgramShared = TheData->TextureShaderProgram;
 	ShaderProgram* const shaderProgram = flatColorshaderProgramShared.get();
 	if (shaderProgram == nullptr)
 	{
@@ -133,7 +114,7 @@ void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransf
 
 	vertextArrayRef.Bind();
 	shaderProgramRef.Bind();
-	shaderProgramRef.SetUniform("u_TheColor", glm::vec3(inColor.x, inColor.y, inColor.z));
+	shaderProgramRef.SetUniform("u_TheColor", inColor);
 	shaderProgramRef.SetUniform("u_ObjectTransform", localTransform);
 	shaderProgramRef.SetUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(vertextArrayRef);}
@@ -149,7 +130,7 @@ void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTran
 	}
 
 	const TSharedPtr<ShaderProgram>& textureshaderProgramShared = TheData->TextureShaderProgram;
-	ShaderProgram* const shaderProgram = textureshaderProgramShared.get();
+	ShaderProgram* const shaderProgram = TheData->TextureShaderProgram.get();
 	if (shaderProgram == nullptr)
 	{
 		GameEngine_LOG(error, "Renderer2D::DrawQuad(). shaderProgram not valid.");
@@ -162,12 +143,10 @@ void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTran
 	vertextArrayRef.Bind();
 	shaderProgramRef.Bind();
 	intexture.Bind();
-	shaderProgramRef.SetUniform("u_TheColor", glm::vec3(1.0f));
+	shaderProgramRef.SetUniform("u_TheColor", glm::vec4(1.0f));
 	shaderProgramRef.SetUniform("u_ObjectTransform", localTransform);
 	shaderProgramRef.SetUniform("u_WorldTransform", worldTransform);
-	//shaderProgramRef.SetUniform("u_TextureSlot", 0);
 	RenderCommand::DrawIndexed(vertextArrayRef);
-
 }
 
 void Renderer2D::EndScene()

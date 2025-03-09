@@ -9,7 +9,7 @@
 #include "Public/log.h"
 #include "Public/Core.h"
 
-TSharedPtr<Renderer::SceneData> Renderer::TheSceneData = std::make_shared<Renderer::SceneData>();
+TSharedPtr<Renderer::SceneData> Renderer::TheSceneData = TMakeShared<Renderer::SceneData>();
 void Renderer::Init()
 {
 	RenderCommand::Init();

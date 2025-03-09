@@ -14,7 +14,7 @@ TSharedPtr<VertexBuffer> VertexBuffer::Create(uint32_t sizeInBytes, const float*
     }
     else if (rendererAPI == ERendererAPIType::OPENGL)
     {
-        return std::make_shared<OpenGLVertexBuffer>(sizeInBytes, vertexData);
+        return TMakeShared<OpenGLVertexBuffer>(sizeInBytes, vertexData);
     }
 
     GameEngine_Assert(false, "VertexBuffer::Create, unsupported rendering API.");
