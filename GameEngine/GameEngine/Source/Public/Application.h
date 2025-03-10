@@ -4,6 +4,7 @@
 #include "Public/WindowClass/WindowBase.h"
 #include "Public/EventData/EventDataBase.h"
 #include "Public/ImGui/Layers/ImGuiLayer.h"
+#include "Public/Timer/TimerResult.h"
 
 struct GLFWwindow;
 class LayerBase;
@@ -28,7 +29,9 @@ public:
 
 	void PushOverlay(const TSharedPtr<OverlayBase> inOverlay);
 	void RemoveOverlay(const TSharedPtr<OverlayBase> inOverlay);
+	void AddTimerResult(const char* const timerName, const float duration) { TimerResults.push_back(FTimerResult(timerName, duration)); }
 
+	std::vector<FTimerResult>& GetTimerResults() { return TimerResults; }
 	void GatherAllLayers(std::vector<TSharedPtr<LayerBase>>& outAllLayers);
 	// Layer funcitons
 
@@ -49,6 +52,7 @@ private:
 	void OnWindowClosed();
 	void OnWindowResized(int width, int height);
 
+	std::vector<FTimerResult> TimerResults;
 	std::vector<TSharedPtr<LayerBase>> LayersStack;
 	std::vector<TSharedPtr<OverlayBase>> OverlayStack;
 

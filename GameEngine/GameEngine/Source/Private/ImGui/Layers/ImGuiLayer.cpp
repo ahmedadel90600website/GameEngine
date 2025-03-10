@@ -85,8 +85,8 @@ void ImGuiLayer::BeginRendering()
 
 void ImGuiLayer::OnImGuiRender()
 {
-	static bool showDemoWindow = true;
-	ImGui::ShowDemoWindow(&showDemoWindow);
+	//static bool showDemoWindow = true;
+	//ImGui::ShowDemoWindow(&showDemoWindow);
 }
 
 void ImGuiLayer::EndRendering()

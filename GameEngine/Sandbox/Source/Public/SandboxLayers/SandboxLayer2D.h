@@ -1,8 +1,14 @@
 #pragma once
 
 #include "Public/Layers/LayerBase.h"
+#include "Public/Timer/TimerResult.h"
+#include <vector>
+
+// Third party
 #include "glm/glm.hpp"
 #include "glm/detail/type_quat.hpp"
+#include "glm/detail/type_quat.hpp"
+
 
 class ShaderProgram;
 class VertexArray;
@@ -19,7 +25,6 @@ private:
 
 	void Tick(const float deltaTime) override;
 	void OnImGuiRender() override;
-
 	glm::quat ObjectsRotation = glm::quat(glm::vec3(0.0f, 0.0f, 0.0f));
 	glm::vec3 ObjectLocation = glm::vec3(0.0f);
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);

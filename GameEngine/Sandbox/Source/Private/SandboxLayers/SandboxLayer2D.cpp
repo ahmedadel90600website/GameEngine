@@ -16,6 +16,7 @@
 #include "Public/Rendering/Buffers/IndexBuffer.h"
 #include "Public/Rendering/Textures/Texture2D.h"
 #include "Public/Input/Input.h"
+#include "Public/Timer/Timer.h"
 
 // Third party
 #include "ImGui/imgui.h"
@@ -44,8 +45,12 @@ SandboxLayer2D::SandboxLayer2D()
 
 void SandboxLayer2D::Tick(const float deltaTime)
 {
+	//FTimer x("test", [](const char* const timerName, const float duration) {});
+	SCOPEED_TIMER("SandboxLayer2D::Tick");
+
 	RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 	RenderCommand::Clear();
+
 
 	OrthographicCamera& cameraRef = *SceneCamera;
 	cameraRef.Tick(deltaTime);
@@ -85,16 +90,32 @@ void SandboxLayer2D::Tick(const float deltaTime)
 	{
 		ObjectLocation.y -= movementSpeed;
 	}
-
-	WhiteTexture2D->Bind();
-	Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)) * glm::mat4(glm::quat(glm::lowp_fvec3(0.0f, 0.0f, glm::radians(45.0f)))));
-	Renderer2D::DrawQuad(*SandboxTexture2D, glm::translate(glm::mat4(1.0f), ObjectLocation) * glm::mat4(ObjectsRotation));
-	Renderer2D::EndScene();
+	{
+		SCOPEED_TIMER("SandboxLayer2D::Tick. Drawing");
+		WhiteTexture2D->Bind();
+		Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)) * glm::mat4(glm::quat(glm::lowp_fvec3(0.0f, 0.0f, glm::radians(45.0f)))));
+		Renderer2D::DrawQuad(*SandboxTexture2D, glm::translate(glm::mat4(1.0f), ObjectLocation) * glm::mat4(ObjectsRotation));
+		Renderer2D::EndScene();
+	}
 }
 
 void SandboxLayer2D::OnImGuiRender()
 {
 	ImGui::Begin("Settings");
 	ImGui::ColorEdit3("Square_Color", glm::value_ptr(ObjectColor));
+
+	std::vector<FTimerResult>& timerResults = Application::Get()->GetTimerResults();
+	for (const FTimerResult& timerResult : timerResults)
+	{
+		char message[60];
+		const uint32_t sizeOfMessage = sizeof(message);
+		const uint32_t sizeOfMesssage = sizeof(timerResult.TimerName);
+		strcpy_s(message, sizeOfMessage, timerResult.TimerName);
+		strcat_s(message, sizeOfMessage, " %.5f ms");
+		ImGui::Text(message, timerResult.TimerDuration);
+	}
+
+	timerResults.clear();
+
 	ImGui::End();
 }
