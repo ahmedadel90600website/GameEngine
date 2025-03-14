@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include "Public/Core.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "glfw/glfw3.h"
@@ -46,6 +47,8 @@ Application::~Application()
 
 void Application::Run()
 {
+	PROFILE_FUNCTION()
+
 	while (bIsRunning)
 	{
 		const float currentTime = (float)glfwGetTime();

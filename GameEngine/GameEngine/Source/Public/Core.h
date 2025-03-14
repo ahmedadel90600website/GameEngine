@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Public/Log.h"
+#include "Public/CoreConfig.h"
 #include <memory>
 
 #ifdef GameEngine_Platform_Windows

@@ -180,7 +180,6 @@ SandboxApplication::~SandboxApplication()
 void SandboxApplication::Run()
 {
 	Application::Run();
-
 }
 
 Application* CreateApplication()

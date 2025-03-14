@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Public/Layers/LayerBase.h"
-#include "Public/Timer/TimerResult.h"
 #include <vector>
 
 // Third party
