@@ -9,6 +9,7 @@
 #include "Public/EventData/CharEventData.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLGraphicsContext.h"
 #include "Public/Rendering/RendererAPI.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "GLFW/glfw3.h"
@@ -42,6 +43,8 @@ int WindowsWindow::GetHeight() const
 
 void WindowsWindow::OnUpdate()
 {
+	PROFILE_FUNCTION();
+
 	glfwPollEvents();
 	if (TheGraphicsContext != nullptr)
 	{
@@ -51,6 +54,8 @@ void WindowsWindow::OnUpdate()
 
 void WindowsWindow::SetIsVSyncEnabled(const bool enabled)
 {
+	PROFILE_FUNCTION();
+
 	if (enabled)
 	{
 		glfwSwapInterval(1);
@@ -75,6 +80,8 @@ void* WindowsWindow::GetNativeWindow() const
 
 void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 {
+	PROFILE_FUNCTION();
+
 	const std::string windowTitle = inWindowProps.Title;
 	const int windowWidth = inWindowProps.Width;
 	const int windowHeight = inWindowProps.Height;
@@ -86,16 +93,21 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 	GameEngine_LOG(info, "A window has been created. Title: {0}, Width: {1}, Height: {2}", windowTitle, windowWidth, windowHeight);
 	if (!IsGLFWInitialized)
 	{
+		PROFILE_SCOPE("glfwInit");
+
 		int success = glfwInit();
 		GameEngine_Assert(success, "WindowsWindow::Initialize. Wasn't able to init GLFW");
 
 		IsGLFWInitialized = true;
 	}
 
-	TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
-	if (RendererAPI::GetTheRendererAPIType() == ERendererAPIType::OPENGL)
 	{
-		TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
+		PROFILE_SCOPE("glfwCreateWindow");
+		TheGLFWWindow = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), nullptr, nullptr);
+		if (RendererAPI::GetTheRendererAPIType() == ERendererAPIType::OPENGL)
+		{
+			TheGraphicsContext = std::make_unique<OpenGLGraphicsContext>(TheGLFWWindow);
+		}
 	}
 
 	GameEngine_Assert(TheGraphicsContext, "WindowsWindow::Initialize. Wasn't able to create TheGraphicsContext");
@@ -159,5 +171,7 @@ void WindowsWindow::Initialize(const FWindowProps& inWindowProps)
 
 void WindowsWindow::ShutDown()
 {
+	PROFILE_FUNCTION();
+
 	glfwDestroyWindow(TheGLFWWindow);
 }

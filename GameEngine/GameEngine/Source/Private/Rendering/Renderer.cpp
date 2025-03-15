@@ -8,26 +8,35 @@
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
 #include "Public/log.h"
 #include "Public/Core.h"
+#include "Public/Profiler/Instrumentor.h"
 
 TSharedPtr<Renderer::SceneData> Renderer::TheSceneData = TMakeShared<Renderer::SceneData>();
 void Renderer::Init()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	RenderCommand::Init();
 	Renderer2D::Init();
 }
 
 void Renderer::BeginScene(const Camera& inCamera)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::BeginScene. TheSceneData was nullptr")
 	TheSceneData->ViewProjectionMatrix = inCamera.GetViewProjectionMatrix();
 }
 
 void Renderer::EndScene()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 }
 
 void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderProgram, const glm::mat4& localTransform, const glm::mat4& worldTransform)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	GameEngine_Assert(TheSceneData != nullptr, "Renderer::Submit. TheSceneData was nullptr");
 
 	inShaderProgram.Bind();
@@ -40,5 +49,7 @@ void Renderer::Submit(const VertexArray& inVertexArray, ShaderProgram& inShaderP
 
 void Renderer::SetViewPortDimensions(uint32_t width, uint32_t height)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	RenderCommand::SetViewPortDimensions(width, height);
 }

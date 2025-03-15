@@ -1,21 +1,28 @@
 #include "Public/PCH.h"
 #include "Public/Platforms/Rendering/OpenGL/Textures/OpenGLTexture2D.h"
+#include "Public/Profiler/Instrumentor.h"
 
 //Third party
 #include "stb_image/Public/stb_image.h"
 
 OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t height, void* data)
 {
-	CreateAnSetupTexture(width, height, TextureStoreFormat, TextureDrawFormat, data);
+	CreateAnDSetupTexture(width, height, TextureStoreFormat, TextureDrawFormat, data);
 }
 
 OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
 	Path(texturePath)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	stbi_set_flip_vertically_on_load(1);
 	int width, height, channels;
-	stbi_uc* const data = stbi_load(Path.c_str(), &width, &height, &channels, 0);
-	GameEngine_Assert(data != nullptr, "OpenGLTexture2D::OpenGLTexture2D, couldn't load the texture.");
+	stbi_uc* data = nullptr;
+	{
+		RENDERER_PROFILE_SCOPE("stbi_load");
+		data = stbi_load(Path.c_str(), &width, &height, &channels, 0);
+		GameEngine_Assert(data != nullptr, "OpenGLTexture2D::OpenGLTexture2D, couldn't load the texture.");
+	}
 
 	uint32_t textureStoreFormat = 0;
 	uint32_t textureDrawFormat = 0;
@@ -30,32 +37,42 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
 		textureDrawFormat = GL_RGBA;
 	}
 
-	CreateAnSetupTexture(width, height, textureStoreFormat, textureDrawFormat, data);
+	CreateAnDSetupTexture(width, height, textureStoreFormat, textureDrawFormat, data);
 	stbi_image_free(data);
 }
 
 OpenGLTexture2D::~OpenGLTexture2D()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glDeleteTextures(1, &TextureID);
 }
 
 void OpenGLTexture2D::Bind(const uint32_t slot) const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glBindTextureUnit(slot, TextureID);
 }
 
 void OpenGLTexture2D::UnBind(const uint32_t slot) const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glBindTextureUnit(slot, 0);
 }
 
 void OpenGLTexture2D::SetData(void* data)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glTextureSubImage2D(TextureID, 0, 0, 0, Width, Height, TextureDrawFormat, GL_UNSIGNED_BYTE, data);
 }
 
-void OpenGLTexture2D::CreateAnSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data)
+void OpenGLTexture2D::CreateAnDSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	if (data == nullptr)
 	{
 		GameEngine_LOG(error, "OpenGLTexture2D::OpenGLTexture2D. Passed data is nullptr");

@@ -2,6 +2,7 @@
 #include "Public/Platforms/Rendering/OpenGL/OpenGLRendererAPI.h"
 #include "Public/Rendering/VertexArray.h"
 #include "Public/Core.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "glad/glad.h"
@@ -12,6 +13,8 @@ OpenGLRendererAPI::OpenGLRendererAPI()
 
 void OpenGLRendererAPI::Init()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
@@ -22,16 +25,22 @@ void OpenGLRendererAPI::Init()
 
 void OpenGLRendererAPI::SetClearColor(const glm::vec4& inClearColor) const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glClearColor(inClearColor.r, inClearColor.g, inClearColor.b, inClearColor.a);
 }
 
 void OpenGLRendererAPI::Clear() const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void OpenGLRendererAPI::DrawIndexed(const VertexArray& inVertexArray) const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	const TSharedPtr<IndexBuffer>& indexBuffer = inVertexArray.GetTheIndexBuffer();
 	if (indexBuffer.get() == nullptr)
 	{
@@ -44,5 +53,7 @@ void OpenGLRendererAPI::DrawIndexed(const VertexArray& inVertexArray) const
 
 void OpenGLRendererAPI::SetViewPortDimensions(uint32_t width, uint32_t height) const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glViewport(0, 0, width, height);
 }

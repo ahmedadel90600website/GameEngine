@@ -3,6 +3,7 @@
 #include "Public/Rendering/Cameras/Camera.h"
 #include "Public/Application.h"
 #include "Public/Input/Input.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "glm/gtc/matrix_transform.hpp"
@@ -67,6 +68,7 @@ void Camera::Tick(const float deltaTime)
 
 void Camera::CalculateViewMatrix()
 {
+	PROFILE_FUNCTION();
 	const glm::mat4& transform = glm::translate(glm::mat4(1.0f), Location) * glm::mat4(Rotation);
 	ViewMatrix = glm::inverse(transform);
 }

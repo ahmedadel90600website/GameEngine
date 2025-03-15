@@ -10,6 +10,7 @@
 #include "Public/EventData/WindowClosedEventData.h"
 #include "Public/EventData/WindowResizedEvenetData.h"
 #include "Public/EventData/CharEventData.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "GLFW/glfw3.h"
@@ -17,6 +18,8 @@
 
 void ImGuiLayer::OnAttached()
 {
+	PROFILE_FUNCTION();
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -71,6 +74,8 @@ void ImGuiLayer::OnAttached()
 
 void ImGuiLayer::OnRemoved()
 {
+	PROFILE_FUNCTION();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
@@ -78,6 +83,8 @@ void ImGuiLayer::OnRemoved()
 
 void ImGuiLayer::BeginRendering()
 {
+	PROFILE_FUNCTION();
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -91,6 +98,8 @@ void ImGuiLayer::OnImGuiRender()
 
 void ImGuiLayer::EndRendering()
 {
+	PROFILE_FUNCTION();
+
 	const Application* const app = Application::Get();
 	if (app == nullptr)
 	{

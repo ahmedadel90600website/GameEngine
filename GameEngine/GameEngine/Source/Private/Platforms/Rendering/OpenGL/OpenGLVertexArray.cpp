@@ -3,12 +3,15 @@
 #include "Public/Rendering/Buffers/BufferLayout.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLVertexArray.h"
 #include "Public/Core.h"
+#include "Public/Profiler/Instrumentor.h"
 
 // Third party
 #include "glad/glad.h"
 
 OpenGLVertexArray::OpenGLVertexArray()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glGenVertexArrays(1, &Handle);
 }
 
@@ -19,16 +22,22 @@ OpenGLVertexArray::~OpenGLVertexArray()
 
 void OpenGLVertexArray::Bind() const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glBindVertexArray(Handle);
 }
 
 void OpenGLVertexArray::UnBind() const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glBindVertexArray(0);
 }
 
 void OpenGLVertexArray::BindVertexBuffer(const TSharedPtr<VertexBuffer>& inVertexBuffer)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	VertexBuffer* const inVertexBufferRaw = inVertexBuffer.get();
 	GameEngine_Assert(inVertexBufferRaw != nullptr, "OpenGLVertexArray::BindVertexBuffer. Invalid index buffer passed.");
 
@@ -53,6 +62,8 @@ void OpenGLVertexArray::BindVertexBuffer(const TSharedPtr<VertexBuffer>& inVerte
 
 void OpenGLVertexArray::BindIndexBuffer(const TSharedPtr<IndexBuffer>& inIndexBuffer)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	GameEngine_Assert(inIndexBuffer.get() != nullptr, "Invalid index buffer passed.");
 	TheIndexBuffer = inIndexBuffer;
 	Bind();

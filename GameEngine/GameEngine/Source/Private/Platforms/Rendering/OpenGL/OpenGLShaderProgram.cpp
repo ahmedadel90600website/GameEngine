@@ -1,6 +1,7 @@
 #include "Public/PCH.h"
 #include "Public/Core.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
+#include "Public/Profiler/Instrumentor.h"
 #include <stdint.h>
 #include <fstream>
 
@@ -10,6 +11,8 @@
 
 OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	GameEngine_Assert(inShaderFilePath.size() > 0, "Empty file path was passed");
 
 	std::unordered_map<uint32_t, std::string> shaderSources;
@@ -81,6 +84,8 @@ OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inShaderFilePath)
 
 OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inVertexShaderSource, const std::string& inFragmentShaderSource)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	std::array<uint32_t, MaxNumberOfShaders> shaders;
 	shaders[0] = CreateAndCompileShader(GL_VERTEX_SHADER, inVertexShaderSource.c_str());
 	shaders[1] = CreateAndCompileShader(GL_FRAGMENT_SHADER, inFragmentShaderSource.c_str());
@@ -89,6 +94,8 @@ OpenGLShaderProgram::OpenGLShaderProgram(const std::string& inVertexShaderSource
 
 OpenGLShaderProgram::~OpenGLShaderProgram()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glDeleteProgram(ProgramID);
 }
 
@@ -113,51 +120,71 @@ const std::string& OpenGLShaderProgram::GetName() const
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::mat3& matrixUniform)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniformMatrix3fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::mat4& matrixUniform)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniformMatrix4fv(GetAddUniformLocation(uniformName.c_str()), 1, false, glm::value_ptr(matrixUniform));
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const int32_t inInteger)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniform1i(GetAddUniformLocation(uniformName.c_str()), inInteger);
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const float inFloat)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniform1f(GetAddUniformLocation(uniformName.c_str()), inFloat);
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec2& vector)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniform2f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y);
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec3& vector)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniform3f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z);
 }
 
 void OpenGLShaderProgram::SetUniform(const std::string& uniformName, const glm::vec4& vector)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUniform4f(GetAddUniformLocation(uniformName.c_str()), vector.x, vector.y, vector.z, vector.a);
 }
 
 void OpenGLShaderProgram::Bind() const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUseProgram(ProgramID);
 }
 
 void OpenGLShaderProgram::UnBind() const
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	glUseProgram(0);
 }
 
 uint32_t OpenGLShaderProgram::GetAddUniformLocation(const std::string& uniformName)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	if (UniformByName.find(uniformName) != UniformByName.end())
 	{
 		return UniformByName[uniformName];
@@ -195,6 +222,8 @@ uint32_t OpenGLShaderProgram::GetAddUniformLocation(const std::string& uniformNa
 
 void OpenGLShaderProgram::CreateAndCompileShaderProgram(const std::array<uint32_t, MaxNumberOfShaders>& inShaders)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	ProgramID = glCreateProgram();
 
 	for (const uint32_t currentShader : inShaders)

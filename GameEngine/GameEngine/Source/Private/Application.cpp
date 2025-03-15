@@ -51,6 +51,8 @@ void Application::Run()
 
 	while (bIsRunning)
 	{
+		PROFILE_SCOPE("Application Loop")
+
 		const float currentTime = (float)glfwGetTime();
 		DeltaTime = currentTime - TimeLastFrame;
 		TimeLastFrame = currentTime;
@@ -64,16 +66,16 @@ void Application::Run()
 			{
 				currentLayer->Tick(DeltaTime);
 			}
+
+			TheImGuiOverlay->BeginRendering();
+
+			for (const TSharedPtr<LayerBase>& currentLayer : allLayers)
+			{
+				currentLayer->OnImGuiRender();
+			}
+
+			TheImGuiOverlay->EndRendering();
 		}
-
-		TheImGuiOverlay->BeginRendering();
-
-		for (const TSharedPtr<LayerBase>& currentLayer : allLayers)
-		{
-			currentLayer->OnImGuiRender();
-		}
-
-		TheImGuiOverlay->EndRendering();
 
 		ApplicationWindow->OnUpdate();
 	}
@@ -118,7 +120,6 @@ void Application::RemoveLayer(const TSharedPtr<LayerBase> inLayer)
 	const std::vector<TSharedPtr<LayerBase>>::iterator& foundLayer = std::find(LayersStack.begin(), layersStackEnd, inLayer);
 	if (foundLayer != layersStackEnd)
 	{
-
 		LayersStack.erase(foundLayer);
 		inLayer->OnRemoved();
 		return;

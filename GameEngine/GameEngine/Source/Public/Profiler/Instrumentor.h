@@ -1,12 +1,15 @@
 #pragma once
 
 #include "InstrumentationTimer.h"
+#include "Public/Core.h"
 #include <string>
 #include <chrono>
 #include <algorithm>
 #include <fstream>
 
 #include <thread>
+
+
 
 #ifdef GAMEENGINE_PROFILER
 
@@ -21,6 +24,19 @@
 #define END_PROFILER_SESSION(,, FilePath)
 #define PROFILE_FUNCTION()
 #define PROFILE_SCOPE(TimerName)
+
+#endif
+
+
+#ifdef GAMEENGINE_RENDERER_PROFILER
+
+#define RENDERER_PROFILE_FUNCTION() PROFILE_SCOPE(__FUNCSIG__)
+#define RENDERER_PROFILE_SCOPE(TimerName) FInstrumentationTimer timer##__LINE__(TimerName);
+
+#else
+
+#define RENDERER_PROFILE_FUNCTION() PROFILE_FUNCTION()
+#define RENDERER_PROFILE_SCOPE(TimerName) PROFILE_SCOPE(TimerName)
 
 #endif
 

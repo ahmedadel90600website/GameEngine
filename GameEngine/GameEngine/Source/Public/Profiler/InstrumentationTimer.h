@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Public/Application.h"
 #include <chrono>
 
 struct FInstrumentationTimer

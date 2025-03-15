@@ -22,7 +22,7 @@ public:
 
 private:
 	
-	void CreateAnSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data);
+	void CreateAnDSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data);
 
 	std::string Path;
 	uint32_t TextureID = 0;

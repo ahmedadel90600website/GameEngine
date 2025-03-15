@@ -8,11 +8,14 @@
 #include "Public/Rendering/Textures/Texture2D.h"
 #include "Public/Rendering/Cameras/OrthographicCamera.h"
 #include "Public/Platforms/Rendering/OpenGL/OpenGLShaderProgram.h"
+#include "Public/Profiler/Instrumentor.h"
 
 Renderer2D::Renderer2DData* Renderer2D::TheData = nullptr;
 
 void Renderer2D::Init()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	TheData = new Renderer2D::Renderer2DData();
 	if (TheData == nullptr)
 	{
@@ -79,6 +82,8 @@ void Renderer2D::Init()
 
 void Renderer2D::BeginScene(const OrthographicCamera& orthoCamera)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	ShaderProgram* const textureShaderProgram = TheData->TextureShaderProgram.get();
 	if (textureShaderProgram == nullptr)
 	{
@@ -93,6 +98,8 @@ void Renderer2D::BeginScene(const OrthographicCamera& orthoCamera)
 
 void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransform, const glm::mat4& worldTransform)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	const TSharedPtr<VertexArray>& vertextArrayShared = TheData->TheVertexArray;
 	const VertexArray* const vertextArray = vertextArrayShared.get();
 	if (vertextArray == nullptr)
@@ -121,6 +128,8 @@ void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransf
 
 void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTransform, const glm::mat4& worldTransform)
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	const TSharedPtr<VertexArray>& vertextArrayShared = TheData->TheVertexArray;
 	const VertexArray* const vertextArray = vertextArrayShared.get();
 	if (vertextArray == nullptr)
@@ -151,9 +160,13 @@ void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTran
 
 void Renderer2D::EndScene()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 }
 
 void Renderer2D::ShutDown()
 {
+	RENDERER_PROFILE_FUNCTION();
+
 	delete TheData;
 }
