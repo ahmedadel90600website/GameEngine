@@ -23,7 +23,8 @@
 
 	uniform vec4 u_TheColor;
 	uniform sampler2D u_TextureSlot;
+	uniform float u_TextureMultiplier;
 	void main()
 	{
-		a_color = texture(u_TextureSlot, v_TextureCoordinates) * u_TheColor;
+		a_color = texture(u_TextureSlot, v_TextureCoordinates * u_TextureMultiplier) * u_TheColor;
 	}

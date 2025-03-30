@@ -93,8 +93,9 @@ void SandboxLayer2D::Tick(const float deltaTime)
 	}
 	{
 		WhiteTexture2D->Bind();
-		Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)) * glm::mat4(glm::quat(glm::lowp_fvec3(0.0f, 0.0f, glm::radians(45.0f)))));
-		Renderer2D::DrawQuad(*SandboxTexture2D, glm::translate(glm::mat4(1.0f), ObjectLocation) * glm::mat4(ObjectsRotation));
+		Renderer2D::DrawQuad(glm::vec4(ObjectColor.x, ObjectColor.y, ObjectColor.z, 1.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.0f, 0.0f)) * glm::mat4(glm::quat(glm::lowp_fvec3(0.0f, 0.0f, glm::radians(45.0f)))), 
+			3.0f);
+		Renderer2D::DrawQuad(*SandboxTexture2D, glm::translate(glm::mat4(1.0f), ObjectLocation) * glm::mat4(ObjectsRotation), glm::mat4(1.0f), glm::vec4(0.5f, 0.5f, 1.0f, 1.0f), 5.0f);
 		Renderer2D::EndScene();
 	}
 }

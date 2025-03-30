@@ -7,7 +7,7 @@
 
 OpenGLTexture2D::OpenGLTexture2D(const uint32_t width, const uint32_t height, void* data)
 {
-	CreateAnDSetupTexture(width, height, TextureStoreFormat, TextureDrawFormat, data);
+	CreateAndSetupTexture(width, height, TextureStoreFormat, TextureDrawFormat, data);
 }
 
 OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
@@ -37,7 +37,7 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& texturePath) :
 		textureDrawFormat = GL_RGBA;
 	}
 
-	CreateAnDSetupTexture(width, height, textureStoreFormat, textureDrawFormat, data);
+	CreateAndSetupTexture(width, height, textureStoreFormat, textureDrawFormat, data);
 	stbi_image_free(data);
 }
 
@@ -69,7 +69,7 @@ void OpenGLTexture2D::SetData(void* data)
 	glTextureSubImage2D(TextureID, 0, 0, 0, Width, Height, TextureDrawFormat, GL_UNSIGNED_BYTE, data);
 }
 
-void OpenGLTexture2D::CreateAnDSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data)
+void OpenGLTexture2D::CreateAndSetupTexture(const uint32_t width, const uint32_t height, const uint32_t storeFormat, const uint32_t drawFormat, void* data)
 {
 	RENDERER_PROFILE_FUNCTION();
 

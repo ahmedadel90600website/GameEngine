@@ -40,6 +40,7 @@ void Renderer2D::Init()
 	}
 
 	textureShaderProgram->SetUniform("u_TextureSlot", 0);
+	textureShaderProgram->SetUniform("u_TextureMultiplier", 1.0f);
 
 	TSharedPtr<VertexArray>& vertexArray = TheData->TheVertexArray;
 	vertexArray = VertexArray::Create();
@@ -96,7 +97,7 @@ void Renderer2D::BeginScene(const OrthographicCamera& orthoCamera)
 	textureShaderProgramRef.SetUniform("u_ViewProjection", orthoCamera.GetViewProjectionMatrix());
 }
 
-void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransform, const glm::mat4& worldTransform)
+void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransform, const glm::mat4& worldTransform, const float textureMultiplier)
 {
 	RENDERER_PROFILE_FUNCTION();
 
@@ -123,10 +124,11 @@ void Renderer2D::DrawQuad(const glm::vec4& inColor, const glm::mat4& localTransf
 	shaderProgramRef.Bind();
 	shaderProgramRef.SetUniform("u_TheColor", inColor);
 	shaderProgramRef.SetUniform("u_ObjectTransform", localTransform);
+	shaderProgramRef.SetUniform("u_TextureMultiplier", textureMultiplier);
 	shaderProgramRef.SetUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(vertextArrayRef);}
 
-void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTransform, const glm::mat4& worldTransform)
+void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTransform, const glm::mat4& worldTransform, const glm::vec4& inTintColor, const float textureMultiplier)
 {
 	RENDERER_PROFILE_FUNCTION();
 
@@ -152,8 +154,9 @@ void Renderer2D::DrawQuad(const Texture2D& intexture, const glm::mat4& localTran
 	vertextArrayRef.Bind();
 	shaderProgramRef.Bind();
 	intexture.Bind();
-	shaderProgramRef.SetUniform("u_TheColor", glm::vec4(1.0f));
+	shaderProgramRef.SetUniform("u_TheColor", inTintColor);
 	shaderProgramRef.SetUniform("u_ObjectTransform", localTransform);
+	shaderProgramRef.SetUniform("u_TextureMultiplier", textureMultiplier);
 	shaderProgramRef.SetUniform("u_WorldTransform", worldTransform);
 	RenderCommand::DrawIndexed(vertextArrayRef);
 }
